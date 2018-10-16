@@ -1,7 +1,5 @@
 # C4.2_Git
 
-This project contains all versions of the "Language specific IDE" courses at OC, to foster collaboration between authors and the OC team.
-
 ## Confidentiality
 
 This file describes internal OpenClassrooms course creation processes. They are for your eyes only if you have been given access. The file and its content should be kept confidential.
