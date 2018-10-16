@@ -17,16 +17,6 @@ Please clone this project and open it in your favorite markdown editor.
 > 1. GitLens, which supercharges the Git capabilities built into Visual Studio Code
 > 2. Markdown All In One that provides keyboard shortcuts, table of contents, auto preview and more
 
-## Create your branches
-
-In order to write your course, please create 2 branches with the following syntax:
-
-1. A *LANG_LANGUAGE_wip* branch for the day-to-day writing
-2. A *LANG_LANGUAGE_review* branch where you will push content that is ready for review by the OC team
-
-* *LANG* is either FR or EN
-* *LANGUAGE* could be JAVA, DOTNET, PHP or whatever technology you are writing the course for.
-
 ## Write your content
 
 * Your day to day writing should take place inside your *wip* (work in progress) branch. Please make your commits as granular as possible, as if you were coding.
