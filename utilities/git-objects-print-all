@@ -1,0 +1,12 @@
+#!/bin/sh
+IFS=$'\n'
+for object in `git cat-file --batch-check --batch-all-objects`; do
+    hash=$(echo $object |  cut -d' ' -f1)
+    type=$(echo $object |  cut -d' ' -f2)
+    echo "\n--- print content of ${hash} of type ${type} --\n"
+    if [ $type = "tree" ]; then
+        git ls-tree $hash
+    else
+        echo `git-object-read  ${object}`
+    fi
+done

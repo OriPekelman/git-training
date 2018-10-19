@@ -12,6 +12,7 @@ git status
 echo "\n---Add file to index---\n"
 git add readme.md
 git status
+echo "\n---Current directory structure of .git---\n"
 tree -C .git
 echo "\n---Commit file---\n"
 git commit -m"Added readme.md"
@@ -29,4 +30,11 @@ echo "Git Example by OpenClassRooms\n\nTo the extent possible under law, the per
 git add LICENSE
 git commit -am"Adding a license file"
 git status
+echo "\n---Current directory structure of .git---\n"
 tree -C .git
+echo "\n---All the objects in .git---\n"
+git cat-file --batch-check --batch-all-objects
+echo "\n---All the objects in .git with their contents---\n"
+git-objects-print-all
+
+
