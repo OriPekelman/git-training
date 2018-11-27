@@ -37,4 +37,10 @@ git cat-file --batch-check --batch-all-objects
 echo "\n---All the objects in .git with their contents---\n"
 git-objects-print-all
 
-
+echo "\n---Create a sub directory---\n"
+mkdir files
+git status
+touch files/.gitkeep
+git add files/.gitkeep
+git commit -m'add .gitkeep so files will be added to the repository'
+git-objects-print-all
