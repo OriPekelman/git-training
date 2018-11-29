@@ -44,3 +44,11 @@ touch files/.gitkeep
 git add files/.gitkeep
 GIT_AUTHOR_DATE="2018-10-11T06:17:22+01:00" GIT_COMMITTER_DATE=$GIT_AUTHOR_DATE git commit -m'add .gitkeep so files will be added to the repository'
 git-objects-print-all
+echo "\n---Modify  README.MD file---\n"
+echo "\n5. \`git log\` voir toutes les révisions" >> readme.md
+git status
+echo "\n---Add and commit file---\n"
+git add readme.md
+git status
+GIT_AUTHOR_DATE="2018-10-11T06:15:30+01:00" GIT_COMMITTER_DATE=$GIT_AUTHOR_DATE git commit -m"Add the list of commands we learnt today."
+git status
