@@ -108,3 +108,8 @@ git add readme.md
 GIT_AUTHOR_DATE="2018-10-11T06:15:40+01:00" GIT_COMMITTER_DATE=$GIT_AUTHOR_DATE git commit -m'Add git log to the list of commands we learned'
 git add media
 GIT_AUTHOR_DATE="2018-10-11T06:15:45+01:00" GIT_COMMITTER_DATE=$GIT_AUTHOR_DATE git commit -m'Add media diretory with .gitkeep'
+
+echo "\n--- P2C1 -  git checkout ---\n"
+git checkout -b"my_new_feature"
+
+git reflog
