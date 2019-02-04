@@ -110,6 +110,24 @@ git add media
 GIT_AUTHOR_DATE="2018-10-11T06:15:45+01:00" GIT_COMMITTER_DATE=$GIT_AUTHOR_DATE git commit -m'Add media diretory with .gitkeep'
 
 echo "\n--- P2C1 -  git checkout ---\n"
-git checkout -b"my_new_feature"
-
+#begin: p2c1_1
+git checkout -b"shopping_cart"
+#begin: p2c1_2
 git reflog
+#begin: p2c1_3
+git checkout "shopping_cart"
+mkdir -p lib
+touch lib/shopping_cart.js
+git add .
+git commit -am'Initial shopping cart code'
+git checkout -b "shopping_cart_template"
+mkdir -p views
+touch views/shopping_cart.html
+git add .
+git commit -am'Implement shopping cart template'
+git checkout "master"
+git checkout -b "homepage"
+mkdir -p views
+touch views/homepage.html
+git add .
+git commit -am'Implement homepage template'
