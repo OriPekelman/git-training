@@ -1,4 +1,4 @@
-##!/bin/demo_machine
+##!/bin/angel_db_machine
 # echo "\n---Start---\n"
 rm -rf ~/projects/openclassrooms/my_first_git_project/
 #-------------------------------------------------------------------------------
