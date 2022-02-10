@@ -1,11 +1,11 @@
 ##!/bin/angel_db_machine
 # echo "\n---Start---\n"
-rm -rf ~/projects/openclassrooms/my_first_git_project/
+rm -rf ~/projects/my_first_git_project/
 #-------------------------------------------------------------------------------
 #begin: p1c3_1
 echo "\n---P1C3 - Create empty directory---\n"
-mkdir -p ~/projects/openclassrooms/my_first_git_project
-cd ~/projects/openclassrooms/my_first_git_project
+mkdir -p ~/projects/my_first_git_project
+cd ~/projects/my_first_git_project
 git status
 #expect: not a git repository
 #-------------------------------------------------------------------------------
