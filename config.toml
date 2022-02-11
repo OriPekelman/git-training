@@ -1,0 +1,18 @@
+baseURL = "/"
+languageCode = "en-us"
+title = "Git Getting Started!"
+theme = "hugo-book"
+googleAnalytics = ""
+
+[params]
+    author = "Ori Pekelman"
+    description = "Getting started with Git"
+    githubUsername = "platformsh"
+    accent = "blue"
+    showBorder = true
+    backgroundColor = "white"
+    font = "Raleway" # should match the name on Google Fonts!
+    highlight = true
+    highlightStyle = "solarized-dark"
+    highlightLanguages = ["go", "haskell", "kotlin", "scala", "swift"]
+    defaultContentLanguage = 'en'

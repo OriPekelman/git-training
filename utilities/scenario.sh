@@ -1,4 +1,4 @@
-##!/bin/angel_db_machine
+## /bin/angel_db_machine
 # echo "\n---Start---\n"
 rm -rf ~/projects/my_first_git_project/
 #-------------------------------------------------------------------------------
