@@ -1,4 +1,11 @@
-## /bin/angel_db_machine
+# no interactive stuff
+export GIT_PAGER=""
+export GIT_TERMINAL_PROMPT=0
+# make sure we always get the same hashes.
+export GIT_AUTHOR_DATE="2022-02-02T06:06:51+01:00" 
+export GIT_COMMITTER_DATE=$GIT_AUTHOR_DATE 
+# TODO: to make this prettier we should advance time by a few minutes on every action
+
 # echo "\n---Start---\n"
 rm -rf ~/projects/my_first_git_project/
 #-------------------------------------------------------------------------------
@@ -26,7 +33,7 @@ echo "\n---P1C4 - Current directory structure of .git---\n"
 tree -C .git
 #begin: p1c4_5
 echo "\n--- P1C4 -  Commit file---\n"
-GIT_AUTHOR_DATE="2018-10-11T06:06:51+01:00" GIT_COMMITTER_DATE=$GIT_AUTHOR_DATE git commit -m"Added readme.md"
+git commit -m"Added readme.md"
 git status
 #begin: p1c4_6
 echo "\n-- P1C4 - Modify file---\n"
@@ -36,13 +43,13 @@ git status
 echo "\n---  P1C4 - Add and commit file---\n"
 git add readme.md
 git status
-GIT_AUTHOR_DATE="2018-10-11T06:10:30+01:00" GIT_COMMITTER_DATE=$GIT_AUTHOR_DATE git commit -m"Add the list of commands we learned today."
+GIT_AUTHOR_DATE="2022-02-02T06:10:30+01:00" GIT_COMMITTER_DATE=$GIT_AUTHOR_DATE git commit -m"Add the list of commands we learned today."
 git status
 #begin: p1c4_8
 echo "\n--- P1C4 -  Create LICENSE file---\n"
 echo "Git Example by OpenClassRooms\n\nTo the extent possible under law, the person who associated CC0 with\nGit Example  has waived all copyright and related or neighboring rights\nto Git Example.\n\nYou should have received a copy of the CC0 legalcode along with this\nwork.  If not, see <http://creativecommons.org/publicdomain/zero/1.0/>." > LICENSE
 git add LICENSE
-GIT_AUTHOR_DATE="2018-10-11T06:15:42+01:00" GIT_COMMITTER_DATE=$GIT_AUTHOR_DATE git commit -am"Adding a license file"
+GIT_AUTHOR_DATE="2022-02-02T06:15:42+01:00" GIT_COMMITTER_DATE=$GIT_AUTHOR_DATE git commit -am"Adding a license file"
 git status
 #begin: p1c4_9
 echo "\n--- P1C4 - Current directory structure of .git---\n"
@@ -62,7 +69,7 @@ mkdir files
 git status
 touch files/.gitkeep
 git add files/.gitkeep
-GIT_AUTHOR_DATE="2018-10-11T06:17:22+01:00" GIT_COMMITTER_DATE=$GIT_AUTHOR_DATE git commit -m'Add .gitkeep so files will be added to the repository'
+GIT_AUTHOR_DATE="2022-02-02T06:17:22+01:00" GIT_COMMITTER_DATE=$GIT_AUTHOR_DATE git commit -m'Add .gitkeep so files will be added to the repository'
 git-objects-print-all
 tree -C .git
 git log --graph --pretty=format:'%C(yellow)%d%Creset %C(cyan)%h%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=short --all
@@ -73,22 +80,21 @@ echo "\n--- P1C6 -  Modify  README.MD file---\n"
 git status
 echo "\n---Add and commit file---\n"
 echo "\n5. \`git log\` voir toutes les révisions" >> readme.md
-GIT_AUTHOR_DATE="2018-10-11T06:15:30+01:00" GIT_COMMITTER_DATE=$GIT_AUTHOR_DATE git commit -am"Add git log to the list of commands we learned today."
+GIT_AUTHOR_DATE="2022-02-02T06:15:30+01:00" GIT_COMMITTER_DATE=$GIT_AUTHOR_DATE git commit -am"Add git log to the list of commands we learned today."
 #begin: p1c7_1
 echo "\n--- P1C6 -  Delete file---\n"
 rm LICENSE
 git status
 git add LICENSE
-GIT_AUTHOR_DATE="2018-10-11T06:15:35+01:00" GIT_COMMITTER_DATE=$GIT_AUTHOR_DATE git commit -m"Remove license file"
+GIT_AUTHOR_DATE="2022-02-02T06:15:35+01:00" GIT_COMMITTER_DATE=$GIT_AUTHOR_DATE git commit -m"Remove license file"
 echo "\n--- P1C6 -  Delete file with git rm---\n"
 #begin: p1c6_2
 git reset --hard HEAD~1
 git rm LICENSE
-GIT_AUTHOR_DATE="2018-10-11T06:15:35+01:00" GIT_COMMITTER_DATE=$GIT_AUTHOR_DATE  git commit -m"Remove license file"
+GIT_AUTHOR_DATE="2022-02-02T06:15:35+01:00" GIT_COMMITTER_DATE=$GIT_AUTHOR_DATE  git commit -m"Remove license file"
 #begin: p1c6_3
 git mv files media
-GIT_AUTHOR_DATE="2018-10-11T06:15:40+01:00" GIT_COMMITTER_DATE=$GIT_AUTHOR_DATE git commit -m'Rename files to media'
-
+GIT_AUTHOR_DATE="2022-02-02T06:15:40+01:00" GIT_COMMITTER_DATE=$GIT_AUTHOR_DATE git commit -m'Rename files to media'
 echo "\n--- P1C7 -  See the past---\n"
 #begin: p1c7_1
 alias lg="git log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%<(45,trunc)%s%C(reset) %C(dim white)- %<(20,trunc)%an %C(reset)%C(bold yellow)%d%C(reset)' --all"
@@ -105,9 +111,9 @@ lg
 echo "\n--- P1C7 -  git reset ---\n"
 git reset HEAD~5
 git add readme.md
-GIT_AUTHOR_DATE="2018-10-11T06:15:40+01:00" GIT_COMMITTER_DATE=$GIT_AUTHOR_DATE git commit -m'Add git log to the list of commands we learned'
+GIT_AUTHOR_DATE="2022-02-02T06:15:40+01:00" GIT_COMMITTER_DATE=$GIT_AUTHOR_DATE git commit -m'Add git log to the list of commands we learned'
 git add media
-GIT_AUTHOR_DATE="2018-10-11T06:15:45+01:00" GIT_COMMITTER_DATE=$GIT_AUTHOR_DATE git commit -m'Add media diretory with .gitkeep'
+GIT_AUTHOR_DATE="2022-02-02T06:15:45+01:00" GIT_COMMITTER_DATE=$GIT_AUTHOR_DATE git commit -m'Add media diretory with .gitkeep'
 
 echo "\n--- P2C1 -  git checkout ---\n"
 #begin: p2c1_1
@@ -123,6 +129,7 @@ git commit -am'Initial shopping cart code'
 git checkout -b "shopping_cart_template"
 mkdir -p views
 touch views/shopping_cart.html
+echo "<html>\n<head>\n<title>Shopping cart template</title>\n</head>\n<body>\nI am a template\n</body>\n</html>\n" >> views/shopping_cart.html
 git add .
 git commit -am'Implement shopping cart template'
 git checkout "master"
@@ -131,3 +138,13 @@ mkdir -p views
 touch views/homepage.html
 git add .
 git commit -am'Implement homepage template'
+git show shopping_cart_template
+#begin: p2c7_4
+echo "\n--- P2C7 -  git merge ---\n"
+git checkout "shopping_cart"
+git status
+git log -1
+#begin: p2c7_5
+git merge shopping_cart_template
+git log -1
+tree -C
