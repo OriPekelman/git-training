@@ -80,11 +80,27 @@ Date:   Mon Feb 2 06:31:09 2026 +0100
 
 So now we've already done a lot of stuff in our little Git repository. We work on a single branch: **master**. Each time we added a **commit**, our **index** was updated. And **HEAD**, this pointer to our work area, was pointing to the most recent **commit**.
 
-![Moving Head](/images/moving_head/moving_head.gif "HEAD advancing with each new commit")
+That is the whole shape of what we have built, and these are the seven commits
+you have just made:
 
-<!-- TODO: this animation was recorded on an older run of the scenario; its hashes and the order of two commits do not match the walkthrough above. Re-record it against the current scenario. -->
+{{< mermaid >}}
+graph TD
+  H["HEAD"] --> M
+  M["master"] --> C7
+  C7["230e18f<br/>added git log command"] --> C6
+  C6["2937bcc<br/>Rename files to media"] --> C5
+  C5["f2c06df<br/>Remove license file"] --> C4
+  C4["f0bb8a2<br/>Add .gitkeep…"] --> C3
+  C3["5ab2cae<br/>Adding a license file"] --> C2
+  C2["46079d2<br/>Add the list of commands…"] --> C1
+  C1["d2eafda<br/>Added readme.md"]
+{{< /mermaid >}}
 
-(That little animation was recorded on an earlier run of this same walkthrough, so its hashes are not the ones you see above. Watch the highlighted line move, not the digits.)
+Every arrow points *backwards*, from a commit to its parent. That is the only
+direction Git stores: a commit knows where it came from and has no idea what came
+after it. It is also why the two things at the top are so cheap — `master` is a
+file containing one commit's hash, and `HEAD` is a file containing the word
+`master`. Adding a commit rewrites one line in each. Nothing else moves.
 
 ## Change Tracking
 

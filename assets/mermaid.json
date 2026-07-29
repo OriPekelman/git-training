@@ -1,0 +1,15 @@
+{
+  "startOnLoad": true,
+  "securityLevel": "strict",
+  "theme": "base",
+  "themeVariables": {
+    "fontFamily": "inherit",
+    "fontSize": "15px"
+  },
+  "flowchart": {
+    "useMaxWidth": true,
+    "htmlLabels": true,
+    "curve": "basis",
+    "padding": 12
+  }
+}

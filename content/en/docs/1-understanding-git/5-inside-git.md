@@ -302,8 +302,32 @@ If the **tree** helped us a lot to understand the internal structure of Git, it 
 * **tree** - contains the list of files (therefore 40-character blob identifiers)... with their names and their executable bit. We can also in the list refer to another **tree** by its **tree-id** which will give us a sub-directory.
 * **commit** - is saving a state, committing; from a **commit** we can rebuild our work area with a specific **tree**. It contains information about who made the change and why. It also points at its parent commit or commits.
 
-![Great Image](https://jwiegley.github.io/git-from-the-bottom-up/images/commits.png)
-<!-- TODO: Great image we should re-execute it!-->
+Here is the whole of it, drawn with the objects from the repository you have just
+built — every hash below is one you can `git cat-file -p` yourself:
+
+{{< mermaid >}}
+graph TD
+  C["commit f0bb8a2<br/>who, when, why"]
+  P["commit 5ab2cae<br/>the parent"]
+  T["tree 3216264"]
+  F["tree d564d0b"]
+  L["blob 0ba5adc"]
+  R["blob 0c7e166"]
+  K["blob e69de29"]
+
+  C -->|parent| P
+  C -->|tree| T
+  T -->|"LICENSE"| L
+  T -->|"files/"| F
+  T -->|"readme.md"| R
+  F -->|".gitkeep"| K
+{{< /mermaid >}}
+
+Look at where the filenames are. They are on the **arrows**, not in the boxes:
+`0ba5adc` is the contents of `LICENSE` and knows nothing about being called that.
+That is why renaming a file creates no new blob, and why an empty `.gitkeep` in
+your repository is the same object `e69de29` as an empty file in everybody
+else's.
 
 All the magic of git will unfold from this simple concept of **commit**. Git will allow us to make our changes each time we save states. Then he will allow us to jump from one to the other. To compare two states .. even to make mixtures of them.
 

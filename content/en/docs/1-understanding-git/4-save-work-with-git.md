@@ -87,9 +87,20 @@ This command does not save the file yet. It just tells Git "from now on, you nee
 > 2. the staging area - the index otherwise known as **staging**, the files as they are prepared to be saved, saved in a specific version (or revision). Here we have "snapshots" of our files.
 > 3. The commit area - the committed work, where things are saved for posterity - things that can also be shared with others and sent to others.
 
-[Areas]: https://git-scm.com/book/en/v2/images/areas.png "Working areas"
-[Zones]: https://jwiegley.github.io/git-from-the-bottom-up/images/lifecycle.png "Working Zones"
-<!--TODO: reexecute an image -->
+{{< mermaid >}}
+graph LR
+  W["Working directory<br/>the files you edit"]
+  I["Index<br/>the next commit,<br/>being assembled"]
+  R["Repository<br/>.git, committed<br/>for posterity"]
+
+  W -->|"git add"| I
+  I -->|"git commit"| R
+  R -->|"git checkout"| W
+{{< /mermaid >}}
+
+Notice that the arrows go round. Nothing is ever taken *out* of the repository by
+committing; `git checkout` copies a saved state back into the working directory,
+which is why the last chapter of this part can put your deleted work back.
 
 ## Looking inside `.git`
 

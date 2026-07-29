@@ -1,0 +1,61 @@
+/* Project styles. This file shadows the theme's own `_custom.scss`, which is
+   the extension point `book.scss` imports last, so nothing in the vendored
+   theme has to be patched to get here. */
+
+/* ---- Mermaid diagrams ------------------------------------------------------
+   Mermaid bakes its colours into the SVG at render time, and this site switches
+   between light and dark on `prefers-color-scheme` alone -- there is no toggle
+   to re-render on. So the diagrams are drawn with Mermaid's `base` theme and
+   recoloured here with the same CSS variables the rest of the page uses, which
+   means one diagram follows the reader's system setting for free.
+
+   The `!important` is not decoration: Mermaid emits inline `style` attributes
+   and presentation attributes on the shapes it draws, and only a declaration
+   this specific wins against them. */
+
+.mermaid {
+  background: transparent;
+  margin: 1.5rem 0;
+  text-align: center;
+
+  /* Node shapes: a faint fill so boxes read as boxes on either background. */
+  .node {
+    rect, circle, ellipse, polygon, path {
+      fill: var(--gray-100) !important;
+      stroke: var(--gray-500) !important;
+      stroke-width: 1px !important;
+    }
+  }
+
+  /* Subgraph frames stay unfilled so nested nodes remain legible. */
+  .cluster rect {
+    fill: transparent !important;
+    stroke: var(--gray-200) !important;
+  }
+
+  /* Labels. Mermaid renders them as HTML in a foreignObject when htmlLabels is
+     on and as SVG <text> when it is off, so set both `color` and `fill`. */
+  text, span, div, .label, .nodeLabel, .edgeLabel, .titleText {
+    color: var(--body-font-color) !important;
+    fill: var(--body-font-color) !important;
+    font-family: inherit !important;
+  }
+
+  /* An edge label sits on top of its line; it needs the page colour behind it
+     to punch a hole, not a fixed white. */
+  .edgeLabel {
+    rect, .label-container {
+      fill: var(--body-background) !important;
+      background-color: var(--body-background) !important;
+    }
+  }
+
+  /* Edges and their arrowheads. */
+  .edgePath .path, .flowchart-link, line, .messageLine0, .messageLine1 {
+    stroke: var(--gray-500) !important;
+  }
+  .arrowheadPath, marker path, defs marker path {
+    fill: var(--gray-500) !important;
+    stroke: none !important;
+  }
+}

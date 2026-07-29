@@ -7,6 +7,17 @@ theme = 'hugo-book'
 # source of truth and the French is translated from it.
 defaultContentLanguageInSubdir = false
 
+# `:information_source:` and `:warning:` are used throughout the content as
+# callout markers. Without this they render as literal text.
+enableEmoji = true
+
+# The book theme keeps the original casing of section/page paths.
+disablePathToLower = true
+
+# Keep every site-wide key above this line. TOML binds a bare key to the table
+# that was opened last, so anything written after `[languages]` becomes a
+# setting of the last language rather than of the site -- which is exactly how
+# `enableEmoji` was once lost, turning every callout marker into literal text.
 [languages]
   [languages.en]
     contentDir = 'content/en'
@@ -20,13 +31,6 @@ defaultContentLanguageInSubdir = false
     languageCode = 'fr'
     title = 'Git, bien démarrer !'
     weight = 2
-
-# `:information_source:` and `:warning:` are used throughout the content as
-# callout markers. Without this they render as literal text.
-enableEmoji = true
-
-# The book theme keeps the original casing of section/page paths.
-disablePathToLower = true
 
 # The part directories carry a leading number so they sort in reading order on
 # disk and in the sidebar. This keeps that number out of the published address.
