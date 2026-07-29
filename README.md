@@ -4,23 +4,32 @@ A hands-on Git course that always looks under the hood. Built with [Hugo](https:
 and the vendored [hugo-book](https://github.com/alex-shpak/hugo-book) theme.
 
 ```
-content/_index.md      landing page; its table of contents is generated
-content/docs/<n>-<part>/_index.md
+content/<lang>/_index.md
+                       landing page; its table of contents is generated
+content/<lang>/docs/<n>-<part>/_index.md
                        part section page, and the sidebar group header
-content/docs/<n>-<part>/<n>-<chapter>.md
+content/<lang>/docs/<n>-<part>/<n>-<chapter>.md
                        the chapters, ordered by the `weight` in their front matter
-fr/                    the older French version, not yet updated from the English
+fr/                    the pre-2026 French version, kept only as a tone reference
 utilities/             the tooling described below
 STYLE.md               the binding style guide -- read it before writing a chapter
 themes/hugo-book/      vendored theme (patched for Hugo 0.128+ deprecations)
 ```
 
-The leading numbers order the parts and chapters on disk and in the sidebar; they
-are kept out of the published address by an explicit `url` in each file's front
-matter, so every chapter is served from a flat `/docs/<slug>/`. Chapters link to
-each other by relative markdown path (`../6-appendices/1-git-install.md`), which
-works both when the file is read on a forge and, via the theme's portable links,
-in the built site. `make build` fails if one of them does not resolve.
+One content tree per language: English is served from the root and French from
+`/fr/`. Every tool below takes `--lang`, and defaults to every language present.
+
+The leading numbers order the parts and chapters on disk and in the sidebar, and
+are kept out of the published address by the `[permalinks]` patterns in
+`hugo.toml`, so each chapter is served from a flat `/docs/<slug>/`. That has to
+be done with permalinks rather than a `url` in front matter: Hugo does not add
+the language prefix to an absolute front-matter `url`, so the French pages would
+silently overwrite the English ones at the same path.
+
+Chapters link to each other by relative markdown path
+(`../6-appendices/1-git-install.md`), which works both when the file is read on a
+forge and, via the theme's portable links, in the built site. `make build` fails
+if one of them does not resolve.
 
 ## Working on it
 
@@ -71,5 +80,9 @@ picks them up as `git object-read` and `git objects-print-all`.
 
 ## Translations
 
-The English content under `content/` is the source of truth. The French version in `fr/`
-predates the current revision and has not been brought forward yet.
+The course was written in French first, but the 2026 revision was done in English, so
+`content/en/` is the source of truth and `content/fr/` is translated from it.
+
+The `fr/` directory at the top level is the *old* French version. It predates the revision
+and is not built by Hugo; it is kept only as a reference for the original register and
+terminology while the new translation is written, and should be deleted once that is done.

@@ -28,7 +28,10 @@ from collections import defaultdict
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-DOCS = ROOT / "content" / "docs"
+CONTENT = ROOT / "content"
+
+# Reassigned by main() from --lang; the site keeps one content tree per language.
+DOCS = CONTENT / "en" / "docs"
 
 # --------------------------------------------------------------------------
 # Things we know about
@@ -83,6 +86,9 @@ NO_SUMMARY_NEEDED = {
     "5-automation/5-git-foo.md",
 }
 
+# The word a chapter's closing section is expected to contain, per language.
+SUMMARY_WORD = {"en": "summary", "fr": r"r[ée]sum[ée]"}
+
 HUNK_RE = re.compile(r"^@@ -\d+([.,]\d+)? \+\d+([.,]\d+)? @@")
 BAD_HUNK_RE = re.compile(r"^@@ -\d+(\.\d+)? \+\d+(\.\d+)? @@")
 
@@ -134,7 +140,8 @@ def parse_front_matter(lines: list[str]) -> tuple[dict[str, str], int]:
     return fields, 0
 
 
-def lint_file(path: Path, rep: Report, subcommands: set[str], chapter_files: set[str]) -> dict[str, str]:
+def lint_file(path: Path, rep: Report, subcommands: set[str],
+              chapter_files: set[str], lang: str = "en") -> dict[str, str]:
     text = path.read_text(encoding="utf-8")
     lines = text.splitlines()
 
@@ -142,9 +149,7 @@ def lint_file(path: Path, rep: Report, subcommands: set[str], chapter_files: set
     if not fields:
         rep.error(path, 1, "missing YAML front matter")
     else:
-        # `url` rather than `slug`: the part directories carry a leading number
-        # for ordering, and pinning the URL keeps it out of the address.
-        for required in ("title", "url", "weight"):
+        for required in ("title", "slug", "weight"):
             if required not in fields:
                 rep.error(path, 1, f"front matter is missing `{required}`")
         if "weight" in fields and not fields["weight"].isdigit():
@@ -237,10 +242,15 @@ def lint_file(path: Path, rep: Report, subcommands: set[str], chapter_files: set
                 rep.error(path, n, f"link to a chapter that does not exist: {target}")
 
         # ---- French false friends and known translation scars ------------
-        for pattern, msg in (
+        # The first three are scars from the original machine translation out of
+        # French, so they are meaningless in the French tree itself; the spelling
+        # of GitHub and GitLab is wrong in any language.
+        scars = (
             (r"\brepertoire\b", "'repertoire' is a false friend for 'directory'"),
             (r"\bdeposit\b", "'deposit' is probably a mistranslation of 'dépôt' (repository)"),
             (r"\bnote commit\b", "'note commit' is probably 'our commit' (notre)"),
+        ) if lang == "en" else ()
+        for pattern, msg in scars + (
             (r"\bGithub\b", "spell it GitHub"),
             (r"\bGitlab\b", "spell it GitLab"),
             (r"\bgit hub\b", "spell it GitHub"),
@@ -265,7 +275,8 @@ def lint_file(path: Path, rep: Report, subcommands: set[str], chapter_files: set
     except ValueError:
         rel = path.name
     if (rel not in NO_SUMMARY_NEEDED
-            and not re.search(r"^#{2,3} .*summary", text, re.I | re.M)):
+            and not re.search(rf"^#{{2,3}} .*{SUMMARY_WORD.get(lang, 'summary')}",
+                              text, re.I | re.M)):
         rep.warn(path, 0, "chapter has no summary section")
 
     return fields
@@ -300,19 +311,40 @@ def check_links(paths: list[Path], rep: Report) -> None:
 
 
 def main() -> int:
+    global DOCS
+
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("paths", nargs="*", type=Path,
-                    help="markdown files to lint (default: content/docs/*.md)")
+                    help="markdown files to lint (default: every language tree)")
+    ap.add_argument("--lang", default="all",
+                    help="language tree to lint: a code like 'en', or 'all' "
+                         "(the default) for every language present")
     ap.add_argument("--links", action="store_true",
                     help="also check that external URLs resolve (slow, needs network)")
     ap.add_argument("--quiet", action="store_true", help="only print errors")
     args = ap.parse_args()
 
-    # The chapters live one directory down, one directory per part; `_index.md`
-    # is a part's section page, not a chapter, so it is not linted as one.
-    paths = sorted(args.paths) if args.paths else sorted(DOCS.glob("*/[0-9]*.md"))
-    if not paths:
+    if args.lang == "all":
+        langs = [d.name for d in sorted(CONTENT.iterdir())
+                 if d.is_dir() and (d / "docs").is_dir()]
+    else:
+        langs = [args.lang]
+
+    # Explicit paths are linted against the language tree they sit in.
+    if args.paths:
+        trees = defaultdict(list)
+        for p in sorted(args.paths):
+            try:
+                lang = p.resolve().relative_to(CONTENT).parts[0]
+            except (ValueError, IndexError):
+                lang = "en"
+            trees[lang].append(p)
+    else:
+        trees = {lang: sorted((CONTENT / lang / "docs").glob("*/[0-9]*.md"))
+                 for lang in langs}
+
+    if not any(trees.values()):
         print("no files to lint", file=sys.stderr)
         return 1
 
@@ -320,26 +352,45 @@ def main() -> int:
     subcommands = git_subcommands()
     if not subcommands and not args.quiet:
         print("note: could not list Git subcommands; skipping that check")
-    # Resolved paths, so a relative link from any part directory can be checked
-    # against them. Part section pages are valid link targets too.
-    chapter_files = {p.resolve() for p in DOCS.glob("*/*.md")}
 
     slugs: dict[str, list[str]] = defaultdict(list)
     weights: dict[str, list[str]] = defaultdict(list)
+    paths: list[Path] = []
 
-    for path in paths:
-        fields = lint_file(path, rep, subcommands, chapter_files)
-        if "url" in fields:
-            slugs[fields["url"]].append(path.name)
-        if "weight" in fields:
-            weights[fields["weight"]].append(path.name)
+    for lang, lang_paths in sorted(trees.items()):
+        if not lang_paths:
+            continue
+        DOCS = CONTENT / lang / "docs"
+        # Resolved paths, so a relative link from any part directory can be
+        # checked against them. Part section pages are valid link targets too.
+        chapter_files = {p.resolve() for p in DOCS.glob("*/*.md")}
+        paths.extend(lang_paths)
 
-    for slug, files in sorted(slugs.items()):
+        # Slugs and weights only have to be unique within a language.
+        lang_slugs: dict[str, list[str]] = defaultdict(list)
+        lang_weights: dict[str, list[str]] = defaultdict(list)
+        for path in lang_paths:
+            fields = lint_file(path, rep, subcommands, chapter_files, lang)
+            if "slug" in fields:
+                lang_slugs[fields["slug"]].append(f"{lang}/{path.name}")
+            if "weight" in fields:
+                lang_weights[fields["weight"]].append(f"{lang}/{path.name}")
+        for k, v in lang_slugs.items():
+            slugs[f"{lang}:{k}"] = v
+        for k, v in lang_weights.items():
+            weights[f"{lang}:{k}"] = v
+
+    # Keys are "<lang>:<value>", so a clash is always within one language.
+    for key, files in sorted(slugs.items()):
         if len(files) > 1:
-            rep.errors.append(f"duplicate url {slug!r} in {', '.join(files)}")
-    for weight, files in sorted(weights.items(), key=lambda kv: int(kv[0])):
+            rep.errors.append(f"duplicate slug {key.partition(':')[2]!r} "
+                              f"in {', '.join(files)}")
+    for key, files in sorted(weights.items(),
+                             key=lambda kv: (kv[0].split(":", 1)[0],
+                                             int(kv[0].split(":", 1)[1]))):
         if len(files) > 1:
-            rep.errors.append(f"duplicate weight {weight} in {', '.join(files)}")
+            rep.errors.append(f"duplicate weight {key.partition(':')[2]} "
+                              f"in {', '.join(files)}")
 
     if args.links:
         check_links(paths, rep)

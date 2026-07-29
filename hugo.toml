@@ -1,8 +1,25 @@
 baseURL = '/'
-languageCode = 'en-us'
 defaultContentLanguage = 'en'
-title = 'Git Getting Started!'
 theme = 'hugo-book'
+
+# English is served from the root and French from /fr/. The course was written
+# in French first, but the 2026 revision was done in English, so English is the
+# source of truth and the French is translated from it.
+defaultContentLanguageInSubdir = false
+
+[languages]
+  [languages.en]
+    contentDir = 'content/en'
+    languageName = 'English'
+    languageCode = 'en'
+    title = 'Git Getting Started!'
+    weight = 1
+  [languages.fr]
+    contentDir = 'content/fr'
+    languageName = 'Français'
+    languageCode = 'fr'
+    title = 'Git, bien démarrer !'
+    weight = 2
 
 # `:information_source:` and `:warning:` are used throughout the content as
 # callout markers. Without this they render as literal text.
@@ -10,6 +27,18 @@ enableEmoji = true
 
 # The book theme keeps the original casing of section/page paths.
 disablePathToLower = true
+
+# The part directories carry a leading number so they sort in reading order on
+# disk and in the sidebar. This keeps that number out of the published address.
+# It has to be done here rather than with a `url` in front matter: Hugo does not
+# add the language prefix to an absolute front-matter `url`, so the French pages
+# would silently overwrite the English ones at the same path. Permalink patterns
+# are language-aware, so /docs/inside-git/ and /fr/docs/inside-git/ both work.
+[permalinks]
+  [permalinks.page]
+    docs = '/docs/:slug/'
+  [permalinks.section]
+    docs = '/docs/:slug/'
 
 [markup]
   [markup.goldmark.renderer]

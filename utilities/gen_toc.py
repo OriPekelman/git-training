@@ -18,22 +18,14 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-DOCS = ROOT / "content" / "docs"
-INDEX = ROOT / "content" / "_index.md"
+CONTENT = ROOT / "content"
+
+# Reassigned by main() from --lang; the site keeps one content tree per language.
+DOCS = CONTENT / "en" / "docs"
+INDEX = CONTENT / "en" / "_index.md"
 
 BEGIN = "<!-- BEGIN GENERATED TOC (utilities/gen_toc.py) -->"
 END = "<!-- END GENERATED TOC -->"
-
-# The part titles and blurbs are also the body of each part's `_index.md`, which
-# this script does not own. Keep the two in step when editing either.
-PARTS = {
-    1: ("Understanding Git", "What Git is, and what actually happens inside `.git` when you save your work."),
-    2: ("Collaborating", "Branches, remotes, merges, conflicts, and how to recover when it goes wrong."),
-    3: ("The tooling ecosystem", "The command line, the forges, the GUIs and the editor integrations."),
-    4: ("Beyond the basics", "Worktrees, agents, notes, large files, data and models — and the ideas Git spawned."),
-    5: ("Git as the engine of automation", "GitOps, continuous integration, continuous deployment, and a bag of tricks."),
-    6: ("Appendices", "Installing Git, SSH keys and signing, and setting up a hosting account."),
-}
 
 PART_DIR_RE = re.compile(r"^(\d+)-")
 CHAPTER_RE = re.compile(r"^(\d+)-")
@@ -53,14 +45,36 @@ def front_matter(path: Path) -> dict[str, str]:
     return fields
 
 
+def part_heading(part_dir: Path) -> tuple[str, str]:
+    """A part's heading and blurb, read from its `_index.md`.
+
+    Taken from the section page rather than hardcoded here, so the landing page,
+    the sidebar and the part page cannot disagree -- and so this works for any
+    language without the part titles being translated in two places.
+    """
+    index = part_dir / "_index.md"
+    if not index.exists():
+        return part_dir.name, ""
+    title = front_matter(index).get("title", part_dir.name)
+    body = index.read_text(encoding="utf-8").split("---", 2)[-1]
+    blurb = next(
+        (ln.strip() for ln in body.splitlines()
+         if ln.strip() and not ln.startswith("#")),
+        "",
+    )
+    return title, blurb
+
+
 def build() -> str:
     chapters: dict[int, list[tuple[int, str, str]]] = {}
+    part_dirs: dict[int, str] = {}
     for path in sorted(DOCS.glob("*/[0-9]*.md")):
         part_m = PART_DIR_RE.match(path.parent.name)
         chapter_m = CHAPTER_RE.match(path.name)
         if not part_m or not chapter_m:
             continue
         part, chapter = int(part_m.group(1)), int(chapter_m.group(1))
+        part_dirs[part] = path.parent.name
         fm = front_matter(path)
         title = fm.get("title", path.stem)
         weight = int(fm.get("weight", part * 10 + chapter))
@@ -69,8 +83,8 @@ def build() -> str:
 
     out: list[str] = [BEGIN, ""]
     for part in sorted(chapters):
-        name, blurb = PARTS.get(part, (f"Part {part}", ""))
-        out.append(f"### Part {part} — {name}")
+        heading, blurb = part_heading(DOCS / part_dirs[part])
+        out.append(f"### {heading}")
         out.append("")
         if blurb:
             out.append(blurb)
@@ -83,11 +97,32 @@ def build() -> str:
 
 
 def main() -> int:
+    global DOCS, INDEX
+
     ap = argparse.ArgumentParser()
     ap.add_argument("--check", action="store_true",
                     help="exit non-zero if the landing page is out of date")
+    ap.add_argument("--lang", default="all",
+                    help="language tree to rebuild: a code like 'en', or "
+                         "'all' (the default) for every language present")
     args = ap.parse_args()
 
+    langs = ([d.name for d in sorted(CONTENT.iterdir())
+              if d.is_dir() and (d / "docs").is_dir()]
+             if args.lang == "all" else [args.lang])
+    if not langs:
+        print(f"no language trees found under {CONTENT}", file=sys.stderr)
+        return 1
+
+    status = 0
+    for lang in langs:
+        DOCS = CONTENT / lang / "docs"
+        INDEX = CONTENT / lang / "_index.md"
+        status |= run_one(args.check)
+    return status
+
+
+def run_one(check: bool) -> int:
     if not INDEX.exists():
         print(f"{INDEX} does not exist", file=sys.stderr)
         return 1
@@ -101,15 +136,16 @@ def main() -> int:
     _, _, tail = rest.partition(END)
     new = head + build() + tail
 
+    rel = INDEX.relative_to(ROOT)
     if new == text:
-        print("landing page table of contents is up to date")
+        print(f"{rel}: table of contents is up to date")
         return 0
-    if args.check:
-        print("landing page table of contents is STALE; run utilities/gen_toc.py",
+    if check:
+        print(f"{rel}: table of contents is STALE; run utilities/gen_toc.py",
               file=sys.stderr)
         return 1
     INDEX.write_text(new, encoding="utf-8")
-    print(f"rewrote the table of contents in {INDEX.relative_to(ROOT)}")
+    print(f"{rel}: rewrote the table of contents")
     return 0
 
 
