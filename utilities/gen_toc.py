@@ -3,8 +3,8 @@
 
 Chapter titles get rewritten as the course is edited, and a hand-maintained
 table of contents drifts within a week. This reads the front matter of every
-`content/docs/P<part>C<chapter>.md`, groups them by part, and rewrites the block
-between the two marker comments in `content/_index.md`.
+chapter under `content/docs/<part>-<name>/`, groups them by part, and rewrites
+the block between the two marker comments in `content/_index.md`.
 
     utilities/gen_toc.py            # rewrite the block
     utilities/gen_toc.py --check    # fail if it would change (for CI)
@@ -24,8 +24,8 @@ INDEX = ROOT / "content" / "_index.md"
 BEGIN = "<!-- BEGIN GENERATED TOC (utilities/gen_toc.py) -->"
 END = "<!-- END GENERATED TOC -->"
 
-# The part titles live here rather than in front matter, because Hugo's flat
-# `docs` section has nowhere to hang them.
+# The part titles and blurbs are also the body of each part's `_index.md`, which
+# this script does not own. Keep the two in step when editing either.
 PARTS = {
     1: ("Understanding Git", "What Git is, and what actually happens inside `.git` when you save your work."),
     2: ("Collaborating", "Branches, remotes, merges, conflicts, and how to recover when it goes wrong."),
@@ -35,7 +35,8 @@ PARTS = {
     6: ("Appendices", "Installing Git, SSH keys and signing, and setting up a hosting account."),
 }
 
-CHAPTER_RE = re.compile(r"^P(\d+)C(\d+)\.md$")
+PART_DIR_RE = re.compile(r"^(\d+)-")
+CHAPTER_RE = re.compile(r"^(\d+)-")
 
 
 def front_matter(path: Path) -> dict[str, str]:
@@ -54,15 +55,17 @@ def front_matter(path: Path) -> dict[str, str]:
 
 def build() -> str:
     chapters: dict[int, list[tuple[int, str, str]]] = {}
-    for path in sorted(DOCS.glob("P*.md")):
-        m = CHAPTER_RE.match(path.name)
-        if not m:
+    for path in sorted(DOCS.glob("*/[0-9]*.md")):
+        part_m = PART_DIR_RE.match(path.parent.name)
+        chapter_m = CHAPTER_RE.match(path.name)
+        if not part_m or not chapter_m:
             continue
-        part, chapter = int(m.group(1)), int(m.group(2))
+        part, chapter = int(part_m.group(1)), int(chapter_m.group(1))
         fm = front_matter(path)
         title = fm.get("title", path.stem)
         weight = int(fm.get("weight", part * 10 + chapter))
-        chapters.setdefault(part, []).append((weight, title, path.name))
+        rel = f"{path.parent.name}/{path.name}"
+        chapters.setdefault(part, []).append((weight, title, rel))
 
     out: list[str] = [BEGIN, ""]
     for part in sorted(chapters):

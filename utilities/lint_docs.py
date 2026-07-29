@@ -74,7 +74,14 @@ NOT_SUBCOMMANDS = {
 
 # Chapters that deliberately have no summary section: the three narrative
 # openers, and the grab-bag of tips, which is itself a summary and says so.
-NO_SUMMARY_NEEDED = {"P1C1.md", "P1C2.md", "P1C3.md", "P5C5.md"}
+# Paths are relative to content/docs, because the chapter numbers restart in
+# every part and the bare filenames are therefore not unique.
+NO_SUMMARY_NEEDED = {
+    "1-understanding-git/1-what-is-git.md",
+    "1-understanding-git/2-git-ecosystem.md",
+    "1-understanding-git/3-first-git-commands.md",
+    "5-automation/5-git-foo.md",
+}
 
 HUNK_RE = re.compile(r"^@@ -\d+([.,]\d+)? \+\d+([.,]\d+)? @@")
 BAD_HUNK_RE = re.compile(r"^@@ -\d+(\.\d+)? \+\d+(\.\d+)? @@")
@@ -135,7 +142,9 @@ def lint_file(path: Path, rep: Report, subcommands: set[str], chapter_files: set
     if not fields:
         rep.error(path, 1, "missing YAML front matter")
     else:
-        for required in ("title", "slug", "weight"):
+        # `url` rather than `slug`: the part directories carry a leading number
+        # for ordering, and pinning the URL keeps it out of the address.
+        for required in ("title", "url", "weight"):
             if required not in fields:
                 rep.error(path, 1, f"front matter is missing `{required}`")
         if "weight" in fields and not fields["weight"].isdigit():
@@ -220,8 +229,11 @@ def lint_file(path: Path, rep: Report, subcommands: set[str], chapter_files: set
                 rep.error(path, n, f"`{token}` should be `git {token[4:]}`")
 
         # ---- chapter cross-links -----------------------------------------
-        for target in re.findall(r"\]\((P\d+C\d+\.md)(?:\s+\"[^\"]*\")?\)", line):
-            if target not in chapter_files:
+        # Chapters link to each other by relative markdown path, so the links
+        # also work when the file is read on disk or on a forge; Hugo resolves
+        # them to permalinks at build time. Resolve them the same way here.
+        for target in re.findall(r"\]\(([^)\s#:]+\.md)(?:#[^)\s]*)?(?:\s+\"[^\"]*\")?\)", line):
+            if (path.parent / target).resolve() not in chapter_files:
                 rep.error(path, n, f"link to a chapter that does not exist: {target}")
 
         # ---- French false friends and known translation scars ------------
@@ -248,7 +260,11 @@ def lint_file(path: Path, rep: Report, subcommands: set[str], chapter_files: set
     # `git add` and `git commit` summary"). A few chapters are exempt: the
     # narrative openers have nothing to summarise, and the tips chapter *is* a
     # summary.
-    if (path.name not in NO_SUMMARY_NEEDED
+    try:
+        rel = path.resolve().relative_to(DOCS).as_posix()
+    except ValueError:
+        rel = path.name
+    if (rel not in NO_SUMMARY_NEEDED
             and not re.search(r"^#{2,3} .*summary", text, re.I | re.M)):
         rep.warn(path, 0, "chapter has no summary section")
 
@@ -293,7 +309,9 @@ def main() -> int:
     ap.add_argument("--quiet", action="store_true", help="only print errors")
     args = ap.parse_args()
 
-    paths = sorted(args.paths) if args.paths else sorted(DOCS.glob("P*.md"))
+    # The chapters live one directory down, one directory per part; `_index.md`
+    # is a part's section page, not a chapter, so it is not linted as one.
+    paths = sorted(args.paths) if args.paths else sorted(DOCS.glob("*/[0-9]*.md"))
     if not paths:
         print("no files to lint", file=sys.stderr)
         return 1
@@ -302,21 +320,23 @@ def main() -> int:
     subcommands = git_subcommands()
     if not subcommands and not args.quiet:
         print("note: could not list Git subcommands; skipping that check")
-    chapter_files = {p.name for p in DOCS.glob("*.md")}
+    # Resolved paths, so a relative link from any part directory can be checked
+    # against them. Part section pages are valid link targets too.
+    chapter_files = {p.resolve() for p in DOCS.glob("*/*.md")}
 
     slugs: dict[str, list[str]] = defaultdict(list)
     weights: dict[str, list[str]] = defaultdict(list)
 
     for path in paths:
         fields = lint_file(path, rep, subcommands, chapter_files)
-        if "slug" in fields:
-            slugs[fields["slug"]].append(path.name)
+        if "url" in fields:
+            slugs[fields["url"]].append(path.name)
         if "weight" in fields:
             weights[fields["weight"]].append(path.name)
 
     for slug, files in sorted(slugs.items()):
         if len(files) > 1:
-            rep.errors.append(f"duplicate slug {slug!r} in {', '.join(files)}")
+            rep.errors.append(f"duplicate url {slug!r} in {', '.join(files)}")
     for weight, files in sorted(weights.items(), key=lambda kv: int(kv[0])):
         if len(files) > 1:
             rep.errors.append(f"duplicate weight {weight} in {', '.join(files)}")

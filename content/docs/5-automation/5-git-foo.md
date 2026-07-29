@@ -1,0 +1,683 @@
+---
+title: Shining in society and amazing friends with Gitfoo
+url: "/docs/git-foo/"
+weight: 45
+---
+# Shining in society and amazing friends with Gitfoo
+
+Here is our grab-bag. What follows is forty-odd short tricks, each one a question you will
+eventually ask out loud followed by the command that answers it — originally a French "Git Daily"
+series, one tip per day, which is why it is deliberately terser than the rest of this course. No
+theory here, no peeking under the hood: dip in, steal something, come back another day.
+
+They are in no particular order, so do not read them in one sitting. Each one ends with the `git
+help` page to read if you want the whole story, which is the habit worth stealing above all the
+others. And there is no summary at the end of this chapter, because the chapter *is* a summary.
+
+The last few tips are ours: the original series predates commands that we would not want you to
+miss.
+
+## Commit only part of my changes
+
+I made several changes in a file and I want to commit only some of them:
+
+    git add -p
+
+For each modified file in your working tree, Git offers you each hunk in turn, and you answer
+whether it goes into the staging area.
+
+More information?
+
+    git help add
+
+## Know who committed to a project
+
+    git shortlog -n -s
+
+Will return the list of authors sorted by their number of commits.
+
+    git help shortlog
+
+## Delete remote branches that no longer exist
+
+    git fetch -p origin
+
+Will retrieve objects from origin and remove remote branches that no longer exist. You will have
+a correct `git branch -a`.
+
+    git help fetch
+
+## Throw everything away and go back to a commit
+
+    git reset --hard SHA1
+
+Will put you in the state of the commit given as a parameter. Anything you had modified is gone
+for good — and anything you had *committed* is still findable in the `reflog` for a few weeks, so
+you are not quite as doomed as you feel (see the reflog tip below).
+
+If you have already pushed the commits in question, this is bad practice.
+
+    git help reset
+
+## Put my system configuration under Git
+
+    git init /etc
+
+Will initialize a git repository in `/etc`. Same idea for that piece of code that will never be
+reused: `git init && git add . && git commit`.
+
+> :warning:
+> Do this to `/etc` with your eyes open. You need to be root, so the repository will be owned by
+> root — and `/etc` contains `shadow`, private keys and other things that must never leave the
+> machine. Write a `.gitignore` *before* the first `git add`, and if you ever push this
+> repository anywhere, you have just published your secrets.
+
+    git help init
+
+## Know which branches a commit is on
+
+    git branch --contains SHA1
+
+You will list the branches in question.
+
+    git help branch
+
+## Undo my last commit
+
+    git reset --soft HEAD^
+
+Your last commit is undone and its changes are back in your staging area, ready to be committed
+again — which is roughly what `git commit --amend` does for you in a single step.
+
+    git help reset
+
+## Add my own git command
+
+I want to add a cool `chuck` command that answers `norris` (ahah).
+
+    $ cat > /usr/local/bin/git-chuck <<'EOF'
+    #!/bin/sh
+    echo 'norris'
+    EOF
+    $ chmod +x /usr/local/bin/git-chuck
+    $ git chuck
+
+This creates a `git-chuck` executable that simply answers `norris`. Git runs any executable named
+`git-xxx` found in your `PATH` when you type `git xxx`. That is how these work:
+
+* git-pulls: https://github.com/schacon/git-pulls
+* git-pair: https://github.com/chrisk/git-pair
+
+and many others.
+
+## See commits that are in one branch and not in another
+
+    git log origin/master --not origin/develop
+
+You will list the commits that are in the master branch but not in develop.
+
+    git help log
+
+## Retrieve a commit that is on another branch
+
+    git cherry-pick SHA1
+
+Will retrieve the SHA1 commit and apply it to the current branch. Be careful, the parent commit is
+not the same, so the SHA will change.
+
+    git help cherry-pick
+
+## Check that I am not adding trailing whitespace
+
+I want to check that my changes do not add spaces at the end of a line, or a space before a tab.
+
+    git diff --check
+
+Displays each detected error and returns a non-zero exit code:
+
+    a.txt:2: trailing whitespace.
+    +world
+
+More information?
+
+    git help diff
+
+## Make an archive of my repository
+
+    git archive --format tar -o backup.tar HEAD
+
+Will create a `backup.tar` tarball of HEAD. Two options worth knowing:
+
+    git archive --format=tar.gz --prefix=myproject-1.0/ -o myproject-1.0.tar.gz v1.0
+
+`--format=tar.gz` compresses for you, and `--prefix` puts everything in a directory inside the
+archive, which is what people expect when they unpack a release.
+
+    git help archive
+
+## See commit messages with the diff
+
+    git log -p
+
+Will show you a classic log view but with the diff just below.
+
+    git help log
+
+## Visualize changes in a way that is readable for prose
+
+    git diff --color-words
+
+Will display the differences word by word rather than line by line.
+
+    git help diff
+
+## Search for something in my repository
+
+    git grep "plop"
+
+Will return all lines that contain "plop".
+
+    git help grep
+
+## Search for the change that added or removed something
+
+    git log -S "plop"
+
+Will return all revisions where the number of occurrences of "plop" changed. To be used with the
+`-p` option in general.
+
+    git help log
+
+## Prepare my patches to send them by email
+
+    git format-patch SHA1
+
+Will write the patches to files, to send them by email for example, or simply to share them.
+
+    git help format-patch
+
+## Stop tracking a file without deleting it
+
+    git rm --cached path/to/file
+
+Will mark the file for removal in the next commit but will not remove it from the filesystem.
+Convenient if you have done something stupid :).
+
+    git help rm
+
+## Find the commit that introduced a regression
+
+    git bisect start
+
+Will start a bug-hunting session. Bisect puts you on specific commits, and you mark each one good
+or bad until it finds the culprit.
+
+And if the test can be scripted, do not do it by hand — Git will run the whole search for you:
+
+    git bisect start HEAD HEAD~40
+    git bisect run ./test.sh
+
+Exit code 0 means good, anything else means bad, and 125 means "cannot test this one, skip it".
+Finish with `git bisect reset`.
+
+    git help bisect
+
+## Optimize a somewhat large repository
+
+    git gc
+
+Will delete lost objects and compress revisions. If your repository is a bit big, Git launches
+`gc` automatically.
+
+Modern Git can also look after itself in the background:
+
+    git maintenance start
+
+registers the repository with your system scheduler and runs the cheap upkeep tasks hourly, so you
+never think about it again.
+
+    git help gc
+    git help maintenance
+
+## See what I am about to commit
+
+    git diff --cached
+
+Returns only the differences in your staging area. Great combo with the previous tip:
+
+    git diff --cached --check
+
+Will return trailing whitespace errors for your staging area.
+
+More information?
+
+    git help diff
+
+## Have aliases for my usual commands
+
+In `~/.gitconfig`, I add:
+
+    [alias]
+      st = status
+      a = add
+      ci = commit
+      br = branch
+      co = checkout
+      cpk = cherry-pick
+      d = diff
+
+These aliases are immediately available, without having to reload anything.
+
+    git help config
+
+## Have colors everywhere
+
+In `~/.gitconfig`, I add:
+
+    [color]
+      ui = auto
+    [color "diff"]
+      meta = yellow
+      frag = cyan
+      old = red
+      new = green
+
+In diffs, deleted lines will be in red and added ones in green. (`ui = auto` has been the default
+for years now, so you only need this section if you want to change the colors themselves.)
+
+## Write my commit messages in my favorite editor
+
+In `~/.gitconfig`, I add:
+
+    [core]
+      editor = vim
+
+With commit messages, feel free to spread over more than a single line if your patch is not
+trivial, while keeping the first line under 50 characters.
+
+## Useful flags for the log command
+
+Some flags of the `log` command, to enhance your aliases:
+
+    --date=relative
+      for dates as on social networks ("n hours ago")
+    --name-only
+      to display the names of modified files
+    --no-merges
+      is quite explicit
+    --oneline
+      will only show the abbreviated SHA-1 and the commit message
+    --patch
+      or -p to display the patch of the commit
+
+## Format the logs exactly as I want
+
+    git log --pretty=format:'%Cred%h%Creset %s %Cgreen(%cr) %Cblue<%an>'
+
+With:
+
+    %C  to change the color
+    %h  for the abbreviated SHA-1
+    %s  for the commit subject
+    %cr for the relative date
+    %an for the author name
+
+More information about the pretty format:
+
+    git help log
+
+## Display only one person's commits
+
+    git log --author="John Smith"
+
+I can also make an alias to show only my own commits, in the `[alias]` section:
+
+    mylog = !git log --author=`git config --get user.email`
+
+The exclamation mark tells Git to run the rest as a shell command rather than as a `git`
+subcommand.
+
+## Have Git check for trailing whitespace before every commit
+
+I want Git to check that I did not leave trailing spaces before each commit, and to refuse the
+commit if I did:
+
+    mv .git/hooks/pre-commit.sample .git/hooks/pre-commit
+
+The sample hook that ships with Git does exactly this, and refuses the commit:
+
+    a:2: trailing whitespace.
+    +bad
+
+More information about hooks:
+
+    git help hooks
+
+## Create a repository from a subdirectory of another one
+
+For example to create a repository out of the `lib/captcha` subdirectory:
+
+    git filter-repo --subdirectory-filter lib/captcha
+
+The rewrite keeps only the files and commits that touched `lib/captcha`, and `lib/captcha` becomes
+the root of the repository.
+
+You can also remove a file from your entire history:
+
+    git filter-repo --invert-paths --path config/prod.yml
+
+Will rewrite every commit so that `config/prod.yml` was never there.
+
+> :warning:
+> The original version of this tip used `git filter-branch`, and Git itself now tells you not
+> to: "These safety and performance issues cannot be backward compatibly fixed and as such, its
+> use is not recommended. Please use an alternative history filtering tool such as git
+> filter-repo." `git filter-repo` is a separate program you install (`brew install
+> git-filter-repo`, `apt install git-filter-repo`, `pip install git-filter-repo`), and it is
+> faster and far harder to misuse. [BFG Repo-Cleaner](https://rtyley.github.io/bfg-repo-cleaner/)
+> is the other good option, especially for "delete every blob bigger than 10 megabytes".
+
+`filter-repo` insists on a fresh clone and will tell you so — *"this does not look like a fresh
+clone… Please operate on a fresh clone instead"* — which is the same advice the original tip gave
+by hand. Rewriting history is not undoable by the person you send the rewrite to.
+
+    git filter-repo -h
+    https://github.com/newren/git-filter-repo
+
+## Rewrite my history to squash, drop and rename commits
+
+    git rebase -i SHA1
+
+SHA1 being the starting commit, the one you do *not* want to modify. Everything above it can be
+rewritten. Git opens your `$EDITOR` and asks you what you want to do with each commit: keep it,
+merge it into the previous one, drop it.
+
+    pick 379ab2a Move all presence as pid.
+    pick 42bab02 Update timeout module to use the new presence api.
+    pick d1da4b4 No more indexes for uce_presence_mongodb.
+    pick 94835c2 No more indexes for uce_presence_mnesia.
+    pick 0a481e9 Optimize uce_paginate.
+    pick 09b4224 Connected user as pid.
+
+On the previous example, you can modify the buffer as follows:
+
+    pick 379ab2a Move all presence as pid.
+    squash 42bab02 Update timeout module to use the new presence api.
+    squash d1da4b4 No more indexes for uce_presence_mongodb.
+    squash 94835c2 No more indexes for uce_presence_mnesia.
+    reword 09b4224 Connected user as pid.
+
+What is going to happen:
+
+* 42bab02, d1da4b4 and 94835c2 will be merged into 379ab2a. Git will also offer to rewrite the
+  commit message.
+* You will be able to rewrite the commit message of 09b4224.
+* Commit 0a481e9 having been deleted from the buffer, it will also be deleted from the history.
+
+    git help rebase
+
+## Know all the commits since yesterday
+
+    git log --since yesterday
+
+A little bonus today:
+
+    git log HEAD^
+
+Will list the commits from the penultimate commit.
+
+    git log HEAD~4..
+
+Will list the last four commits. Equivalent to:
+
+    git log HEAD~4..HEAD
+
+More information:
+
+    git help revisions
+
+## Modify my last commit
+
+I put a bad commit message, or I forgot a file.
+
+    git commit --amend
+
+Modifies the last commit message. It can also add what is in your staging area to it:
+
+    git add myfile.erl && git commit --amend
+
+Will fold the change to `myfile.erl` into the previous commit.
+
+This command rewrites history: you should NOT do this if you have already pushed.
+
+## Resolve the same conflict once and for all
+
+You have recurring conflicts during merges and you want to fix them once and for all.
+
+The first thing to do is to enable the `rerere.enabled` variable:
+
+    git config --global rerere.enabled true
+
+Then? You let Git do it. It records conflicts and their resolutions, and replays your resolution
+automatically the next time it sees the same conflict.
+
+At the next `git pull --rebase` or `git merge`, no need to reapply the same patch.
+
+If you recorded a bad resolution, `git rerere forget <path>` throws it away.
+
+And why the name? It is the abbreviation of *Reuse Recorded Resolution*.
+
+    git help rerere
+
+    https://git-scm.com/book/en/v2/Git-Tools-Rerere
+
+## Graft one repository's history onto another
+
+    git replace SHA1 SHA2
+
+`git replace` tells Git "whenever you would read object SHA1, read SHA2 instead". Nothing is
+rewritten: the replacement lives in `refs/replace/`, and `git --no-replace-objects log` shows you
+the unvarnished truth again.
+
+The classic use is joining two histories. You keep a short, fast repository, and you graft the
+ancient history onto its root commit only for those who want it. This is what was done for the
+Erlang/OTP repository, which is over 300MB:
+https://github.com/erlang/otp/wiki/Extending-the-history-of-Erlang-OTP.
+
+You can test it in a few commands. Fetch another repository into yours, then replace a commit of
+yours with one of theirs:
+
+    $ git clone https://github.com/eventmachine/eventmachine.git
+    $ cd eventmachine
+    $ git remote add other https://github.com/nodejs/node.git
+    $ git fetch other
+    $ git replace d9a23e4779b3f555e63e4ff565ef0848a8bcabd4 61dfe5d2a9f613e3826997efa189ec8dd239aacf
+
+Yes, it is useless. But look at `git log`: everything behaves as if the two histories had always
+been one. `git replace -l` lists your replacements, and deleting the ref undoes the whole thing.
+
+    git help replace
+
+    https://git-scm.com/book/en/v2/Git-Tools-Replace
+
+## Find out what on earth I just did
+
+Did you commit on no branch at all? Did you fire a `git reset --hard` you now regret? Did you test
+a history rewrite on a repository full of extremely important patches?
+
+    git reflog
+
+The reflog records every change made to your branches and to HEAD. Your commits, merges and pulls
+are all there. A good spy, and the thing that will get you out of trouble.
+
+Here is a typical reflog output:
+
+    d2bbd0e HEAD@{1}: commit: Run the bootstrap script when running bench.
+    bd91916 HEAD@{2}: bd919164c72c38b88a85275ee5b9add7f7a8f382: updating HEAD
+    2ce209e HEAD@{3}: pull origin master: Merge made by recursive.
+    bd91916 HEAD@{4}: commit: Generate tsung scenario from a yml file.
+    4cdc612 HEAD@{5}: checkout: moving from complex_metadata to develop
+    44fb6fc HEAD@{6}: commit: Initial support of complex metadata in events.
+    4cdc612 HEAD@{7}: checkout: moving from 4cdc61204e4ea5c6814c65c88e2ef19031c2cf6d to complex_metadata
+
+For example, to recover a commit that is on no branch:
+
+    git reflog          # find the right commit, e.g. d2bbd0e
+    git checkout master
+    git cherry-pick d2bbd0e
+
+Or to get your repository back after a history rewrite:
+
+    git reflog
+     129b276 HEAD@{0}: filter-repo: rewrite
+     bbd8de8 HEAD@{1}: rebase -i (pick): Optimize uce_paginate.
+    git reset --hard bbd8de8
+
+A few subcommands are available, like `expire` and `delete`.
+
+    git help reflog
+
+## Know the commits I have not pushed yet
+
+    git log origin/master..HEAD
+
+Will list only the commits that have not been pushed to origin/master.
+
+    git help log
+
+## Retrieve the contents of a file at a specific revision
+
+    git show SHA1:path/to/file
+
+Will return the contents of `path/to/file` in revision SHA1. Handy when you delete a file by
+mistake :).
+
+    git help show
+
+## Set aside the changes in my working directory
+
+    git stash push -m "What I did"
+
+All your changes are shelved under the name "What I did". (The old form was `git stash save "What
+I did"`; `save` is deprecated in favour of `push`, which also accepts a list of paths so you can
+stash only part of your work.)
+
+    git help stash
+
+## Re-apply the changes I set aside
+
+    git stash apply
+
+Will re-apply the last shelved change in your working copy.
+
+    git stash pop
+
+Does the same as `apply` but removes the change from your pile.
+
+    git help stash
+
+## Switch branches and restore files without checkout
+
+`git checkout` does two unrelated jobs, which is why it confuses everyone. Since Git 2.23 there is
+one command for each:
+
+    git switch my-branch          # instead of git checkout my-branch
+    git switch -c my-branch       # instead of git checkout -b my-branch
+    git switch -                  # back to the previous branch, like cd -
+    git restore path/to/file      # discard my changes to this file
+    git restore --staged file     # unstage it, keep the change
+
+`checkout` is not going anywhere, and it is still what most of the world types. But when you are
+about to type `git checkout -- something`, the version with the clear name is right there.
+
+    git help switch
+    git help restore
+
+## Force-push without clobbering a colleague
+
+    git push --force-with-lease
+
+Same idea as `--force`, except that Git first checks that the remote branch is still where you
+last saw it. If somebody pushed while you were rebasing, the push is refused instead of quietly
+deleting their work. Make it a habit: `--force` is for when you have thought about it,
+`--force-with-lease` is for every other time.
+
+    git help push
+
+## Work on two branches at the same time
+
+    git worktree add ../hotfix main
+
+Gives you a second working directory, checked out on another branch, sharing the same repository —
+no second clone, no stash, no interrupting what you were doing. Delete it with
+`git worktree remove ../hotfix`. See
+[One repository, many working trees](../4-beyond-the-basics/1-git-worktree.md "One repository, many working trees").
+
+    git help worktree
+
+## Compare two versions of the same branch
+
+    git range-diff main..my-feature@{1} main..my-feature
+
+Shows how a series of commits changed between two rebases: which commits were added, dropped,
+reordered, and how each patch itself differs.
+
+    1:  34cb151 = 1:  34cb151 add a
+    2:  66f725a ! 2:  ecb6096 add b
+
+`=` means that commit is unchanged, `!` that the patch itself differs, and `<` or `>` that a commit
+was dropped or added. It is the tool for "what did you change since my last review?", and there is
+nothing else like it. (`my-feature@{1}` is where the branch pointed before your last rewrite —
+the reflog again.)
+
+    git help range-diff
+
+## Fix a commit in the middle of a series
+
+    git commit --fixup SHA1
+    git rebase -i --autosquash SHA1~
+
+The first command makes a commit whose subject is `fixup! <the other commit's subject>`. The second
+one notices those markers, moves each fixup next to the commit it belongs to, and squashes them,
+without you rearranging anything by hand. `--fixup :/some words` even finds the target commit by
+searching its message.
+
+    git help commit
+
+## See the whole graph at once
+
+    git log --oneline --graph --all --decorate
+
+Every branch, every tag, as an ASCII graph, one line per commit. Worth an alias — this is the
+single most useful `git log` invocation there is, and it is how you find the branch you forgot
+about.
+
+    git help log
+
+## Know where I am
+
+    git rev-parse --show-toplevel     # the root of the working tree
+    git rev-parse --abbrev-ref HEAD   # the name of the current branch
+    git rev-parse --short HEAD        # the current commit, abbreviated
+
+`git rev-parse` is the plumbing command that turns a name into an answer, and these three forms
+end up in every shell prompt and every deployment script ever written.
+
+    git help rev-parse
+
+## Hide a bulk reformat from git blame
+
+You ran a formatter over the whole project, and now `git blame` says everything was written by you
+last Tuesday. Put the offending commits in a file, one SHA per line:
+
+    git log --format=%H -1 > .git-blame-ignore-revs
+    git blame --ignore-revs-file=.git-blame-ignore-revs somefile.py
+
+Better, commit that file and tell Git to always use it:
+
+    git config blame.ignoreRevsFile .git-blame-ignore-revs
+
+Blame now skips straight past the reformat to whoever actually wrote the line. GitHub's blame view
+honours the same file, and the name `.git-blame-ignore-revs` is a convention worth respecting.
+
+    git help blame

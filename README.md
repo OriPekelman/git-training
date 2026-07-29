@@ -5,13 +5,22 @@ and the vendored [hugo-book](https://github.com/alex-shpak/hugo-book) theme.
 
 ```
 content/_index.md      landing page; its table of contents is generated
-content/docs/P<part>C<chapter>.md
+content/docs/<n>-<part>/_index.md
+                       part section page, and the sidebar group header
+content/docs/<n>-<part>/<n>-<chapter>.md
                        the chapters, ordered by the `weight` in their front matter
 fr/                    the older French version, not yet updated from the English
 utilities/             the tooling described below
 STYLE.md               the binding style guide -- read it before writing a chapter
 themes/hugo-book/      vendored theme (patched for Hugo 0.128+ deprecations)
 ```
+
+The leading numbers order the parts and chapters on disk and in the sidebar; they
+are kept out of the published address by an explicit `url` in each file's front
+matter, so every chapter is served from a flat `/docs/<slug>/`. Chapters link to
+each other by relative markdown path (`../6-appendices/1-git-install.md`), which
+works both when the file is read on a forge and, via the theme's portable links,
+in the built site. `make build` fails if one of them does not resolve.
 
 ## Working on it
 

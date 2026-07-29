@@ -1,0 +1,820 @@
+---
+title: Making the command line yours
+url: "/docs/git-tools/"
+weight: 21
+---
+# Making the command line yours
+
+Everything up to here was about Git itself: objects, the **index**, refs, branches, merges, rebases, remotes. You now know what Git *is*. This part of the course is about the other half of the job — making Git pleasant to live with eight hours a day.
+
+We are unapologetically command-line people here, and this chapter is the reason we can afford to be. A stock Git out of the box is a perfectly good tool that happens to be configured for 2007. Twenty lines of configuration, six aliases and two or three extra programs turn it into something you actually enjoy using.
+
+Read this one with your `~/.gitconfig` open. Almost everything here is a line you paste once and benefit from for years.
+
+## Config is the real power tool `git config`
+
+We have been setting configuration since [Installing and configuring Git](../6-appendices/1-git-install.md "Installing and configuring Git") without ever asking where those settings live. Let's ask.
+
+### Where did that setting come from? `--show-origin`
+
+```console
+git config --list --show-origin --show-scope
+```
+
+```console
+system	file:/etc/gitconfig	core.autocrlf=input
+global	file:/home/you/.gitconfig	user.name=Ori Pekelman
+global	file:/home/you/.gitconfig	user.email=ori@pekelman.com
+global	file:/home/you/.gitconfig	init.defaultbranch=main
+global	file:/home/you/.gitconfig	pull.ff=only
+local	file:.git/config	user.email=ori@work.example.com
+```
+
+Three things to notice. First, every value carries the file it came from — this is the single most useful debugging command in Git, and the answer to "why on earth is Git doing that". Second, `init.defaultBranch` comes back as `init.defaultbranch`: section and key names are case-insensitive and Git normalises them, so don't panic when the case you typed is not the case you get back. Third, `user.email` appears twice.
+
+When a key appears more than once, the last one wins, and the scopes are read in order: **system**, then **global**, then **local**, then **worktree**. So:
+
+```console
+git config --show-origin --show-scope --get-all user.email
+```
+
+```console
+global	file:/home/you/.gitconfig	ori@pekelman.com
+local	file:.git/config	ori@work.example.com
+```
+
+and `git config --get user.email` answers `ori@work.example.com`. That is the mechanism behind the classic "I committed to the work repo with my personal address" cure: set the personal identity globally, override it locally in the repositories where it is wrong.
+
+The four scopes, concretely:
+
+* **system** — `/etc/gitconfig`, one file for the whole machine. `git config --system`. You will rarely touch it.
+* **global** — `~/.gitconfig` (or `~/.config/git/config`). `git config --global`. This is *your* file, the one this chapter is about.
+* **local** — `.git/config`, per repository. Plain `git config` writes here. Not versioned, not cloned — it holds your remotes and your upstreams.
+* **worktree** — `.git/worktrees/<name>/config.worktree`, per linked **worktree**, and only if `extensions.worktreeConfig` is on. See [One repository, many working trees](../4-beyond-the-basics/1-git-worktree.md "One repository, many working trees").
+
+`git config --global --edit` opens your global file in your editor, which is honestly the nicest way to work on it.
+
+### A config worth pasting
+
+Here is the block I would put in `~/.gitconfig` on a new machine. Paste it, then read the justifications below — a dotfile you don't understand is a liability.
+
+```ini
+[init]
+	defaultBranch = main
+[pull]
+	ff = only
+[push]
+	default = simple
+	autoSetupRemote = true
+[rebase]
+	autosquash = true
+	autostash = true
+	updateRefs = true
+[merge]
+	conflictStyle = zdiff3
+[rerere]
+	enabled = true
+[diff]
+	algorithm = histogram
+	colorMoved = zebra
+	mnemonicPrefix = true
+[fetch]
+	prune = true
+	writeCommitGraph = true
+[log]
+	date = iso
+[branch]
+	sort = -committerdate
+[tag]
+	sort = version:refname
+[column]
+	ui = auto
+[core]
+	excludesFile = ~/.gitignore
+	editor = nano
+	pager = less -FRX
+[help]
+	autocorrect = prompt
+[transfer]
+	fsckObjects = true
+```
+
+`init.defaultBranch = main` stops `git init` from printing its hint about `master` and lines your local repositories up with what GitHub, GitLab and friends do. Nothing technical turns on it; it is just less friction.
+
+`pull.ff = only` is the one I would fight for. A default `git pull` will happily invent a merge commit when your branch and the remote have both moved, and that is how "Merge branch 'main' of github.com:..." ends up in a hundred histories. With `ff = only`, Git refuses and tells you to decide: `git pull --rebase` or an explicit `git merge`. If you are firmly in the rebase camp, `pull.rebase = true` says so instead — either is defensible, the default is not.
+
+`push.default = simple` pushes the current branch to its upstream of the same name and nothing else. `push.autoSetupRemote = true` ends the ritual where your first push on a new branch fails and hands you a `git push --set-upstream origin my-branch` to copy-paste. With it on, `git push` just creates the remote branch. That refspec machinery is explained in [Retrieve and send code](../2-collaborating/3-git-clone-pull-remote.md "Retrieve and send code"); this setting means you stop having to think about it.
+
+`rebase.autosquash = true` makes `git rebase -i` automatically fold commits whose messages start with `fixup!` or `squash!` into their targets, which is what makes `git commit --fixup=<sha>` worth using. `rebase.autostash = true` stashes and unstashes your dirty **worktree** around a rebase instead of refusing to start. `rebase.updateRefs = true` is the newest and the most quietly brilliant: if you have a stack of branches (`feature-a`, then `feature-b` on top of it, then `feature-c`), rebasing the tip used to leave the intermediate branch pointers stranded on the old commits. With this on, Git moves them all. Stacked branches stop being a chore.
+
+`merge.conflictStyle = zdiff3` changes what a conflict looks like in the file. We will look at it properly in a moment.
+
+`rerere.enabled = true` is "reuse recorded resolution". Git remembers how you resolved a given conflict, and if it sees the same conflict again it replays your resolution. If you have ever rebased a long branch and hit the same conflict five times, you know why this matters.
+
+`diff.algorithm = histogram` produces noticeably more human diffs than the default in code that has repeated lines — the classic case being a block of `}` and `else` lines where the default aligns the wrong ones. `diff.colorMoved = zebra` colours moved lines differently from added and removed ones, so a refactor that shuffles functions around reads as "this moved" instead of a wall of red and green. `diff.mnemonicPrefix = true` replaces the `a/` and `b/` in diff headers with letters that mean something: `i/` for the **index**, `w/` for the **worktree**, `c/` for a commit.
+
+`fetch.prune = true` deletes remote-tracking branches whose remote branch is gone, so `git branch -r` reflects reality instead of accumulating six months of merged feature branches. `fetch.writeCommitGraph = true` maintains a commit-graph file on fetch, which makes graph-walking commands (`git log --graph`, merge-base computation) dramatically faster on big repositories.
+
+`log.date = iso` prints dates as `2026-07-30 00:14:55 +0200` instead of Git's default `Thu Jul 30 00:14:55 2026 +0200`. Sortable, unambiguous, shorter.
+
+`branch.sort = -committerdate` lists your branches most-recently-touched first, which is very nearly always the order you want. `tag.sort = version:refname` sorts tags the way a human reads version numbers — real output from a repository with three tags:
+
+```console
+git tag
+```
+
+```console
+v1.9
+v1.10
+v2.0
+```
+
+Without it you get `v1.10` before `v1.9`, because `1` sorts before `9`. `column.ui = auto` lets `git branch` and `git tag` use the width of your terminal instead of one item per line.
+
+`core.excludesFile` is your personal ignore list, for things that are your business and not the project's — editor droppings, `.DS_Store`, your scratch files. See [A little structure please](../2-collaborating/4-git-repo-structure.md "A little structure please"). `core.editor` is what opens for commit messages and interactive rebase. `core.pager = less -FRX` makes the pager quit by itself when the output fits on one screen (`-F`), keep colour (`-R`), and not wipe the screen on exit (`-X`).
+
+`help.autocorrect = prompt` catches typos and asks:
+
+```console
+WARNING: You called a Git command named 'brnach', which does not exist.
+Run 'branch' instead [y/N]?
+```
+
+Set it to a number instead and that number is tenths of a second before Git runs the correction *without* asking. I strongly prefer `prompt`. Machines that guess and then act are how you learn new swear words.
+
+`transfer.fsckObjects = true` makes Git verify objects it receives over the network rather than trusting them. It costs a little time on clone and closes a real class of malicious-repository attacks.
+
+### The conflict style, seen properly
+
+`merge.conflictStyle = zdiff3` is worth its own demonstration. Two branches change the same line; the common ancestor said something else again.
+
+```console
+git merge theirs
+```
+
+```console
+Auto-merging meta.yaml
+CONFLICT (content): Merge conflict in meta.yaml
+Automatic merge failed; fix conflicts and then commit the result.
+```
+
+The file now reads:
+
+```console
+title: Report
+<<<<<<< HEAD
+author: Grace
+||||||| 02b8d1b
+author: nobody
+=======
+author: Ada
+>>>>>>> theirs
+year: 2024
+```
+
+That middle section between `|||||||` and `=======` is the **merge base** — what the line said before either side touched it — and the default `merge` style does not show it to you. It is the difference between "two people disagree" and "one person changed it and the other deleted it", which are resolved very differently. The conflict-resolution workflow is in [Implement an efficient collaborative workflow](../2-collaborating/5-git-workflow.md "Implement an efficient collaborative workflow"); this setting makes it easier.
+
+### Making a big repository fast again
+
+If `git status` takes three seconds, Git is walking your entire **worktree** and stat-ing every file. Two settings fix that:
+
+```ini
+[core]
+	fsmonitor = true
+	untrackedCache = true
+```
+
+`core.fsmonitor = true` starts Git's own built-in file-system monitor daemon, which watches the **worktree** and tells Git what changed, so `git status` stops looking. `core.untrackedCache = true` caches the answer to "which files here are untracked", the other expensive half of the same question. On a large repository this is the difference between an unusable `git status` and an instant one. There is also `feature.manyFiles`, an umbrella setting that turns on a bundle of these.
+
+And for housekeeping, the modern answer is not a cron job running `git gc`:
+
+```console
+git maintenance start
+```
+
+That registers the repository with your system scheduler (launchd, systemd timers, cron, Task Scheduler) and runs the right tasks on the right cadence — commit-graph, loose objects, incremental repack, prefetch. `git maintenance run --task=commit-graph` runs one task by hand. `git maintenance unregister` undoes it.
+
+### Surviving a mass reformat
+
+Someone runs the formatter across the whole codebase and now `git blame` says every line was last touched by them, in that commit. The fix:
+
+```ini
+[blame]
+	ignoreRevsFile = .git-blame-ignore-revs
+```
+
+Put the SHAs of the mass-change commits in a `.git-blame-ignore-revs` file at the root of the repository, one per line, comments with `#`, and commit it. `git blame` skips them and shows the real author of each line again.
+
+> :warning:
+> Set this one **locally**, per repository, not globally. If the file does not exist, `git blame` does not shrug — it dies with `fatal: could not open object name list: .git-blame-ignore-revs`. A global `blame.ignoreRevsFile` breaks blame in every repository that hasn't got one. The alternative is `git blame --ignore-revs-file=...` on the command line when you need it.
+
+## Aliases
+
+Aliases are just config. They are the cheapest quality-of-life win in Git.
+
+```console
+git config --global alias.st status
+git config --global alias.co checkout
+git config --global alias.sw switch
+git config --global alias.br branch
+git config --global alias.lg "log --oneline --graph --decorate --all"
+git config --global alias.amend "commit --amend --no-edit"
+git config --global alias.undo "reset --soft HEAD^"
+git config --global alias.last "log -1 --stat"
+```
+
+`git lg` is the one you will use hourly — the whole graph, one line per commit, with branch and tag names on it:
+
+```console
+* 112dc50 (HEAD -> main) Set the author to Grace
+| * d723515 (theirs) Set the author to Ada
+|/
+* 02b8d1b Add metadata
+```
+
+`git amend` re-uses the current message and quietly folds your staged changes into the last commit. `git undo` un-commits the last commit while leaving all its changes staged — the "oops, wrong message, wrong files, wrong everything" button. Both rewrite history, so both are for commits you have not pushed; see [Keep a clean history, recover from mistakes](../2-collaborating/6-git-cleanup.md "Keep a clean history, recover from mistakes").
+
+An alias whose value starts with `!` is handed to the shell instead of to Git, which means it can chain commands and use arguments:
+
+```ini
+[alias]
+	wip = "!git add -A && git commit -m 'wip: savepoint' --no-verify"
+	unstage = "reset HEAD --"
+	pushf = "push --force-with-lease"
+```
+
+`git wip` is a savepoint: stage everything, commit with a throwaway message, skip the hooks. It is not a commit you keep — it is what you type before lunch, and squash away later.
+
+> :information_source:
+> Shell aliases run from the **root of the repository**, not from the directory you typed them in. If you need the directory you were standing in, Git puts it in `$GIT_PREFIX`.
+
+There is a second, more powerful mechanism. **Any executable named `git-<something>` on your `PATH` becomes a Git subcommand.** Drop a script called `git-hello` somewhere on your `PATH`, `chmod +x` it, and `git hello world` runs it — on my machine it answers `hello from a custom subcommand, args: world`. That is all a custom subcommand is. This course ships one: `utilities/git-object-read`, which prints a loose object with its header intact, works exactly that way. There is a longer example, `git-chuck`, in [Shining in society and amazing friends with Gitfoo](../5-automation/5-git-foo.md "Shining in society and amazing friends with Gitfoo").
+
+## Shell integration: completion and prompt
+
+Completion first, because it is free. Git ships `contrib/completion/git-completion.bash` and `git-completion.zsh`; your package manager has almost certainly installed them already (`brew install git` and most Linux `git` packages wire them up). With completion on, tab-completing branch names, remote names, config keys and `--options` is a different experience.
+
+For zsh, oh-my-zsh's `git` plugin brings completion plus a large pile of aliases. For fish, completion is built in.
+
+Then the prompt. Git ships `contrib/completion/git-prompt.sh`, which defines a shell function `__git_ps1`:
+
+```console
+source /usr/share/git-core/contrib/completion/git-prompt.sh
+GIT_PS1_SHOWDIRTYSTATE=1
+GIT_PS1_SHOWUNTRACKEDFILES=1
+GIT_PS1_SHOWUPSTREAM=auto
+PS1='\w$(__git_ps1 " (%s)") \$ '
+```
+
+That gives you the branch name in your prompt, with a `*` for unstaged changes, a `+` for staged ones, a `%` for untracked files, and `<`/`>`/`<>` for behind/ahead/diverged from upstream. Once you have it you will never again type `git status` just to find out what branch you are on.
+
+The fancier options are [starship](https://starship.rs/) (a single binary, configured in TOML, works in every shell) and [powerlevel10k](https://github.com/romkatv/powerlevel10k) (zsh only, famously fast). Both do the same job with better typography.
+
+> :warning:
+> A prompt that computes Git status runs Git on **every single prompt draw** — that is once per command, and with some setups once per keystroke. In a repository with 100,000 files, `GIT_PS1_SHOWDIRTYSTATE=1` will make your shell feel broken. The cheap fix is to turn the dirty-state parts off (`GIT_PS1_SHOWDIRTYSTATE=` and `GIT_PS1_SHOWUNTRACKEDFILES=`, or starship's `git_status.disabled = true`), or to set `git config --local bash.showDirtyState false` in the offending repository. But the *real* fix is the one from the section above: `core.fsmonitor = true` and `core.untrackedCache = true` make the underlying question fast, so the prompt can keep answering it.
+
+## `git log` and `git diff` as investigation tools
+
+Most people learn `git log` and stop. It is actually a query language over your history, and knowing it is the difference between "I have no idea when this broke" and a two-minute answer.
+
+### Shape
+
+```console
+git log --oneline --graph --decorate --all
+```
+
+That is `git lg` from above, and it is the picture of the repository. `--all` matters: without it you only see history reachable from **HEAD**, which hides exactly the branch you were looking for.
+
+```console
+git log --oneline --first-parent
+```
+
+On a branch full of merge commits, `--first-parent` follows only the first parent of each merge, which on a `main` that receives merged pull requests gives you one line per merged feature instead of every commit anyone ever wrote. It is the closest thing Git has to a release changelog.
+
+### `A..B` versus `A...B` — the thing everybody gets wrong
+
+Two dots and three dots are different, and the difference bites. Let's build the situation: `main` and `feature` diverged after a common commit.
+
+```console
+git log --oneline --graph --decorate --all
+```
+
+```console
+* 655127f (feature) Feature: second step
+* 8cbd8b2 Feature: first step
+| * b19fd04 (HEAD -> main) Main: a hotfix
+|/
+* 3854e08 Initial commit
+```
+
+`main..feature` means "commits reachable from `feature` but not from `main`" — what the feature branch has that `main` hasn't:
+
+```console
+git log --oneline main..feature
+```
+
+```console
+655127f Feature: second step
+8cbd8b2 Feature: first step
+```
+
+Reverse it and you get the other side, which is a completely different answer:
+
+```console
+git log --oneline feature..main
+```
+
+```console
+b19fd04 Main: a hotfix
+```
+
+Three dots is the **symmetric difference**: everything on either side that is not on both.
+
+```console
+git log --oneline main...feature
+```
+
+```console
+b19fd04 Main: a hotfix
+655127f Feature: second step
+8cbd8b2 Feature: first step
+```
+
+`--left-right` tells you which side each commit is on — `<` for the left, `>` for the right:
+
+```console
+git log --oneline --left-right main...feature
+```
+
+```console
+< b19fd04 Main: a hotfix
+> 655127f Feature: second step
+> 8cbd8b2 Feature: first step
+```
+
+> :warning:
+> `git diff` uses the same two spellings for *almost the opposite* meanings, and this is the actual trap. For `diff`, `main..feature` is the plain difference between the two commits — it will show you `main`'s hotfix as a *deletion*, because that file is not on `feature`. `main...feature` diffs from the **merge base**, which is what "what does my branch change?" means and what every code review shows you. Compare:
+>
+> ```console
+> git diff --stat main..feature
+> ```
+>
+> ```console
+>  file.txt  | 2 ++
+>  other.txt | 1 -
+>  2 files changed, 2 insertions(+), 1 deletion(-)
+> ```
+>
+> ```console
+> git diff --stat main...feature
+> ```
+>
+> ```console
+>  file.txt | 2 ++
+>  1 file changed, 2 insertions(+)
+> ```
+>
+> The `other.txt` deletion in the first one is a lie about your branch. Use three dots for reviewing a branch.
+
+### Filters
+
+`--since=2.weeks`, `--until=yesterday`, `--author=ada`, `--grep=timeout` (searches commit *messages*), `--no-merges`, `-- path/to/file` to restrict to a path. They compose. `git log --no-merges --since=1.month --author=ada -- src/` is a perfectly ordinary thing to type.
+
+`git shortlog -sn` counts commits per author, which is how you find out who to ask about a subsystem:
+
+```console
+git shortlog -sn --all
+```
+
+```console
+     4	Ori Pekelman
+```
+
+### The pickaxe: searching *content* through time
+
+This is the feature that makes Git a time machine rather than an archive. `-S<string>` finds the commits where the *number of occurrences* of a string changed — that is, where it was introduced or removed.
+
+```console
+git log --oneline -S 'TIMEOUT = 30'
+```
+
+```console
+fbd72a6 Raise the timeout because CI is slow
+e04de64 Add the greeter
+```
+
+Two commits: the one that added that line, and the one that took it away. Not the commits that merely touched the file — the commits that changed *that text*. `-G<regex>` is the looser cousin: any commit whose diff matches the regex, including a line that moved.
+
+`-L` follows a range of lines through history:
+
+```console
+git log --oneline -L 4,4:greeter.py
+```
+
+```console
+fbd72a6 Raise the timeout because CI is slow
+
+diff --git a/app.py b/app.py
+--- a/app.py
++++ b/app.py
+@@ -4,1 +4,1 @@
+-TIMEOUT = 30
++TIMEOUT = 90
+e04de64 Add the greeter
+
+diff --git a/app.py b/app.py
+--- /dev/null
++++ b/app.py
+@@ -0,0 +4,1 @@
++TIMEOUT = 30
+```
+
+You can also write `-L :funcname:file` to follow a whole function.
+
+> :warning:
+> `-L` takes a *different* shape in `git log` and in `git blame`, and each rejects the other's spelling outright. `git log` wants one colon-joined argument — `git log -L :greet:app.py` — and `git log -L :greet app.py` dies with `fatal: -L<range>:<file> cannot be used with pathspec`. `git blame` wants them separate — `git blame -L :greet app.py` — and the colon form just prints the usage message. There is no good reason for this; it is one of the accidents we mentioned in [Git and its ecosystem](../1-understanding-git/2-git-ecosystem.md "Git and its ecosystem"). Remember that the two disagree and you will save yourself a puzzled minute.
+
+And `--follow` keeps a file's history across renames — note that the file was called `app.py` in the diffs above:
+
+```console
+git log --oneline --follow greeter.py
+```
+
+```console
+32101ee Rename app.py to greeter.py
+fbd72a6 Raise the timeout because CI is slow
+1cc7f30 Use an f-string
+e04de64 Add the greeter
+```
+
+### Reading diffs better
+
+`git diff --stat` for the shape of a change. `--word-diff` when a line was edited rather than rewritten:
+
+```console
+git diff --word-diff HEAD~3 HEAD~2 -- app.py
+```
+
+```console
+@@ -1,4 +1,4 @@
+def greet(name):
+    return [-"Hello " + name-]{+f"Hello {name}"+}
+
+TIMEOUT = 30
+```
+
+`--color-moved` (or the `diff.colorMoved` config from earlier) distinguishes lines that moved from lines that changed. On a review of "I extracted this into a helper", it is the difference between reading 400 lines and reading 4.
+
+### `git range-diff`: the diff of two diffs
+
+You rebased a branch, or amended a commit in the middle of it, and now you want to know *what actually changed about the change*. `git diff` cannot answer that — the two versions of the branch have different parents. `git range-diff` can:
+
+```console
+git range-diff main feature feature-v2
+```
+
+```console
+1:  8cbd8b2 = 1:  8cbd8b2 Feature: first step
+2:  655127f ! 2:  70ef0e7 Feature: second step
+    @@ Metadata
+     Author: Ori Pekelman <ori@pekelman.com>
+
+      ## Commit message ##
+     -    Feature: second step
+     +    Feature: second step, with a better message
+
+      ## file.txt ##
+     @@
+-:  ------- > 3:  a97c54b Feature: polish
+```
+
+Read the markers: `=` means that commit came through the rewrite untouched, `!` means it changed and here is how, `-:`/`>` means this one is new. If you review a colleague's force-pushed branch and want to check they only addressed your comments, this is the command. It is also how you audit your own interactive rebase.
+
+### `git bisect run`: the sharpest tool in the box
+
+You know it worked twelve commits ago and it is broken now. Do not read twelve diffs. Write a script that exits `0` when things are fine and non-zero when they are broken, and let Git binary-search:
+
+```console
+git bisect start HEAD HEAD~11
+git bisect run ./test.sh
+```
+
+```console
+Bisecting: 5 revisions left to test after this (roughly 3 steps)
+[62f0c3867f74bc72f055938b7a3ad54507c8477f] Commit 6: harmless note
+running './test.sh'
+Bisecting: 2 revisions left to test after this (roughly 2 steps)
+[b83108de0b02c7233d6b51e7896f185f24d65e08] Commit 9: harmless note
+running './test.sh'
+Bisecting: 0 revisions left to test after this (roughly 1 step)
+[67baa58510d9badf79e28e4fbb2be9a1354aa6e6] Commit 8: harmless note
+running './test.sh'
+Bisecting: 0 revisions left to test after this (roughly 0 steps)
+[5d20f59bd6ea1ff63b19d75a9cef312b00e9ab21] Commit 7: an innocent refactor
+running './test.sh'
+5d20f59bd6ea1ff63b19d75a9cef312b00e9ab21 is the first bad commit
+commit 5d20f59bd6ea1ff63b19d75a9cef312b00e9ab21
+Author: Ori Pekelman <ori@pekelman.com>
+Date:   Thu Jul 30 00:03:37 2026 +0200
+
+    Commit 7: an innocent refactor
+
+ answer.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+bisect found first bad commit
+```
+
+Four automated steps to find the culprit among twelve commits, and it printed the diff. `git bisect reset` puts you back where you were. The script can be your test suite, one test from it, a `grep`, a `curl` — anything with an exit code. Exit code `125` means "cannot test this commit, skip it".
+
+This is the single best argument for small, self-contained, always-building commits: they are what makes `git bisect run` work.
+
+## Interactive staging: `git add -p`
+
+The other habit worth building. You made three unrelated changes in one file and you want three commits. `git add -p` walks you through the diff hunk by hunk:
+
+```console
+git add -p
+```
+
+```console
+diff --git a/words.txt b/words.txt
+index e0396ff..ac57c0a 100644
+--- a/words.txt
++++ b/words.txt
+@@ -1,8 +1,8 @@
+ alpha
+ bravo
+-charlie
++CHARLIE
+ delta
+ echo
+-foxtrot
++FOXTROT
+ golf
+ hotel
+(1/1) Stage this hunk [y,n,q,a,d,s,e,p,?]?
+```
+
+`?` prints the full key list, which is worth reading once. The essentials: `y` stage it, `n` skip it, `q` quit, `a` stage this and all the rest of this file, `d` skip this and all the rest of this file, `j`/`k` to postpone a decision.
+
+The two nobody learns are the two that matter.
+
+**`s` splits the hunk.** Those two changes above arrived as one hunk because they are close together. Press `s`:
+
+```console
+(1/1) Stage this hunk [y,n,q,a,d,s,e,p,?]? Split into 2 hunks.
+@@ -1,5 +1,5 @@
+ alpha
+ bravo
+-charlie
++CHARLIE
+ delta
+ echo
+(1/2) Stage this hunk [y,n,q,a,d,j,J,g,/,e,p,?]?
+```
+
+Now you can take one and leave the other. If Git says `Sorry, cannot split this hunk`, the changes are adjacent with no context line between them — and that is what `e` is for.
+
+**`e` opens the hunk in your editor.** You get the raw diff and you edit it by hand: delete a `+` line to not stage it, turn a `-` into a space to keep that deletion out of this commit. The instructions Git puts at the bottom of the buffer tell you the rules. This is line-by-line staging, and it is the only way to split two changes that live on the same line's neighbourhood. Nothing you do here touches your files — only the **index**.
+
+There is also an older, menu-driven front end, `git add -i`, from which `p` gets you to the patch mode above:
+
+```console
+git add -i
+```
+
+```console
+           staged     unstaged path
+  1:    unchanged        +2/-2 words.txt
+
+*** Commands ***
+  1: [s]tatus	  2: [u]pdate	  3: [r]evert	  4: [a]dd untracked
+  5: [p]atch	  6: [d]iff	  7: [q]uit	  8: [h]elp
+What now>
+```
+
+Its `4: add untracked` is genuinely handy for picking a few new files out of many.
+
+The same `-p` machinery shows up in several other commands:
+
+* `git stash -p` stashes only the hunks you pick — "put my debugging aside, keep the real fix".
+* `git restore -p` throws away only the hunks you pick. Careful: unlike the others, this one destroys work.
+* `git checkout -p` and `git reset -p` also exist, and behave the way you would now expect.
+
+## The tools I would actually install
+
+The Git ecosystem has hundreds of tools. Here are the ones I think earn their place, in the order I would install them. Graphical clients and editor integrations get their own chapters — [Graphical Git clients](3-git-guis.md "Graphical Git clients") and [Editors, IDEs and the file browser](4-git-ides.md "Editors, IDEs and the file browser") — so this list is terminal tools.
+
+**lazygit** is what I would recommend to most people, and it is the one I would install first on a new machine. It is a full-screen terminal UI: panels for status, branches, commits, stash and the diff, and the operations that are fiddly on the command line — staging individual lines, reordering commits, resolving conflicts, interactive rebase — become a couple of keystrokes. Crucially it is not a replacement for understanding Git; it is a faster way to drive the Git you now understand.
+
+**delta** is the biggest quality-of-life win per byte of config. It is a pager for `git diff`: syntax highlighting, side-by-side mode, line numbers, and much better rendering of moved code.
+
+```ini
+[core]
+	pager = delta
+[interactive]
+	diffFilter = delta --color-only
+[delta]
+	navigate = true
+	side-by-side = true
+	line-numbers = true
+[merge]
+	conflictStyle = zdiff3
+```
+
+The `interactive.diffFilter` line is the one people forget — without it `git add -p` keeps the plain diff. The `[delta]` section is not a Git setting; Git ignores sections it doesn't know, and delta reads its own configuration out of your `~/.gitconfig`.
+
+**difftastic** (the binary is `difft`) is a different idea, and worth understanding rather than just installing. Every diff tool above compares *lines*. difftastic parses both files with a real grammar and compares *syntax trees*. So re-indenting a block, wrapping code in an `if`, or renaming a parameter shows up as the small structural change it is, instead of a large textual one. Wire it up as a second opinion, not as your default:
+
+```ini
+[difftool "difftastic"]
+	cmd = difft "$LOCAL" "$REMOTE"
+[difftool]
+	prompt = false
+[alias]
+	dft = "-c diff.external=difft diff"
+```
+
+`git dft` then gives you a structural diff and plain `git diff` still gives you the familiar one. (Yes, an alias may begin with `-c`; Git expands the alias into its own argument list.)
+
+**tig** is an ncurses browser for log, blame and status, and it is installed here:
+
+```console
+tig --version
+```
+
+```console
+tig version 2.6.0
+```
+
+Run `tig` in a repository and you get the graph; the keystrokes that matter are `Enter` to open the commit under the cursor in a split view, `d` for its diff, `t` for the tree at that commit, `b` for blame on the file you are looking at, `/` to search, `h` for help and `q` to back out one level. `tig blame <file>` and `tig status` (where you can stage hunks) go straight to those views. It is smaller and more focused than lazygit: a very good *reader* of history.
+
+**gitui** is another full-screen terminal client, written in Rust, in the same territory as lazygit. It is also here (`gitui --version` reports `gitui nightly 2025-01-14`). Try both and keep whichever fits your hands.
+
+**git-absorb** solves one annoying problem beautifully: you have a stack of commits under review and three small fixes in your **worktree**, and each fix belongs to a different commit. `git absorb --and-rebase` works out which commit each hunk belongs to, creates the `fixup!` commits and squashes them in. It is `--fixup` without the bookkeeping.
+
+**gh** and **glab** are the CLI clients for GitHub and GitLab. They are not Git — they talk to the forge's API — but `gh pr create`, `gh pr checkout 42` and `gh run watch` remove a lot of tab-switching. `gh` is installed here (`gh version 2.80.0`). See [Hosting Git, and hosting it yourself](2-git-hosting.md "Hosting Git, and hosting it yourself").
+
+That is the list. Not twenty tools: two terminal UIs to choose between, one pager, one structural differ, one history browser, one niche fixer, one forge client.
+
+## Diff and merge tools
+
+Git can hand a diff or a conflict to an external program.
+
+```console
+git difftool
+git difftool -t vimdiff HEAD~1
+git mergetool
+```
+
+`git difftool` behaves like `git diff` but opens each pair of files in your configured tool; `git mergetool` walks the conflicted files after a failed merge. What is available depends on your machine:
+
+```console
+git mergetool --tool-help
+```
+
+```console
+'git mergetool --tool=<tool>' may be set to one of the following:
+		araxis           Use Araxis Merge (requires a graphical session)
+		opendiff         Use FileMerge (requires a graphical session)
+		vimdiff          Use Vim with a custom layout (see `git help mergetool`'s `BACKEND SPECIFIC HINTS` section)
+		vimdiff1         Use Vim with a 2 panes layout (LOCAL and REMOTE)
+		vimdiff2         Use Vim with a 3 panes layout (LOCAL, MERGED and REMOTE)
+		vimdiff3         Use Vim where only the MERGED file is shown
+		vscode           Use Visual Studio Code (requires a graphical session)
+```
+
+Configuring one is two lines, and any program can be a merge tool because Git just passes it four filenames:
+
+```ini
+[merge]
+	tool = my-tool
+[mergetool "my-tool"]
+	cmd = my-tool "$LOCAL" "$BASE" "$REMOTE" "$MERGED"
+[mergetool]
+	prompt = false
+	keepBackup = false
+```
+
+Those four names are the whole model of a three-way merge UI, and the surest way to see them is to make a "merge tool" that does nothing but print them. Doing exactly that during the conflict from earlier:
+
+```console
+Normal merge conflict for 'meta.yaml':
+  {local}: modified file
+  {remote}: modified file
+BASE   (./meta_BASE_78557.yaml):
+    title: Report
+    author: nobody
+    year: 2024
+LOCAL  (./meta_LOCAL_78557.yaml):
+    title: Report
+    author: Grace
+    year: 2024
+REMOTE (./meta_REMOTE_78557.yaml):
+    title: Report
+    author: Ada
+    year: 2024
+MERGED (meta.yaml) is the file Git will keep
+```
+
+* **BASE** is the **merge base**, the common ancestor — the same content `zdiff3` shows you between the `|||||||` markers.
+* **LOCAL** is your side, the branch you are on.
+* **REMOTE** is their side, the branch you are merging in.
+* **MERGED** is the working file with the conflict markers, and it is the only one that survives. A three-pane UI shows you the first three read-only and lets you build the fourth.
+
+`mergetool.keepBackup = false` stops Git leaving `.orig` files behind, and `mergetool.prompt = false` stops it asking permission before each file. Everything about resolving the conflict itself is in [Implement an efficient collaborative workflow](../2-collaborating/5-git-workflow.md "Implement an efficient collaborative workflow").
+
+## Hooks: making Git run your code
+
+A **hook** is an executable that Git runs at a defined moment. Every repository is born with a directory of examples:
+
+```console
+ls .git/hooks
+```
+
+```console
+applypatch-msg.sample
+commit-msg.sample
+fsmonitor-watchman.sample
+post-update.sample
+pre-applypatch.sample
+pre-commit.sample
+pre-merge-commit.sample
+pre-push.sample
+pre-rebase.sample
+pre-receive.sample
+prepare-commit-msg.sample
+push-to-checkout.sample
+sendemail-validate.sample
+update.sample
+```
+
+The rule is simple: drop the `.sample` suffix, make the file executable, and Git runs it. The language does not matter — shebang, exit code, that is the contract. **A non-zero exit from a "pre-" hook aborts the operation.**
+
+The ones worth your time:
+
+* `pre-commit` — runs before the commit message is written. Format, lint, reject debugging leftovers.
+* `commit-msg` — receives the message file. Enforce a convention, refuse an empty subject, require an issue number.
+* `prepare-commit-msg` — edits the message *before* you see it, e.g. prefilling a ticket ID from the branch name.
+* `pre-push` — runs before objects go over the wire. The right place for the test suite, or a "not to `main`" guard.
+* `pre-receive` and `update` — run on the **server**. This is the only kind of hook a developer cannot skip, so it is where real policy lives.
+* `post-receive` — runs on the server after refs are updated. This is how push-to-deploy works, and [Deploying a simple static site](../5-automation/3-git-static-site.md "Deploying a simple static site") builds a real one.
+
+`core.hooksPath` moves the hooks directory, which is what makes hooks shareable:
+
+```console
+git config core.hooksPath .githooks
+```
+
+Now the hooks live in a versioned `.githooks/` directory in the repository. Committing this one and running it:
+
+```console
+git commit -m "add a breakpoint"
+```
+
+```console
+pre-commit: checking for stray debugger statements
+pre-commit: found a breakpoint(), refusing the commit
+```
+
+The commit did not happen; the hook exited `1`. `git commit --no-verify` (or `-n`) skips client-side hooks, which is exactly why the ones that really matter live on the server.
+
+> :information_source:
+> **Hooks are not versioned and not transferred by clone.** `.git/hooks` is inside `.git`, so it is not part of any **commit**, and `git clone` does not copy it. This is deliberate — a repository that could ship code your machine runs on `git commit` would be a lovely attack — and it is also why "we have a pre-commit hook" is never a policy. Your new colleague simply does not have it.
+
+The frameworks exist to close exactly that gap. They keep the configuration in a versioned file and install a small dispatcher hook locally:
+
+* **pre-commit** (the Python tool, [pre-commit.com](https://pre-commit.com/)) is the de facto standard, and language-agnostic despite being written in Python. You commit a `.pre-commit-config.yaml` listing hooks and their versions; each contributor runs `pre-commit install` once, and the tool fetches and runs them in isolated environments.
+  ```yaml
+  repos:
+    - repo: https://github.com/pre-commit/pre-commit-hooks
+      rev: v5.0.0
+      hooks:
+        - id: trailing-whitespace
+        - id: end-of-file-fixer
+        - id: check-yaml
+  ```
+* **husky** plus **lint-staged** is the JavaScript world's answer: husky sets `core.hooksPath` to a versioned directory, lint-staged runs your linters on the staged files only.
+* **lefthook** is a single binary configured in `lefthook.yml`, with no runtime of its own, and runs its jobs in parallel.
+
+Whichever you pick, keep hooks *fast*. A `pre-commit` hook that takes fifteen seconds is a `pre-commit` hook everyone bypasses with `-n`. Formatting and linting on staged files belong in `pre-commit`; the full test suite belongs in `pre-push` or, better, in [Continuous integration with Git](../5-automation/2-git-ci.md "Continuous integration with Git"), which is the only place where a check cannot be skipped.
+
+> :warning:
+> Hooks are **executable code that arrives with a repository**, and you should think of them that way. A committed `.githooks/pre-commit` plus a `core.hooksPath` in the setup instructions, a `.pre-commit-config.yaml` pointing at a hook repository you have never read, a `package.json` `prepare` script that runs `husky` — each of these is a path from "I cloned this and ran the setup command" to "arbitrary code ran as me". It is a supply-chain surface, and it has been used. So: read the hooks before you enable them, pin hook repositories to a tag or a **SHA** rather than a moving branch, and do not run `npm install`, `pre-commit install` or a setup script inside a repository you do not trust. Cloning a repository is safe. Running its tooling is not.
+
+## Summary `git config` `git bisect` `git range-diff` `git maintenance`
+
+* `git config --list --show-origin --show-scope` tells you where every setting comes from, across the **system**, **global**, **local** and **worktree** scopes, last one winning.
+* A dozen config lines fix Git's oldest defaults: `pull.ff = only` against accidental merge commits, `push.autoSetupRemote` against the upstream dance, `merge.conflictStyle = zdiff3` to see the **merge base** in a conflict, `rerere.enabled` to stop resolving the same conflict twice, `rebase.updateRefs` for stacked branches, `diff.algorithm = histogram` and `diff.colorMoved` for readable diffs, `fetch.prune` for a truthful branch list.
+* `core.fsmonitor` and `core.untrackedCache` are the real cure for a slow `git status` and therefore for a slow shell prompt. `git maintenance start` is the modern replacement for a cron'd `git gc`.
+* `blame.ignoreRevsFile` gives you back a usable `git blame` after a mass reformat — set it per repository, because a missing file is a fatal error.
+* Aliases are config; an alias starting with `!` runs in the shell; and any executable named `git-<name>` on your `PATH` becomes a Git subcommand.
+* Completion and a `__git_ps1`, starship or powerlevel10k prompt pay for themselves daily — as long as the underlying `git status` is fast.
+* `A..B` is "reachable from B, not from A"; `A...B` is the symmetric difference, and for `git diff` it means "diff from the **merge base**", which is what you want when reviewing a branch. `--left-right` labels the sides.
+* `-S` and `-G` search content through history, `-L` follows lines, `--follow` follows renames, `--first-parent` reads a merged history, `git shortlog -sn` counts authors.
+* `git range-diff` diffs two versions of a branch — the tool for reviewing a force-push or auditing your own rebase.
+* `git bisect run <script>` finds the commit that broke something in log₂ steps, which is the best reason to make small commits.
+* `git add -p` stages hunk by hunk; `s` splits a hunk and `e` lets you edit it by hand. The same `-p` works with `stash`, `restore`, `checkout` and `reset`.
+* Worth installing: `lazygit` (or `gitui`), `delta` as a pager, `difftastic` for structural diffs, `tig` for reading history, `git-absorb`, and `gh`/`glab` for your forge.
+* `git difftool` and `git mergetool` hand files to an external program; a three-way merge UI shows LOCAL, BASE and REMOTE, and you build MERGED.
+* Hooks live in `.git/hooks` or wherever `core.hooksPath` points, are **not** versioned and **not** cloned; `pre-commit`, `husky` + `lint-staged` and `lefthook` fix that, and every one of them is a supply-chain surface to treat with suspicion.

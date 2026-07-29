@@ -1,0 +1,92 @@
+---
+title: First steps, first Git commands
+url: "/docs/first-git-commands/"
+weight: 3
+---
+# First steps, first Git commands
+
+There you go, now you need to have a little bit of context. As we told you, Git is software; it would therefore have to be installed to use it. But we're nice and we promised it was going to be easy. So for the moment you can do all your exercises without installing anything, but one moment or another, you will have to be brave. The more adventurous are already invited to visit the chapter [Installing and configuring Git](../6-appendices/1-git-install.md "Installing and configuring Git").
+
+In this first hands-on chapter, we're going to cover a huge amount of ground:
+
+* We'll tell Git who we are.
+* We are going to create a very first Git repository.
+* We are going to make our first change and we are going to save it.
+* We will immediately look at how Git is built on the inside (in a superficial way).
+* We'll take our understanding of "commit" a bit further, what it is, and why it's such a fun and powerful thing.
+
+## Minimum setup
+
+> :warning:
+> If you are not comfortable with a terminal, I invite you to do a quick visit to: https://tutorial.djangogirls.org/en/intro_to_command_line/ ; you'll see, you get a taste for it quickly. Also note that the terms "terminal", "terminal emulator", "console", "command line" and "command prompt" are all equivalent. This is the small window in which you type commands, press the "enter" key and see characters printed on the screen.
+
+Git will only need a tiny bit of information to get us started: we need to tell it who we are.
+
+At the command line:
+
+```console
+git config --global user.name "Ori Pekelman"
+git config --global user.email "ori@pekelman.com"
+```
+
+Put your own name and your own email address there, of course. Throughout this course the example output will show mine, because that is what my machine actually prints.
+
+As we said: Git allows us to collaborate, to know who made what change when and why. This part will allow it to keep the "who" information without having to guess.
+
+> :information_source:
+> On each machine, this action only needs to be done once: the information is saved in a configuration file, `~/.gitconfig`. The little `~` tilde you see there represents the current user's home folder, in my case it's going to be `/Users/oripekelman/`.
+
+## Initialize your first git repository: `git init`
+
+We are now going to do something remarkable: we are going to create our first Git repository. And as I don't really like black magic, we will immediately try to understand what we have done. In a few minutes you will acquire some rare and amazing knowledge and you could go and show off with your friends.
+ 
+On my computer, I store my projects in my user folder under `projects`. It's important to put things in order. We will create a directory inside for our first project, which we will name "my_first_git_project".
+
+Open your terminal emulator.
+
+We will type the command:
+```console
+mkdir -p ~/projects/my_first_git_project
+```
+
+> :information_source:
+> `mkdir` is a command to create directories (we assume here that Windows users will have followed the installation guide noted above and opted for the _Windows Subsystem for Linux_). And we will create the `projects/my_first_git_project` subdirectory. The `-p` option assures us that the command will succeed even if `projects` does not exist.
+
+We will change the current directory to reach the folder created above, so type:
+
+```console
+cd ~/projects/my_first_git_project
+```
+
+We have a very fine, very new, very clean directory. This will be our **working directory**.
+
+Git, as you have been told, is software. To use it, you type `git` on the command line and then sub-commands (which quite often will themselves have arguments and options). But our first command is simple:
+
+```console
+git init
+```
+
+If life is good and you have successfully installed git the response should be:
+
+```console
+hint: Using 'master' as the name for the initial branch. This default branch name
+hint: is subject to change. To configure the initial branch name to use in all
+hint: of your new repositories, which will suppress this warning, call:
+hint:
+hint: 	git config --global init.defaultBranch <name>
+hint:
+hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+hint: 'development'. The just-created branch can be renamed via this command:
+hint:
+hint: 	git branch -m <name>
+hint:
+hint: Disable this message with "git config set advice.defaultBranchName false"
+Initialized empty Git repository in /Users/oripekelman/projects/my_first_git_project/.git/
+```
+
+The line that matters is the last one. All the `hint:` lines above it are Git being chatty about the name of the very first branch it just created for us; we come back to that, and to what a branch even is, in [Playing with our revisions](7-play-with-git-revisions.md "Playing with our revisions"). If you have already configured `init.defaultBranch`, you won't see the hint at all.
+
+> :information_source:
+> If in the directory we type the command `ls` to list the files it will tell us that there is absolutely nothing. Indeed on systems like Linux and macOS, files and directories whose name starts with a `.` are hidden. You can type `ls -a`; you should see it.
+
+Let's explain what just happened: The `git init` command created a hidden subdirectory named `.git` in our **working directory**. This will contain all the information Git will need to help us save our work, track releases, and collaborate with others.
