@@ -1,0 +1,24 @@
+# A course about Git ought to have one of these.
+#
+# `text=auto` lets Git decide what is text, store it with LF in the repository,
+# and check it out with the platform's convention. This is the setting the
+# chapter on repository structure recommends over `core.autocrlf`, because it
+# travels with the repository instead of living in each contributor's config.
+* text=auto
+
+# The transcripts under utilities/snippets are compared byte for byte by
+# utilities/scenario.sh --check, so they must never be touched by any filter.
+utilities/snippets/*.txt -text
+
+# Shell scripts must keep LF even on Windows checkouts or they will not run.
+*.sh text eol=lf
+utilities/git-object-read       text eol=lf
+utilities/git-objects-print-all text eol=lf
+
+# Binaries: never munge, never try to diff.
+*.png  binary
+*.gif  binary
+*.psd  binary
+*.woff  binary
+*.woff2 binary
+*.ttf   binary

@@ -1,12 +1,41 @@
-#!/bin/sh
-IFS=$'\n'
-for object in `git cat-file --batch-check --batch-all-objects`; do
-    hash=$(echo $object |  cut -d' ' -f1)
-    type=$(echo $object |  cut -d' ' -f2)
-    echo "\n--- print content of ${hash} of type ${type} --\n"
-    if [ $type = "tree" ]; then
-        git ls-tree $hash
-    else
-        echo `git-object-read  ${object}`
-    fi
+#!/usr/bin/env bash
+#
+# git-objects-print-all
+#
+# Walk every object in the repository and print its contents, so that a small
+# teaching repository can be inspected in one go. Trees are listed with
+# `git ls-tree` (which is readable); everything else is dumped with
+# `git cat-file -p`.
+#
+#   -r, --raw   show loose objects exactly as stored, header included, via
+#               git-object-read -- this is the version the course uses to prove
+#               that an object's name is the hash of "<type> <length>\0<content>"
+#
+# Put this directory on your PATH and Git will find it as
+# `git objects-print-all`.
+#
+set -euo pipefail
+
+RAW=0
+case "${1:-}" in
+    -r|--raw) RAW=1 ;;
+    "") ;;
+    -h|--help) sed -n '2,17p' "$0" | sed 's/^# \{0,1\}//'; exit 0 ;;
+    *) echo "unknown option: $1" >&2; exit 2 ;;
+esac
+
+git cat-file --batch-check --batch-all-objects | while read -r hash type size; do
+    printf '\n--- %s %s (%s bytes) ---\n\n' "$type" "$hash" "$size"
+    case "$type" in
+        tree)
+            git ls-tree "$hash"
+            ;;
+        *)
+            if [ "$RAW" = 1 ]; then
+                git-object-read "$hash" || git cat-file -p "$hash"
+            else
+                git cat-file -p "$hash"
+            fi
+            ;;
+    esac
 done

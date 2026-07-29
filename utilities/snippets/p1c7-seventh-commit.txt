@@ -1,0 +1,28 @@
+$ git commit -am added git log command
+[master 230e18f] added git log command
+ 1 file changed, 2 insertions(+)
+$ git log -1
+commit 230e18f7b7070cd33c94e7a2a8aaa532473007af
+Author: Ori Pekelman <ori@pekelman.com>
+Date:   Mon Feb 2 06:31:09 2026 +0100
+
+    added git log command
+$ git log --oneline
+230e18f added git log command
+2937bcc Rename files to media
+f2c06df Remove license file
+f0bb8a2 Add .gitkeep so files will be added to the repository
+5ab2cae Adding a license file
+46079d2 Add the list of commands we learned today.
+d2eafda Added readme.md
+$ cat readme.md
+# My first Git project
+
+Today we learned the following Git commands:
+
+1. `git init` - initialize a new git repository
+2. `git status` - find out the status of the working directory relative to the git repository
+3. `git add` - add files to the git index to prepare for a commit
+4. `git commit -m"{commit message}"` - save a milestone in the git repository
+
+5. `git log` view all revisions

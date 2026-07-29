@@ -1,0 +1,9 @@
+$ tree --charset=UTF-8 --noreport .git/objects
+.git/objects
+├── 38
+│   └── 36229b5ce7fd362c59974d286de92bf5191784
+├── info
+└── pack
+# one blob: readme.md, addressed by the hash of its content
+$ git cat-file --batch-check --batch-all-objects
+3836229b5ce7fd362c59974d286de92bf5191784 blob 23

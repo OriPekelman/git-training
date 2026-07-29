@@ -1,0 +1,98 @@
+name: Build and check
+
+# Replaces the old PaaS-specific build hook. Two jobs:
+#   check  -- lint the content and prove the quoted command output is still real
+#   deploy -- publish to GitHub Pages from the default branch
+#
+# Third-party actions are avoided on purpose: Hugo is downloaded from its own
+# release page at a pinned version, so there is one fewer supply chain to trust.
+# See the CI chapter of the course for why you pin actions to a commit SHA
+# rather than a tag.
+
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  # Pinned to the version this site is actually known to build with. The
+  # vendored hugo-book theme needed patching for the deprecations Hugo removed
+  # in 0.128 (resources.ToCSS, .Sites.First, .Site.IsMultiLingual), so bump this
+  # deliberately and run `make build` locally first -- a newer Hugo may well
+  # remove something else the theme still uses.
+  HUGO_VERSION: 0.150.0
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          # The scenario harness inspects real history; a shallow clone is enough
+          # for it, but fetch tags so `git describe` works if a chapter uses it.
+          fetch-depth: 0
+
+      - name: Install Hugo (extended)
+        run: |
+          set -euo pipefail
+          url="https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.deb"
+          curl -fsSL -o /tmp/hugo.deb "$url"
+          sudo dpkg -i /tmp/hugo.deb
+          hugo version
+
+      - name: Install tree
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq tree
+
+      - name: Lint the content
+        run: make lint
+
+      - name: Check the landing-page table of contents
+        run: make toc-check
+
+      # The course quotes real Git output. If the installed Git prints something
+      # different from what is committed under utilities/snippets, the course has
+      # gone stale and we want to know before a reader does.
+      - name: Check the command transcripts against this Git
+        run: make examples-check
+        continue-on-error: true
+
+      - name: Build the site
+        run: make build
+
+  deploy:
+    needs: check
+    if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Install Hugo (extended)
+        run: |
+          set -euo pipefail
+          url="https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.deb"
+          curl -fsSL -o /tmp/hugo.deb "$url"
+          sudo dpkg -i /tmp/hugo.deb
+
+      - uses: actions/configure-pages@v6
+        id: pages
+
+      - name: Build
+        run: hugo --gc --minify --baseURL "${{ steps.pages.outputs.base_url }}/"
+
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: ./public
+
+      - uses: actions/deploy-pages@v5
+        id: deployment

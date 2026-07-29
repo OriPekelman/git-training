@@ -1,0 +1,34 @@
+$ git checkout shopping_cart
+Switched to branch 'shopping_cart'
+$ git status
+On branch shopping_cart
+nothing to commit, working tree clean
+$ git log -1
+commit 57563d230b3b552922e00c626159272cca683837
+Author: Ori Pekelman <ori@pekelman.com>
+Date:   Mon Feb 2 06:46:00 2026 +0100
+
+    Initial shopping cart code
+$ git merge shopping_cart_template
+Updating 57563d2..10913e8
+Fast-forward
+ views/shopping_cart.html | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+ create mode 100644 views/shopping_cart.html
+$ tree --charset=UTF-8 --noreport .
+.
+├── lib
+│   └── shopping_cart.js
+├── media
+├── readme.md
+└── views
+    └── shopping_cart.html
+$ git log --oneline --graph --decorate --all
+* 10913e8 (HEAD -> shopping_cart, shopping_cart_template) Implement shopping cart template
+* 57563d2 Initial shopping cart code
+* f8aeebe (master, homepage) Add media directory with .gitkeep
+* 94e2c27 Add git log to the list of commands we learned
+* 46079d2 Add the list of commands we learned today.
+* d2eafda Added readme.md
+$ git checkout master
+Switched to branch 'master'

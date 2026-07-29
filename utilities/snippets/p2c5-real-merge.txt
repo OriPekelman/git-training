@@ -1,0 +1,28 @@
+$ git merge --no-ff shopping_cart -m Merge branch 'shopping_cart'
+Merge made by the 'ort' strategy.
+ lib/shopping_cart.js     | 1 +
+ views/shopping_cart.html | 8 ++++++++
+ 2 files changed, 9 insertions(+)
+ create mode 100644 lib/shopping_cart.js
+ create mode 100644 views/shopping_cart.html
+# a merge commit has two parent lines
+$ git cat-file -p HEAD
+tree 5082314cda7c62704ee342d21a9a884f4df5a11f
+parent f8aeebe5e4db23afa4efdceb7fc5564f7b04cdb0
+parent 10913e87d1c3567f6a631f6e6f9ffc3018633925
+author Ori Pekelman <ori@pekelman.com> 1770011580 +0100
+committer Ori Pekelman <ori@pekelman.com> 1770011580 +0100
+
+Merge branch 'shopping_cart'
+$ git merge-base master shopping_cart
+10913e87d1c3567f6a631f6e6f9ffc3018633925
+$ git log --oneline --graph --decorate --all
+*   3501906 (HEAD -> master) Merge branch 'shopping_cart'
+|\  
+| * 10913e8 (shopping_cart_template, shopping_cart) Implement shopping cart template
+| * 57563d2 Initial shopping cart code
+|/  
+* f8aeebe (homepage) Add media directory with .gitkeep
+* 94e2c27 Add git log to the list of commands we learned
+* 46079d2 Add the list of commands we learned today.
+* d2eafda Added readme.md

@@ -1,0 +1,16 @@
+# the tree of the third commit
+$ git show 5ab2caec01348fa809286b406298889992680ed0^{tree}
+tree 5ab2caec01348fa809286b406298889992680ed0^{tree}
+
+LICENSE
+readme.md
+$ git ls-tree 5ab2caec01348fa809286b406298889992680ed0^{tree}
+100644 blob 0ba5adce31cb9cf9951fed3075d7571a9db5bc32	LICENSE
+100644 blob 0c7e1663dd99931898dfa9e25dfd2aba94dbe9ad	readme.md
+# the two versions of readme.md, and LICENSE, as blobs
+$ git rev-parse d2eafda3f0b5660fd33b0db429d2f5e447c4cd28:readme.md
+3836229b5ce7fd362c59974d286de92bf5191784
+$ git rev-parse 46079d29e5c812f3141e2e5a2522c6a5871d2255:readme.md
+0c7e1663dd99931898dfa9e25dfd2aba94dbe9ad
+$ git rev-parse 5ab2caec01348fa809286b406298889992680ed0:LICENSE
+0ba5adce31cb9cf9951fed3075d7571a9db5bc32

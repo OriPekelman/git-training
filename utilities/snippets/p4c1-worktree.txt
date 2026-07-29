@@ -1,0 +1,29 @@
+$ git worktree add ../hotfix -b hotfix/urgent
+Preparing worktree (new branch 'hotfix/urgent')
+HEAD is now at a0faa94 Add a title file, the other way
+$ git worktree list
+~/projects/my_first_git_project  a0faa94 [master]
+~/projects/hotfix                a0faa94 [hotfix/urgent]
+# in a linked worktree, .git is a file, not a directory
+$ cat ../hotfix/.git
+gitdir: ~/projects/my_first_git_project/.git/worktrees/hotfix
+$ tree --charset=UTF-8 --noreport .git/worktrees
+.git/worktrees
+└── hotfix
+    ├── HEAD
+    ├── ORIG_HEAD
+    ├── commondir
+    ├── gitdir
+    ├── index
+    ├── logs
+    │   └── HEAD
+    └── refs
+# you cannot check out the same branch in two worktrees
+$ git worktree add ../nope master
+Preparing worktree (checking out 'master')
+fatal: 'master' is already used by worktree at '~/projects/my_first_git_project'
+# (exit status 128)
+$ git worktree remove ../hotfix
+
+$ git branch -D hotfix/urgent
+Deleted branch hotfix/urgent (was a0faa94).

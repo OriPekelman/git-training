@@ -1,0 +1,22 @@
+$ git notes add -m Reviewed by nobody in particular HEAD
+
+$ git log -1
+commit a0faa943872e1ae46561f36be9c1da6da37615dd
+Author: Ori Pekelman <ori@pekelman.com>
+Date:   Mon Feb 2 06:57:40 2026 +0100
+
+    Add a title file, the other way
+
+Notes:
+    Reviewed by nobody in particular
+$ git rev-parse refs/notes/commits
+ad117d1b17ef82c37d6904b1b18e55c365b46a71
+# the notes ref is an ordinary commit whose tree is keyed by object id
+$ git cat-file -p refs/notes/commits
+tree c4298eb4d38cf6551740e95c896b69f0e653de0b
+author Ori Pekelman <ori@pekelman.com> 1770011860 +0100
+committer Ori Pekelman <ori@pekelman.com> 1770011860 +0100
+
+Notes added by 'git notes add'
+$ git ls-tree refs/notes/commits
+100644 blob deae9cea66ae207dd11349416e8f4e2025ab285f	a0faa943872e1ae46561f36be9c1da6da37615dd

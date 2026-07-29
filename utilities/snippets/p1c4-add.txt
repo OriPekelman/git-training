@@ -1,0 +1,12 @@
+$ git add readme.md
+
+$ git status
+On branch master
+
+No commits yet
+
+Changes to be committed:
+  (use "git rm --cached <file>..." to unstage)
+	new file:   readme.md
+$ git ls-files -s
+100644 3836229b5ce7fd362c59974d286de92bf5191784 0	readme.md

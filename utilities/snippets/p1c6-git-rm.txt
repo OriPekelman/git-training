@@ -1,0 +1,8 @@
+# the same thing done in one step, on an untouched copy of the repository
+$ git rm LICENSE
+rm 'LICENSE'
+$ git status
+On branch master
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+	deleted:    LICENSE

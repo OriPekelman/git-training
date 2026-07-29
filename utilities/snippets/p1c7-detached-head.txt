@@ -1,0 +1,50 @@
+$ git checkout 2937bccec42553482636326d6d60c5dcd1fe938d
+Note: switching to '2937bccec42553482636326d6d60c5dcd1fe938d'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by switching back to a branch.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -c with the switch command. Example:
+
+  git switch -c <new-branch-name>
+
+Or undo this operation with:
+
+  git switch -
+
+Turn off this advice by setting config variable advice.detachedHead to false
+
+HEAD is now at 2937bcc Rename files to media
+$ cat readme.md
+# My first Git project
+
+Today we learned the following Git commands:
+
+1. `git init` - initialize a new git repository
+2. `git status` - find out the status of the working directory relative to the git repository
+3. `git add` - add files to the git index to prepare for a commit
+4. `git commit -m"{commit message}"` - save a milestone in the git repository
+$ git log --oneline
+2937bcc Rename files to media
+f2c06df Remove license file
+f0bb8a2 Add .gitkeep so files will be added to the repository
+5ab2cae Adding a license file
+46079d2 Add the list of commands we learned today.
+d2eafda Added readme.md
+# git log shows only the past of where we are; --branches shows the rest
+$ git log --oneline --branches
+230e18f added git log command
+2937bcc Rename files to media
+f2c06df Remove license file
+f0bb8a2 Add .gitkeep so files will be added to the repository
+5ab2cae Adding a license file
+46079d2 Add the list of commands we learned today.
+d2eafda Added readme.md
+$ git status
+HEAD detached at 2937bcc
+nothing to commit, working tree clean
+$ git checkout master
+Previous HEAD position was 2937bcc Rename files to media
+Switched to branch 'master'

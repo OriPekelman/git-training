@@ -1,0 +1,47 @@
+$ touch files/.gitkeep
+
+$ git add files/.gitkeep
+
+$ git commit -m Add .gitkeep so files will be added to the repository
+[master f0bb8a2] Add .gitkeep so files will be added to the repository
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 files/.gitkeep
+$ git ls-tree f0bb8a21c920246672cf67119d2fc42ba8e5bb18^{tree}
+100644 blob 0ba5adce31cb9cf9951fed3075d7571a9db5bc32	LICENSE
+040000 tree d564d0bc3dd917926892c55e3706cc116d5b165e	files
+100644 blob 0c7e1663dd99931898dfa9e25dfd2aba94dbe9ad	readme.md
+$ git ls-tree f0bb8a21c920246672cf67119d2fc42ba8e5bb18:files
+100644 blob e69de29bb2d1d6434b8b29ae775ad8c2e48c5391	.gitkeep
+# an empty blob always hashes to e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
+$ git hash-object -t blob /dev/null
+e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
+$ tree --charset=UTF-8 --noreport .git/objects
+.git/objects
+├── 0b
+│   └── a5adce31cb9cf9951fed3075d7571a9db5bc32
+├── 0c
+│   └── 7e1663dd99931898dfa9e25dfd2aba94dbe9ad
+├── 32
+│   └── 162643c6cd0e5af5acdc726148521816b57777
+├── 38
+│   └── 36229b5ce7fd362c59974d286de92bf5191784
+├── 46
+│   └── 079d29e5c812f3141e2e5a2522c6a5871d2255
+├── 5a
+│   └── b2caec01348fa809286b406298889992680ed0
+├── 83
+│   └── 2e299281e32ed167f389f4b34501ec48b302c0
+├── 89
+│   └── 69130a4c5a09759ca1f60b161a8805edf26042
+├── d2
+│   └── eafda3f0b5660fd33b0db429d2f5e447c4cd28
+├── d5
+│   └── 64d0bc3dd917926892c55e3706cc116d5b165e
+├── e6
+│   └── 9de29bb2d1d6434b8b29ae775ad8c2e48c5391
+├── f0
+│   └── bb8a21c920246672cf67119d2fc42ba8e5bb18
+├── f1
+│   └── 2dd321865c1b55cd32d413e8ef51b6c4ee7741
+├── info
+└── pack

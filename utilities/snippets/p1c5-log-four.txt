@@ -1,0 +1,29 @@
+$ git log
+commit f0bb8a21c920246672cf67119d2fc42ba8e5bb18
+Author: Ori Pekelman <ori@pekelman.com>
+Date:   Mon Feb 2 06:17:22 2026 +0100
+
+    Add .gitkeep so files will be added to the repository
+
+commit 5ab2caec01348fa809286b406298889992680ed0
+Author: Ori Pekelman <ori@pekelman.com>
+Date:   Mon Feb 2 06:15:42 2026 +0100
+
+    Adding a license file
+
+commit 46079d29e5c812f3141e2e5a2522c6a5871d2255
+Author: Ori Pekelman <ori@pekelman.com>
+Date:   Mon Feb 2 06:10:30 2026 +0100
+
+    Add the list of commands we learned today.
+
+commit d2eafda3f0b5660fd33b0db429d2f5e447c4cd28
+Author: Ori Pekelman <ori@pekelman.com>
+Date:   Mon Feb 2 06:06:51 2026 +0100
+
+    Added readme.md
+$ git log --oneline
+f0bb8a2 Add .gitkeep so files will be added to the repository
+5ab2cae Adding a license file
+46079d2 Add the list of commands we learned today.
+d2eafda Added readme.md

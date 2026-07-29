@@ -1,0 +1,13 @@
+$ git checkout -b shopping_cart
+Switched to a new branch 'shopping_cart'
+$ cat .git/HEAD
+ref: refs/heads/shopping_cart
+$ tree --charset=UTF-8 --noreport .git/refs
+.git/refs
+├── heads
+│   ├── master
+│   └── shopping_cart
+└── tags
+$ git branch -vv
+  master        f8aeebe Add media directory with .gitkeep
+* shopping_cart f8aeebe Add media directory with .gitkeep

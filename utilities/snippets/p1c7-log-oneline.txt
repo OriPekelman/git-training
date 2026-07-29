@@ -1,0 +1,8 @@
+$ git log --oneline --graph --decorate --all
+* faa7576 (HEAD -> master) Rename files to media
+* 4351060 Remove license file
+* c62f4a9 Add git log to the list of commands we learned today.
+* f0bb8a2 Add .gitkeep so files will be added to the repository
+* 5ab2cae Adding a license file
+* 46079d2 Add the list of commands we learned today.
+* d2eafda Added readme.md

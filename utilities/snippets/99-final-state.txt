@@ -1,0 +1,21 @@
+$ git log --oneline --graph --decorate --all
+* a0faa94 (HEAD -> master) Add a title file, the other way
+*   3501906 Merge branch 'shopping_cart'
+|\  
+| * 10913e8 (shopping_cart_template, shopping_cart) Implement shopping cart template
+| * 57563d2 Initial shopping cart code
+|/  
+* f8aeebe (homepage) Add media directory with .gitkeep
+* 94e2c27 Add git log to the list of commands we learned
+* 46079d2 Add the list of commands we learned today.
+* d2eafda Added readme.md
+* ad117d1 Notes added by 'git notes add'
+$ git count-objects -vH
+count: 43
+size: 172.00 KiB
+in-pack: 0
+packs: 0
+size-pack: 0 bytes
+prune-packable: 0
+garbage: 0
+size-garbage: 0 bytes

@@ -1,0 +1,29 @@
+$ git reset 46079d29e5c812f3141e2e5a2522c6a5871d2255
+Unstaged changes after reset:
+M	readme.md
+$ git status
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   readme.md
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	media/
+
+no changes added to commit (use "git add" and/or "git commit -a")
+$ git log --oneline
+46079d2 Add the list of commands we learned today.
+d2eafda Added readme.md
+$ git add readme.md
+
+$ git commit -m Add git log to the list of commands we learned
+[master 94e2c27] Add git log to the list of commands we learned
+ 1 file changed, 2 insertions(+)
+$ git add media
+
+$ git commit -m Add media directory with .gitkeep
+[master f8aeebe] Add media directory with .gitkeep
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 media/.gitkeep

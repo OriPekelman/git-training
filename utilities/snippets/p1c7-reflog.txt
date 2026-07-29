@@ -1,0 +1,13 @@
+$ git reflog
+f8aeebe HEAD@{0}: commit: Add media directory with .gitkeep
+94e2c27 HEAD@{1}: commit: Add git log to the list of commands we learned
+46079d2 HEAD@{2}: reset: moving to 46079d29e5c812f3141e2e5a2522c6a5871d2255
+230e18f HEAD@{3}: checkout: moving from 2937bccec42553482636326d6d60c5dcd1fe938d to master
+2937bcc HEAD@{4}: checkout: moving from master to 2937bccec42553482636326d6d60c5dcd1fe938d
+230e18f HEAD@{5}: commit: added git log command
+2937bcc HEAD@{6}: commit: Rename files to media
+f2c06df HEAD@{7}: commit: Remove license file
+f0bb8a2 HEAD@{8}: commit: Add .gitkeep so files will be added to the repository
+5ab2cae HEAD@{9}: commit: Adding a license file
+46079d2 HEAD@{10}: commit: Add the list of commands we learned today.
+d2eafda HEAD@{11}: commit (initial): Added readme.md

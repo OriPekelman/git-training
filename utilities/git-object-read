@@ -1,3 +1,57 @@
-#!/bin/sh
-object=$1
-printf "\x1f\x8b\x08\x00\x00\x00\x00\x00" | cat - .git/objects/${object:0:2}/${object:2:38}| gzip -dcq
+#!/usr/bin/env bash
+#
+# git-object-read <object-id>
+#
+# Print a loose Git object *exactly* as it is stored on disk, header and all:
+#
+#   commit 242<NUL>tree 74a30b8...
+#   ^^^^^^^^^^
+#   the type and the byte length that Git prepends before hashing
+#
+# `git cat-file -p` hides that header. This script does not, which is the whole
+# point: it is how the course shows that a loose object is nothing but
+# zlib-compressed "<type> <length>\0<content>", and that the object's name is the
+# SHA-1 of precisely those bytes.
+#
+# The trick: loose objects are raw zlib streams, and there is no portable command
+# line tool for raw zlib -- but gzip is zlib wrapped in a 10-byte header, so we
+# fabricate the header and pipe the two together. gzip then complains about the
+# missing trailer, which is harmless, and is why its stderr is discarded.
+#
+# Put this directory on your PATH and Git will find it as `git object-read`.
+#
+set -uo pipefail
+
+object="${1:-}"
+if [ -z "$object" ]; then
+    echo "usage: git-object-read <object-id>" >&2
+    exit 2
+fi
+
+# Accept an abbreviated id, a ref, HEAD~2 -- anything git can resolve.
+if ! full="$(git rev-parse --verify --quiet "$object")"; then
+    echo "git-object-read: not a valid object: $object" >&2
+    exit 2
+fi
+
+objdir="$(git rev-parse --git-path objects)"
+path="$objdir/${full:0:2}/${full:2}"
+
+if [ ! -f "$path" ]; then
+    cat >&2 <<EOF
+git-object-read: $full is not a loose object.
+
+Git periodically gathers loose objects into a packfile, and a packed object is
+not a standalone zlib stream, so this trick cannot reach it. Use plumbing to see
+the same information:
+
+    git cat-file -t $full     # the type
+    git cat-file -s $full     # the byte length
+    git cat-file -p $full     # the content
+
+EOF
+    exit 1
+fi
+
+printf '\037\213\010\000\000\000\000\000' | cat - "$path" | gzip -dcq 2>/dev/null
+printf '\n'

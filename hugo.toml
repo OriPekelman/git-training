@@ -1,0 +1,44 @@
+baseURL = '/'
+languageCode = 'en-us'
+defaultContentLanguage = 'en'
+title = 'Git Getting Started!'
+theme = 'hugo-book'
+
+# `:information_source:` and `:warning:` are used throughout the content as
+# callout markers. Without this they render as literal text.
+enableEmoji = true
+
+# The book theme keeps the original casing of section/page paths.
+disablePathToLower = true
+
+[markup]
+  [markup.goldmark.renderer]
+    # The content uses raw HTML comments (<!-- TODO -->) and a few inline tags.
+    unsafe = true
+  [markup.tableOfContents]
+    startLevel = 2
+    endLevel = 3
+  [markup.highlight]
+    style = 'solarized-dark'
+    noClasses = false
+    lineNos = false
+    tabWidth = 2
+
+[params]
+  author = 'Ori Pekelman'
+  description = 'Getting started with Git: a hands-on course that always looks under the hood.'
+
+  # Book theme
+  BookSection = 'docs'
+
+  # Chapters cross-reference each other as `[title](P6C1.md)`, which keeps the
+  # links working when the markdown is read on disk or on a forge. This makes
+  # Hugo resolve them to real permalinks in the built site instead of emitting a
+  # literal `href="P6C1.md"`, and warn at build time about broken ones.
+  BookPortableLinks = true
+  BookTheme = 'auto'
+  BookToC = true
+  BookSearch = true
+  BookComments = false
+  BookSSR = false
+  BookSecondaryDark = false

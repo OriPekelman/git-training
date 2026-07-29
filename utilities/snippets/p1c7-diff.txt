@@ -1,0 +1,26 @@
+$ git diff HEAD~1
+diff --git a/readme.md b/readme.md
+index 0c7e166..8457b88 100644
+--- a/readme.md
++++ b/readme.md
+@@ -6,3 +6,5 @@ Today we learned the following Git commands:
+ 2. `git status` - find out the status of the working directory relative to the git repository
+ 3. `git add` - add files to the git index to prepare for a commit
+ 4. `git commit -m"{commit message}"` - save a milestone in the git repository
++
++5. `git log` view all revisions
+$ git diff f2c06df5e0a310f2f4689f9d0dc3edfddf237d4c 230e18f7b7070cd33c94e7a2a8aaa532473007af
+diff --git a/files/.gitkeep b/media/.gitkeep
+similarity index 100%
+rename from files/.gitkeep
+rename to media/.gitkeep
+diff --git a/readme.md b/readme.md
+index 0c7e166..8457b88 100644
+--- a/readme.md
++++ b/readme.md
+@@ -6,3 +6,5 @@ Today we learned the following Git commands:
+ 2. `git status` - find out the status of the working directory relative to the git repository
+ 3. `git add` - add files to the git index to prepare for a commit
+ 4. `git commit -m"{commit message}"` - save a milestone in the git repository
++
++5. `git log` view all revisions

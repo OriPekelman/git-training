@@ -1,0 +1,6 @@
+$ git add LICENSE
+
+$ git commit -m Remove license file
+[master f2c06df] Remove license file
+ 1 file changed, 8 deletions(-)
+ delete mode 100644 LICENSE

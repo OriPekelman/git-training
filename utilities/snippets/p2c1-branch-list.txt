@@ -1,0 +1,10 @@
+$ git checkout master
+Switched to branch 'master'
+$ git checkout -b homepage
+Switched to a new branch 'homepage'
+# four branch names, each pointing at exactly one commit
+$ git branch -vv
+* homepage               f8aeebe Add media directory with .gitkeep
+  master                 f8aeebe Add media directory with .gitkeep
+  shopping_cart          57563d2 Initial shopping cart code
+  shopping_cart_template 10913e8 Implement shopping cart template

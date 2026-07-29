@@ -1,0 +1,42 @@
+$ git switch -c conflicting master
+Switched to a new branch 'conflicting'
+$ git add title.md
+
+$ git commit -q -m Add a title file, one way
+
+$ git switch master
+Switched to branch 'master'
+$ git add title.md
+
+$ git commit -q -m Add a title file, the other way
+
+$ git merge conflicting
+Auto-merging title.md
+CONFLICT (add/add): Merge conflict in title.md
+Automatic merge failed; fix conflicts and then commit the result.
+# (exit status 1)
+$ git status
+On branch master
+You have unmerged paths.
+  (fix conflicts and run "git commit")
+  (use "git merge --abort" to abort the merge)
+
+Unmerged paths:
+  (use "git add <file>..." to mark resolution)
+	both added:      title.md
+
+no changes added to commit (use "git add" and/or "git commit -a")
+# the index holds up to three stages while a conflict is unresolved
+$ git ls-files -u
+100644 575beb4fcb00d4188fd119021bedce12f994eea0 2	title.md
+100644 306066dedd15e6eea82e598243591a9afa4d8be5 3	title.md
+$ cat title.md
+<<<<<<< HEAD
+# The title, the other way
+=======
+# The title, one way
+>>>>>>> conflicting
+$ git merge --abort
+
+$ git branch -D conflicting
+Deleted branch conflicting (was e227b20).

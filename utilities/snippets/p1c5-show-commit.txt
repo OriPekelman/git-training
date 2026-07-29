@@ -1,0 +1,20 @@
+$ git show HEAD~2
+commit 46079d29e5c812f3141e2e5a2522c6a5871d2255
+Author: Ori Pekelman <ori@pekelman.com>
+Date:   Mon Feb 2 06:10:30 2026 +0100
+
+    Add the list of commands we learned today.
+
+diff --git a/readme.md b/readme.md
+index 3836229..0c7e166 100644
+--- a/readme.md
++++ b/readme.md
+@@ -1 +1,8 @@
+ # My first Git project
++
++Today we learned the following Git commands:
++
++1. `git init` - initialize a new git repository
++2. `git status` - find out the status of the working directory relative to the git repository
++3. `git add` - add files to the git index to prepare for a commit
++4. `git commit -m"{commit message}"` - save a milestone in the git repository

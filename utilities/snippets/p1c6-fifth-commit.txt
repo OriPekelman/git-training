@@ -1,0 +1,3 @@
+$ git commit -am Add git log to the list of commands we learned today.
+[master c62f4a9] Add git log to the list of commands we learned today.
+ 1 file changed, 2 insertions(+)
