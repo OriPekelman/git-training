@@ -39,6 +39,13 @@ Ce qu'est Git, et ce qui se passe réellement dans `.git` quand vous sauvegardez
 1. [On sait sauvegarder… mais comment modifier ? supprimer ? annuler ?](docs/1-understanding-git/6-modify-delete-files-with-git.md)
 1. [Jouer avec nos révisions](docs/1-understanding-git/7-play-with-git-revisions.md)
 
+### Partie 2 — Collaborer
+
+Les branches, les dépôts distants, les fusions, les conflits, et comment s'en sortir quand ça tourne mal.
+
+1. [Collaborer grâce à Git](docs/2-collaborating/1-collaborate-with-git.md)
+1. [Travailler avec des dépôts distants](docs/2-collaborating/2-git-remote.md)
+
 <!-- END GENERATED TOC -->
 
 ## À propos
