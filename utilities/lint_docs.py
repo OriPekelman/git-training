@@ -237,6 +237,14 @@ def lint_file(path: Path, rep: Report, subcommands: set[str],
         # Chapters link to each other by relative markdown path, so the links
         # also work when the file is read on disk or on a forge; Hugo resolves
         # them to permalinks at build time. Resolve them the same way here.
+        #
+        # This check is the only thing standing behind those links, and it earns
+        # its keep in the multilingual build. The theme's portable-link template
+        # falls back to `fileExists` before it warns, and Hugo unions the two
+        # contentDirs -- so a French chapter linking to a chapter that has not
+        # been translated yet finds the *English* file, takes the silent branch,
+        # and emits a raw `href="7-play-with-git-revisions.md"`. Hugo reports
+        # nothing and `make build` exits 0. Only this loop notices.
         for target in re.findall(r"\]\(([^)\s#:]+\.md)(?:#[^)\s]*)?(?:\s+\"[^\"]*\")?\)", line):
             if (path.parent / target).resolve() not in chapter_files:
                 rep.error(path, n, f"link to a chapter that does not exist: {target}")
