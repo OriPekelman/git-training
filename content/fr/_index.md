@@ -45,6 +45,8 @@ Les branches, les dépôts distants, les fusions, les conflits, et comment s'en 
 
 1. [Collaborer grâce à Git](docs/2-collaborating/1-collaborate-with-git.md)
 1. [Travailler avec des dépôts distants](docs/2-collaborating/2-git-remote.md)
+1. [Récupérer et envoyer du code](docs/2-collaborating/3-git-clone-pull-remote.md)
+1. [Un peu de structure SVP](docs/2-collaborating/4-git-repo-structure.md)
 
 <!-- END GENERATED TOC -->
 
