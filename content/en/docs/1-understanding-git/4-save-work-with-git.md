@@ -188,8 +188,6 @@ So where is the same file's content, from Git's point of view, at this moment? I
 
 Those three can agree or disagree, and `git status` is the command that tells you which. (During a merge conflict, and only then, a single path can have up to three entries in the index at once — the "stages". We will meet them when we merge.)
 
-<!-- We should create a nice diagram here, even better a small animation. This is a place holder -->
-
 > :warning:
 > A lot of misunderstandings about Git come from misunderstanding this relationship between **staging** or preparing our **commit**, our save stage, and the **commit** itself. This is why we focus on it. So take the time to understand.
 

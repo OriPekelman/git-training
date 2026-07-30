@@ -87,7 +87,9 @@ NO_SUMMARY_NEEDED = {
 }
 
 # The word a chapter's closing section is expected to contain, per language.
-SUMMARY_WORD = {"en": "summary", "fr": r"r[ée]sum[ée]"}
+# The French chapters close on "Récapitulatif", which is what the original
+# French used; "résumé" is accepted too rather than forcing one of them.
+SUMMARY_WORD = {"en": "summary", "fr": r"(r[ée]capitulatif|r[ée]sum[ée])"}
 
 HUNK_RE = re.compile(r"^@@ -\d+([.,]\d+)? \+\d+([.,]\d+)? @@")
 BAD_HUNK_RE = re.compile(r"^@@ -\d+(\.\d+)? \+\d+(\.\d+)? @@")

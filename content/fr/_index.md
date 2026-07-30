@@ -34,6 +34,10 @@ Ce qu'est Git, et ce qui se passe réellement dans `.git` quand vous sauvegardez
 1. [Git, c'est quoi ?](docs/1-understanding-git/1-what-is-git.md)
 1. [Git et son écosystème](docs/1-understanding-git/2-git-ecosystem.md)
 1. [Premiers pas, premières commandes Git](docs/1-understanding-git/3-first-git-commands.md)
+1. [Sauvegardons notre travail !](docs/1-understanding-git/4-save-work-with-git.md)
+1. [Au cœur du dépôt, au cœur du commit](docs/1-understanding-git/5-inside-git.md)
+1. [On sait sauvegarder… mais comment modifier ? supprimer ? annuler ?](docs/1-understanding-git/6-modify-delete-files-with-git.md)
+1. [Jouer avec nos révisions](docs/1-understanding-git/7-play-with-git-revisions.md)
 
 <!-- END GENERATED TOC -->
 

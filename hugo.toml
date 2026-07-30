@@ -32,16 +32,22 @@ disablePathToLower = true
     title = 'Git, bien démarrer !'
     weight = 2
 
-# The part directories carry a leading number so they sort in reading order on
-# disk and in the sidebar. This keeps that number out of the published address.
-# It has to be done here rather than with a `url` in front matter: Hugo does not
-# add the language prefix to an absolute front-matter `url`, so the French pages
-# would silently overwrite the English ones at the same path. Permalink patterns
-# are language-aware, so /docs/inside-git/ and /fr/docs/inside-git/ both work.
+# Chapters are served flat from /docs/<slug>/ even though they live in a numbered
+# part directory, so the digits that give them their reading order on disk stay
+# out of the published address.
+#
+# This has to be done here rather than with a `url` in front matter: Hugo does
+# not add the language prefix to an absolute front-matter `url`, so the French
+# pages would silently overwrite the English ones at the same path. Permalink
+# patterns are language-aware, so /docs/inside-git/ and /fr/docs/inside-git/
+# both build.
+#
+# Only `page`, deliberately -- never add a `[permalinks.section]` here. It would
+# match the top-level `docs` section too, and since that section page has no
+# slug of its own Hugo falls back to its title, moving the whole course index
+# from /docs/ to /docs/Docs/ while the theme goes on linking to it.
 [permalinks]
   [permalinks.page]
-    docs = '/docs/:slug/'
-  [permalinks.section]
     docs = '/docs/:slug/'
 
 [markup]
