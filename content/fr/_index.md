@@ -50,6 +50,15 @@ Les branches, les dépôts distants, les fusions, les conflits, et comment s'en 
 1. [Mettre en œuvre un workflow collaboratif efficace](docs/2-collaborating/5-git-workflow.md)
 1. [Garder un historique propre, se remettre de ses erreurs](docs/2-collaborating/6-git-cleanup.md)
 
+### Partie 3 — L'écosystème d'outils
+
+La ligne de commande, les forges, les interfaces graphiques et les intégrations dans les éditeurs.
+
+1. [Faire sienne la ligne de commande](docs/3-tooling-ecosystem/1-git-tools.md)
+1. [Héberger Git, et l'héberger soi-même](docs/3-tooling-ecosystem/2-git-hosting.md)
+1. [Les clients Git graphiques](docs/3-tooling-ecosystem/3-git-guis.md)
+1. [Les éditeurs, les IDE et le navigateur de fichiers](docs/3-tooling-ecosystem/4-git-ides.md)
+
 <!-- END GENERATED TOC -->
 
 ## À propos
