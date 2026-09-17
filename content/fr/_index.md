@@ -65,6 +65,10 @@ Les répertoires de travail, les agents, les notes, les gros fichiers, les donn�
 
 1. [Un dépôt, plusieurs arbres de travail](docs/4-beyond-the-basics/1-git-worktree.md)
 1. [Arbres de travail et agents, du travail parallèle à la vitesse de la machine](docs/4-beyond-the-basics/2-git-worktree-agents.md)
+1. [Détourner git notes pour le plaisir et le profit](docs/4-beyond-the-basics/3-git-notes.md)
+1. [Les gros fichiers, ou comment Git rencontre ses limites](docs/4-beyond-the-basics/4-git-lfs.md)
+1. [Git pour les données et les modèles](docs/4-beyond-the-basics/5-git-data-science.md)
+1. [Ce que Git a inspiré](docs/4-beyond-the-basics/6-inspired-by-git.md)
 
 ### Partie 5 — Git comme moteur d'automatisation
 
