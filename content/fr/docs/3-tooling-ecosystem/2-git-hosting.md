@@ -43,6 +43,101 @@ Brièvement et équitablement, parce que ce cours n'est pas une publicité. Ce q
 > :warning:
 > Les forges des fournisseurs sont celles qui ont le plus de chances de changer de statut sous vos pieds : nouvelle tarification, absorption dans un autre produit, ou fermeture aux nouvelles inscriptions. Avant de bâtir le workflow d'une entreprise sur une forge hébergée quelconque — et surtout sur la forge annexe d'un fournisseur de cloud — allez lire vous-même sa documentation et sa page de tarifs actuelles. Tout ce qu'un livre vous dit sur la disponibilité d'un service commercial est périmé au moment où vous le lisez.
 
+## La juridiction, et les forges européennes
+
+Voici un critère de choix qui n'existait quasiment pas quand la première version de ce cours a été
+écrite, et qui revient aujourd'hui dans la plupart des conversations d'achat : **où, juridiquement et
+physiquement, le code se trouve-t-il ?**
+
+Trois choses ont fait passer cela de l'hypothèse à une question avec une ligne budgétaire. Le
+**RGPD** a donné à « où cette donnée est-elle traitée, et sous quel droit » un sens juridique précis
+et un mécanisme de sanction. La **consolidation** a concentré le terrain — GitHub est à Microsoft,
+Bitbucket à Atlassian — si bien que « prenez un autre fournisseur » a cessé d'être une vraie
+couverture. Et le **moissonnage de données d'entraînement** a transformé « qui peut lire mon code »
+d'une question philosophique en une question opérationnelle, qui est le même souci que la phrase, à
+la fin de ce chapitre, sur le modèle dans lequel vos sources finissent.
+
+Soyez précis sur ce qu'une forge européenne vous achète et ne vous achète pas, parce que le marketing
+est épais sur ce sujet. Elle vous donne une juridiction, en général un **DPA** — un accord de
+traitement des données, le contrat qui dit réellement ce que l'opérateur a le droit de faire de vos
+données — et un opérateur qui n'est pas structurellement tenu de remettre des choses à un
+gouvernement étranger. Elle ne vous donne pas une meilleure disponibilité, un meilleur produit, ni
+l'immunité contre un rachat. C'est un choix de gouvernance, exactement comme l'auto-hébergement, et il
+devrait être défendu sur ce terrain-là.
+
+### Les forges publiques
+
+Nous en avons déjà rencontré deux dans [Les acteurs](#les-acteurs) : **Codeberg**, l'association
+berlinoise à but non lucratif qui fait tourner Forgejo, et qui est le premier arrêt évident pour du
+travail libre et open source ; et **sourcehut**, la forge minimale pilotée par courriel, opérée en
+Europe et toujours bon marché — les formules payantes tournent autour de quelques euros par mois,
+alors consultez la page actuelle plutôt que cette phrase.
+
+Les autres qui méritent d'être connues par leur nom :
+
+**Framagit.** Une instance GitLab publique tenue par **Framasoft**, association française qui a une
+longue habitude de faire tourner des services libres comme alternative délibérée aux grandes
+plateformes. Gratuite, hébergée en France, et populaire auprès des projets de civic-tech et du monde
+associatif. Si vous voulez une interface GitLab familière sans être client de GitLab, c'est celle-là.
+
+**GNU Savannah.** La forge de la Free Software Foundation, et de loin la plus ancienne de cette liste.
+Elle est stricte : `savannah.gnu.org` est réservée aux paquets GNU officiels, et `savannah.nongnu.org`
+aux autres projets qui sont des logiciels libres au sens de la FSF. L'interface est d'une autre
+époque. Elle est sur cette liste parce qu'elle est véritablement durable — elle a survécu à la plupart
+de ses contemporaines — et parce que cette rigueur est le propos, pas un oubli.
+
+**Pushin.eu.** Une entrante plus récente, opérée par des Néerlandais (PCX IT), sur du matériel dédié
+dans les centres de données de Scaleway à Paris, sans bascule vers les États-Unis, et qui prend
+position explicitement contre l'entraînement d'IA sur le code hébergé. À l'heure où nous écrivons,
+c'est une bêta sur invitation, avec une disponibilité générale visée pour 2027 et des tarifs annoncés
+comme comparables à ceux de GitHub et GitLab. Traitez tout cela comme une intention déclarée plutôt
+que comme un historique — ce qui est la manière honnête de décrire n'importe quelle forge qui n'est pas
+encore sortie.
+
+**Codebahn.** Opérée par des Suédois, hébergée en France, payante, et bâtie sur Forgejo. Son facteur
+différenciant est contractuel plutôt que technique : un DPA publié, qui est exactement le document que
+réclamera un service juridique européen et que la plupart des forges gratuites ne peuvent pas fournir.
+
+Vous verrez aussi **Tangled** et **Plain** dans des annuaires. Elles sont assez neuves pour que le
+conseil utile soit simplement de vérifier si elles existent encore, et qui les finance, avant de
+compter sur l'une ou l'autre.
+
+Et pour la position du pas-d'opérateur-du-tout, **Radicle** est traitée dans
+[Les acteurs](#les-acteurs) — c'est la seule entrée ici qui n'a aucun serveur susceptible de se
+trouver dans une juridiction.
+
+| Service | Ce que c'est | Opéré / hébergé | Coût |
+| --- | --- | --- | --- |
+| Codeberg | Forgejo, association | Allemagne | Gratuit |
+| Framagit | GitLab, association | France | Gratuit |
+| GNU Savannah | Forge de la FSF, logiciel libre uniquement | UE / États-Unis | Gratuit |
+| sourcehut | Minimale, flux par courriel | Europe | Formules payantes modestes |
+| Pushin.eu | Forge, axée souveraineté | Pays-Bas / Paris | Bêta ; payante ensuite |
+| Codebahn | Forgejo, avec un DPA | Suède / France | Payante |
+| Radicle | Pair-à-pair, sans opérateur | Nulle part en particulier | Gratuit |
+| Forgejo, Gitea, Gogs, GitLab CE, OneDev | Logiciel que vous exploitez | Votre propre machine | Gratuit |
+
+Une règle empirique, proposée comme telle : **Codeberg ou Framagit** pour un foyer public gratuit ;
+**Codebahn ou Pushin.eu** s'il vous faut un opérateur payant et un DPA signé ; **Radicle** si vous ne
+voulez aucun opérateur central ; **Forgejo sur votre propre VPS** — Hetzner, Scaleway, OVH — si vous
+voulez tout sous votre contrôle. Ce dernier point est la section suivante, et il n'est pas gratuit au
+sens où le tableau le laisse croire.
+
+> :warning:
+> Une bonne partie des textes qui classent ces services est publiée par des sites dont le métier *est*
+> la souveraineté numérique européenne, et plusieurs des annuaires d'« alternatives européennes » sont
+> des surfaces marketing plutôt que des comparatifs neutres. Lisez-les pour les faits vérifiables —
+> quel moteur, quelle société opératrice, dans quel pays sont les serveurs, s'il existe un DPA, quel
+> prix — et jetez les classements. Ces faits-là, vous pouvez les vérifier vous-même en dix minutes ;
+> les classements, non.
+
+> :information_source:
+> Une chose ne change pas, quelle que soit la case cochée : **`git clone` continue de donner à chacun
+> une copie complète de l'historique.** Le choix d'une forge est réversible comme presque aucune autre
+> décision d'infrastructure, ce qui est une bonne raison de ne pas s'en tourmenter — et une excellente
+> raison de garder la sortie répétée. C'est exactement ce que nous faisons dans
+> [Migration et sortie](#migration-et-sortie).
+
 ## L'auto-hébergement
 
 C'est la section qui rentabilise le chapitre, parce que vous pouvez tout faire, tout de suite, sur votre propre machine.
@@ -287,6 +382,8 @@ Et en attendant, remarquez que vous avez déjà les débuts d'une archive distri
 * **Une forge n'est pas Git.** L'interface web, la revue de code, les tickets, la CI, les permissions, les releases et les registres sont le produit de l'hébergeur, pas une partie de Git.
 * **Le code est portable ; les tickets, les pull requests et la configuration de CI sont l'enfermement.** Planifiez votre sortie avant d'en avoir besoin.
 * Les acteurs, par forme : **GitHub** (effets de réseau, Actions, `gh`), **GitLab** (auto-hébergeable, CI intégrée), **Bitbucket** (Jira), **Codeberg** (à but non lucratif, fait tourner Forgejo), **Gitea**/**Forgejo** (forge auto-hébergée en un binaire ; forkée en 2022 pour cause de gouvernance), **sourcehut** (workflow e-mail/patch, minimal), **Radicle** (pair-à-pair), plus celles des fournisseurs de cloud.
+* **La juridiction est désormais un critère de choix**, poussée par le RGPD, la consolidation des fournisseurs et le moissonnage de données d'entraînement. Les forges publiques européennes : **Codeberg** (Allemagne, gratuite), **Framagit** (France, gratuite, GitLab), **GNU Savannah** (FSF, logiciel libre uniquement), **sourcehut**, **Pushin.eu** (bêta) et **Codebahn** (payante, avec un **DPA** publié). Un opérateur européen vous achète une juridiction et un contrat — pas de la disponibilité, pas un meilleur produit, et pas l'immunité contre un rachat.
+* Lisez les annuaires d'« alternatives européennes » pour les faits vérifiables — moteur, opérateur, pays, DPA, prix — et ignorez leurs classements, parce que la plupart vendent de la souveraineté pour vivre.
 * `git init --bare` crée un dépôt sans zone de travail — la chose vers laquelle vous poussez. Un dépôt bare plus ssh *est* un serveur Git.
 * Les dépôts partagés doivent être bare ; pousser vers une branche extraite casse la zone de travail receveuse.
 * `git-shell` est un shell de connexion restreint qui n'autorise que les commandes Git côté serveur ; combinez-le avec un utilisateur `git` unique et des restrictions `command=` dans `authorized_keys`.
