@@ -59,6 +59,14 @@ La ligne de commande, les forges, les interfaces graphiques et les intégrations
 1. [Les clients Git graphiques](docs/3-tooling-ecosystem/3-git-guis.md)
 1. [Les éditeurs, les IDE et le navigateur de fichiers](docs/3-tooling-ecosystem/4-git-ides.md)
 
+### Partie 6 — Annexes
+
+Installer Git, les clés SSH et la signature, et créer un compte chez un hébergeur.
+
+1. [Installation et configuration de Git](docs/6-appendices/1-git-install.md)
+1. [Configurer Git avec une clé SSH](docs/6-appendices/2-git-ssh.md)
+1. [Créer et configurer son compte GitHub ou GitLab](docs/6-appendices/3-github-gitlab.md)
+
 <!-- END GENERATED TOC -->
 
 ## À propos
