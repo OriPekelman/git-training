@@ -59,6 +59,13 @@ La ligne de commande, les forges, les interfaces graphiques et les intégrations
 1. [Les clients Git graphiques](docs/3-tooling-ecosystem/3-git-guis.md)
 1. [Les éditeurs, les IDE et le navigateur de fichiers](docs/3-tooling-ecosystem/4-git-ides.md)
 
+### Partie 4 — Au-delà des bases
+
+Les répertoires de travail, les agents, les notes, les gros fichiers, les données et les modèles — et les idées que Git a engendrées.
+
+1. [Un dépôt, plusieurs arbres de travail](docs/4-beyond-the-basics/1-git-worktree.md)
+1. [Arbres de travail et agents, du travail parallèle à la vitesse de la machine](docs/4-beyond-the-basics/2-git-worktree-agents.md)
+
 ### Partie 5 — Git comme moteur d'automatisation
 
 GitOps, l'intégration continue, le déploiement continu, et un sac d'astuces.
