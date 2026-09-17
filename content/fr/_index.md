@@ -59,6 +59,16 @@ La ligne de commande, les forges, les interfaces graphiques et les intégrations
 1. [Les clients Git graphiques](docs/3-tooling-ecosystem/3-git-guis.md)
 1. [Les éditeurs, les IDE et le navigateur de fichiers](docs/3-tooling-ecosystem/4-git-ides.md)
 
+### Partie 5 — Git comme moteur d'automatisation
+
+GitOps, l'intégration continue, le déploiement continu, et un sac d'astuces.
+
+1. [GitOps](docs/5-automation/1-git-ops.md)
+1. [L'intégration continue avec Git](docs/5-automation/2-git-ci.md)
+1. [Déployer un site statique tout simple](docs/5-automation/3-git-static-site.md)
+1. [Le déploiement continu](docs/5-automation/4-git-cd.md)
+1. [Briller en société et épater les amis avec le Gitfoo](docs/5-automation/5-git-foo.md)
+
 ### Partie 6 — Annexes
 
 Installer Git, les clés SSH et la signature, et créer un compte chez un hébergeur.
