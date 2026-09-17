@@ -10,7 +10,6 @@ content/<lang>/docs/<n>-<part>/_index.md
                        part section page, and the sidebar group header
 content/<lang>/docs/<n>-<part>/<n>-<chapter>.md
                        the chapters, ordered by the `weight` in their front matter
-fr/                    the pre-2026 French version, kept only as a tone reference
 utilities/             the tooling described below
 STYLE.md               the binding style guide -- read it before writing a chapter
 themes/hugo-book/      vendored theme (patched for Hugo 0.128+ deprecations)
@@ -81,8 +80,22 @@ picks them up as `git object-read` and `git objects-print-all`.
 ## Translations
 
 The course was written in French first, but the 2026 revision was done in English, so
-`content/en/` is the source of truth and `content/fr/` is translated from it.
+`content/en/` is the source of truth and `content/fr/` is translated from it. Both trees
+are complete: 31 chapters each, and `utilities/lint_docs.py` checks them together.
 
-The `fr/` directory at the top level is the *old* French version. It predates the revision
-and is not built by Hugo; it is kept only as a reference for the original register and
-terminology while the new translation is written, and should be deleted once that is done.
+A pre-2026 French version used to sit in a top-level `fr/` directory. It was the tone
+reference for the translation -- the English is a fairly literal rendering *of* that
+French, so restoring the original preserved the author's voice where a round trip would
+have flattened it -- and it was deleted once the translation was finished. It is still in
+the history if you ever want it:
+
+```sh
+git log --oneline -- fr/          # find the last commit that had it
+git show <commit>:fr/P1C1.md      # read one file
+git checkout <commit> -- fr/      # bring the whole thing back
+```
+
+Where the two disagreed, the rule was: the English revision's *corrections* win on facts,
+and the original French wins on voice and on anything it uniquely had. The old text also
+carried OpenClassrooms-era damage -- dropped leading letters in headings, dead links,
+invented callout markers -- which was repaired rather than carried across.
