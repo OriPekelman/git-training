@@ -99,3 +99,18 @@ Where the two disagreed, the rule was: the English revision's *corrections* win 
 and the original French wins on voice and on anything it uniquely had. The old text also
 carried OpenClassrooms-era damage -- dropped leading letters in headings, dead links,
 invented callout markers -- which was repaired rather than carried across.
+
+## Licence
+
+The course itself -- everything under `content/`, plus `STYLE.md` and the scripts in
+`utilities/` -- is © Ori Pekelman and licensed under
+[Creative Commons Attribution-ShareAlike 4.0 International](https://creativecommons.org/licenses/by-sa/4.0/)
+(CC BY-SA 4.0). You may copy it, translate it, teach from it and sell the training you
+give with it, as long as you credit the author and keep derivative work under the same
+licence. The full text is in [LICENSE](LICENSE).
+
+The vendored theme in `themes/hugo-book/` is *not* covered by that: it is Alex Shpak's
+work under the MIT licence, kept in `themes/hugo-book/LICENSE`.
+
+Corrections are welcome. The course quotes real Git output, so a patch that changes a
+transcript should come with the Git version that produced it -- see `make examples`.
