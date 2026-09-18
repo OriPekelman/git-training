@@ -44,8 +44,12 @@ jobs:
           sudo dpkg -i /tmp/hugo.deb
           hugo version
 
-      - name: Install tree
-        run: sudo apt-get update -qq && sudo apt-get install -y -qq tree
+      # `tree` renders the .git listings the course quotes; git-filter-repo is a
+      # third-party subcommand a chapter teaches, and the linter validates every
+      # `git <subcommand>` against what the installed Git actually knows -- so it
+      # has to be installed here or the chapter looks like a typo.
+      - name: Install tree and git-filter-repo
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq tree git-filter-repo
 
       - name: Lint the content
         run: make lint
