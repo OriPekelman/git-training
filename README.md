@@ -116,7 +116,7 @@ prodding it would still be sitting.
 
 ## Licence
 
-The course itself -- everything under `content/`, plus `STYLE.md` and the scripts in
+The course itself -- everything under `content/`, plus the scripts in
 `utilities/` -- is © Ori Pekelman and licensed under
 [Creative Commons Attribution-ShareAlike 4.0 International](https://creativecommons.org/licenses/by-sa/4.0/)
 (CC BY-SA 4.0). You may copy it, translate it, teach from it and sell the training you
