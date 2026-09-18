@@ -11,7 +11,7 @@ First, a word on the subject, then a little explanation on the "why".
 
 At the highest level, we can say that Git is a software that allows saving code. This is the absolute standard in the field: the one and only way to do your ctrl-s (or cmd-s).
 
-You can learn to do HTML and CSS (to create web pages), to use scripting languages ​​like Python, Ruby or PHP to create nice web applications, C or RUST (to, why not, create your own operating system)... If you don't have a minimum knowledge of using Git, you've never learned how to save your work. It would be a shame, right?
+You can learn HTML and CSS (to create web pages), scripting languages like Python, Ruby or PHP (to build web applications), C or Rust (to create your own operating system)... But without a minimum knowledge of Git, you have not really learned how to save your work.
 
 Of course, if all it could do was backup, it would be the weirdest, most complicated backup function in the world, and you'd be right in deciding that computing is for lunatics after all.
 

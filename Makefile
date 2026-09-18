@@ -16,9 +16,9 @@ serve:  ## Run the site locally with live reload on http://localhost:1313
 build:  ## Build the site into ./public, failing on broken cross-references
 	@set -o pipefail; \
 	$(HUGO) --gc --minify 2>&1 | tee /tmp/hugo-build.log; \
-	if grep -qE "not found in '" /tmp/hugo-build.log; then \
+	if grep -qE "(not found in '|ERROR)" /tmp/hugo-build.log; then \
 		echo; \
-		echo "Broken chapter cross-reference or image (see WARN lines above)."; \
+		echo "Broken chapter cross-reference, image, or build error (see above)."; \
 		exit 1; \
 	fi
 

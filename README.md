@@ -48,7 +48,7 @@ keep it honest:
 **`utilities/scenario.sh`** replays the whole course scenario against the installed Git
 and writes one transcript per step to `utilities/snippets/`. Identity, dates, timezone,
 locale and config are all pinned, so the same Git version always produces byte-identical
-output — including the commit hashes. When Git changes a hint message or adds a sample
+output — including the commit hashes. The course is currently validated against Git 2.55. When Git changes a hint message or adds a sample
 hook, this is how you find out:
 
 ```sh

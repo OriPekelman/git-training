@@ -96,7 +96,7 @@ Bold the Git nouns on first and important use, as the original does: **commit**,
 
 ## Current-as-of
 
-Written/updated in 2026. Git 2.51 is current. Assume `git switch` / `git restore` exist and
+Written/updated in 2026. Git 2.55 is current. Assume `git switch` / `git restore` exist and
 are worth teaching alongside `git checkout` (teach `checkout` because that is what the world
 still types, but tell the reader the modern split exists and why). Assume default branch may
 be `main` (GitHub, GitLab) while `git init` still says `master` unless configured — explain

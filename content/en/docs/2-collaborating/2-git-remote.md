@@ -59,7 +59,7 @@ cat .git/config
 ```console
 {..}
 [remote "origin"]
-	url = /Users/oripekelman/projects/my_first_git_project.git
+	url = ~/projects/my_first_git_project.git
 	fetch = +refs/heads/*:refs/remotes/origin/*
 ```
 
@@ -67,7 +67,7 @@ A section header, a URL, and one very cryptic line. Let's take them one at a tim
 
 `[remote "origin"]` — we have created a remote and we called it `origin`. The name is ours to choose.
 
-`url = /Users/oripekelman/projects/my_first_git_project.git` — the address. Note that the shell expanded our `~` into the real path before Git ever saw it; yours will show your own home directory.
+`url = ~/projects/my_first_git_project.git` — the address. Note that the shell expanded our `~` into the real path before Git ever saw it; yours will show your own home directory.
 
 And then that third line, which is the reason this chapter exists.
 

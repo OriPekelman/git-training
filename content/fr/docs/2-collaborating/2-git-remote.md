@@ -59,7 +59,7 @@ cat .git/config
 ```console
 {..}
 [remote "origin"]
-	url = /Users/oripekelman/projects/my_first_git_project.git
+	url = ~/projects/my_first_git_project.git
 	fetch = +refs/heads/*:refs/remotes/origin/*
 ```
 
@@ -67,7 +67,7 @@ Un en-tête de section, une URL, et une ligne très cryptique. Prenons-les une �
 
 `[remote "origin"]` — nous avons créé un dépôt distant et nous l'avons appelé `origin`. Le nom est de notre choix.
 
-`url = /Users/oripekelman/projects/my_first_git_project.git` — l'adresse. Notez que le shell a développé notre `~` en chemin réel avant même que Git ne le voie ; le vôtre affichera votre propre répertoire personnel.
+`url = ~/projects/my_first_git_project.git` — l'adresse. Notez que le shell a développé notre `~` en chemin réel avant même que Git ne le voie ; le vôtre affichera votre propre répertoire personnel.
 
 Et puis cette troisième ligne, qui est la raison d'être de ce chapitre.
 

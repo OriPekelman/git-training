@@ -94,6 +94,9 @@ comme comparables à ceux de GitHub et GitLab. Traitez tout cela comme une inten
 que comme un historique — ce qui est la manière honnête de décrire n'importe quelle forge qui n'est pas
 encore sortie.
 
+> :information_source:
+> Contenu évolutif : Le statut et les tarifs de Pushin.eu peuvent changer lors de son passage de la bêta à la disponibilité générale. Vérifiez les informations actuelles avant de vous y fier.
+
 **Codebahn.** Opérée par des Suédois, hébergée en France, payante, et bâtie sur Forgejo. Son facteur
 différenciant est contractuel plutôt que technique : un DPA publié, qui est exactement le document que
 réclamera un service juridique européen et que la plupart des forges gratuites ne peuvent pas fournir.

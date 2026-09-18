@@ -35,6 +35,9 @@ Both services have moved from "please" to "you must":
 * **GitHub** has required two-factor authentication since March 2023 for every user who *contributes code* — the criteria include publishing an app or an action, creating a release, being an organization owner, or contributing to a repository GitHub considers high-importance. It was rolled out in cohorts, each with a 45-day enrollment window, and the last cohort's deadline was 19 January 2024. It is not (as of writing) required of every single account, but if you are following this course you are on your way into the group it applies to. Turn it on.
 * **GitLab.com** announced mandatory multi-factor authentication in January 2026, with enforcement starting 27 April 2026 and rolling out in cohorts through the year. It applies to any sign-in or API request made with a username and password. Git over SSH and Git over HTTPS with a token are unaffected.
 
+  > :information_source:
+  > Fast-moving: GitLab's MFA enforcement schedule evolves. Check [GitLab's current documentation](https://docs.gitlab.com/ee/user/profile/account/two_factor_authentication.html) for the latest dates.
+
 You have a choice of second factor. In rough order of how much we like them:
 
 1. **A passkey or a hardware security key** (a YubiKey, or the passkey your phone or laptop already offers). Phishing-resistant, because the key checks *which site* is asking. On GitHub a passkey can replace the password entirely.

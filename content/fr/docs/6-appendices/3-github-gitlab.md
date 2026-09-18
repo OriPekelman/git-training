@@ -35,6 +35,9 @@ Les deux services sont passés de « s'il vous plaît » à « vous devez » :
 * **GitHub** exige l'authentification à deux facteurs depuis mars 2023 pour tout utilisateur qui *contribue du code* — les critères incluent la publication d'une application ou d'une action, la création d'une version, le fait d'être propriétaire d'une organisation, ou de contribuer à un dépôt que GitHub juge important. Le déploiement s'est fait par cohortes, chacune avec une fenêtre d'inscription de 45 jours, et l'échéance de la dernière cohorte était le 19 janvier 2024. Ce n'est pas (à l'heure où nous écrivons) exigé de chaque compte, mais si vous suivez ce cours vous êtes en route vers le groupe concerné. Activez-la.
 * **GitLab.com** a annoncé l'authentification multifacteur obligatoire en janvier 2026, avec une application à partir du 27 avril 2026 et un déploiement par cohortes tout au long de l'année. Cela concerne toute connexion ou requête d'API faite avec un nom d'utilisateur et un mot de passe. Git par SSH et Git par HTTPS avec un jeton ne sont pas concernés.
 
+  > :information_source:
+  > Contenu évolutif : Le calendrier d'application de l'authentification multifacteur de GitLab évolue. Consultez [la documentation actuelle de GitLab](https://docs.gitlab.com/ee/user/profile/account/two_factor_authentication.html) pour les dernières dates.
+
 Vous avez le choix du second facteur. Dans l'ordre approximatif de notre préférence :
 
 1. **Une clé d'accès ou une clé de sécurité matérielle** (une YubiKey, ou la clé d'accès que votre téléphone ou votre portable propose déjà). Résistante à l'hameçonnage, parce que la clé vérifie *quel site* pose la question. Sur GitHub, une clé d'accès peut remplacer entièrement le mot de passe.

@@ -56,9 +56,20 @@ jobs:
       # The course quotes real Git output. If the installed Git prints something
       # different from what is committed under utilities/snippets, the course has
       # gone stale and we want to know before a reader does.
+      - name: Install Git 2.55
+        run: |
+          set -euo pipefail
+          # Pin to the Git version the course is validated against (2.55.0).
+          # Ubuntu 24.04 (ubuntu-latest) ships with Git 2.43, so we need the PPA.
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq software-properties-common
+          sudo add-apt-repository -y ppa:git-core/ppa
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq git
+          # Verify we got 2.55.x
+          git --version | grep -q "2.55" || (echo "Git 2.55 not found" && exit 1)
       - name: Check the command transcripts against this Git
         run: make examples-check
-        continue-on-error: true
 
       - name: Build the site
         run: make build

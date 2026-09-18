@@ -402,8 +402,10 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      # Major versions current in mid-2026. For third-party actions, pin a commit
+      # Major versions current as of this writing. For third-party actions, pin a commit
       # SHA instead of a tag; for actions/* a major tag is a reasonable compromise.
+      #
+      # Fast-moving: Action versions change frequently. Check for updates.
       - uses: actions/checkout@v7
         with:
           fetch-depth: 0            # we want history: describe, blame, merge-base

@@ -2,8 +2,8 @@ $ git worktree add ../hotfix -b hotfix/urgent
 Preparing worktree (new branch 'hotfix/urgent')
 HEAD is now at a0faa94 Add a title file, the other way
 $ git worktree list
-~/projects/my_first_git_project  a0faa94 [master]
-~/projects/hotfix                a0faa94 [hotfix/urgent]
+~/projects/my_first_git_project a0faa94 [master]
+~/projects/hotfix               a0faa94 [hotfix/urgent]
 # in a linked worktree, .git is a file, not a directory
 $ cat ../hotfix/.git
 gitdir: ~/projects/my_first_git_project/.git/worktrees/hotfix

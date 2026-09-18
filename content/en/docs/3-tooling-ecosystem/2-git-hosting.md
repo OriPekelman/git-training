@@ -61,7 +61,10 @@ The others worth knowing by name:
 
 **GNU Savannah.** The Free Software Foundation's forge, and the oldest thing on this list by a wide margin. It is strict: `savannah.gnu.org` is for official GNU packages, and `savannah.nongnu.org` for other projects that are free software by the FSF's definition. The interface is from another era. It is on this list because it is genuinely durable — it has outlived most of its contemporaries — and because that strictness is the point, not an oversight.
 
-**Pushin.eu.** A newer Dutch-operated entrant (PCX IT), running on bare metal in Scaleway's Paris datacentres with no US failover, and taking an explicit position against AI training on hosted code. As of this writing it is an invite-only beta, with general availability targeted for 2027 and pricing said to be comparable to GitHub and GitLab. Treat all of that as a stated intention rather than a track record — which is the honest way to describe any forge that has not shipped yet.
+**Pushin.eu.** A newer Dutch-operated entrant (PCX IT), running on bare metal in Scaleway's Paris datacentres with no US failover, and taking an explicit position against AI training on hosted code. As of this writing it is an invite-only beta, with general availability targeted for 2027 and pricing said to be comparable to GitHub and GitLab. 
+
+> :information_source:
+> Fast-moving: Pushin.eu's status and pricing may change as it moves from beta to GA. Check current information before relying on it.
 
 **Codebahn.** Swedish-operated, French-hosted, paid, and built on Forgejo. Its differentiator is contractual rather than technical: a published DPA, which is exactly the artifact a European legal department will ask for and which most free forges cannot offer.
 

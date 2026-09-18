@@ -443,9 +443,11 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      # Versions majeures courantes à la mi-2026. Pour les actions tierces, épinglez un
+      # Versions majeures courantes à la date de rédaction. Pour les actions tierces, épinglez un
       # SHA de commit plutôt qu'une étiquette ; pour actions/* une étiquette majeure est
       # un compromis raisonnable.
+      #
+      # Contenu évolutif : Les versions des actions changent fréquemment. Vérifiez les mises à jour.
       - uses: actions/checkout@v7
         with:
           fetch-depth: 0            # on veut l'historique : describe, blame, merge-base
