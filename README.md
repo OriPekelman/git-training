@@ -100,6 +100,20 @@ and the original French wins on voice and on anything it uniquely had. The old t
 carried OpenClassrooms-era damage -- dropped leading letters in headings, dead links,
 invented callout markers -- which was repaired rather than carried across.
 
+## Thanks
+
+**[Upsun](https://upsun.com)** -- most of this was drafted while I was still operational
+there as one of the founders, surrounded by people who used Git all day and deserved a
+better explanation of it than the one they had.
+
+**[Bruno Michel](https://github.com/nono)** -- who taught me Git in the first place, and
+taught it the right way round: the object store first, the porcelain after.
+
+**[Robert Douglass](https://github.com/robertDouglass)** of
+[spec-kitty.ai](https://spec-kitty.ai) -- who got me to finish it. The bulk of this text
+was written in 2018 and then sat there for the better part of a decade; without his
+prodding it would still be sitting.
+
 ## Licence
 
 The course itself -- everything under `content/`, plus `STYLE.md` and the scripts in
