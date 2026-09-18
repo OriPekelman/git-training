@@ -323,7 +323,7 @@ git cat-file -p v1.0
 object a47856e41c9e5f275068920884c735276b97f1f6
 type commit
 tag v1.0
-tagger Ori Pekelman <ori@pekelman.com> 1770285600 +0100
+tagger Ori Pekelman <ori+git-training@pekelman.com> 1770285600 +0100
 
 First release: readme, license and a homepage stub
 ```
@@ -378,13 +378,13 @@ git show v1.0
 ```
 ```console
 tag v1.0
-Tagger: Ori Pekelman <ori@pekelman.com>
+Tagger: Ori Pekelman <ori+git-training@pekelman.com>
 Date:   Thu Feb 5 11:00:00 2026 +0100
 
 First release: readme, license and a homepage stub
 
 commit a47856e41c9e5f275068920884c735276b97f1f6
-Author: Ori Pekelman <ori@pekelman.com>
+Author: Ori Pekelman <ori+git-training@pekelman.com>
 Date:   Wed Feb 4 09:00:00 2026 +0100
 
     Add an empty homepage template

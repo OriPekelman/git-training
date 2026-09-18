@@ -9,5 +9,5 @@ $ tree --charset=UTF-8 --noreport .git/refs
 │   └── shopping_cart
 └── tags
 $ git branch -vv
-  master        f8aeebe Add media directory with .gitkeep
-* shopping_cart f8aeebe Add media directory with .gitkeep
+  master        4d48f63 Add media directory with .gitkeep
+* shopping_cart 4d48f63 Add media directory with .gitkeep

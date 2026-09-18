@@ -1,5 +1,5 @@
 $ git commit -m Added readme.md
-[master (root-commit) d2eafda] Added readme.md
+[master (root-commit) 0ab682b] Added readme.md
  1 file changed, 1 insertion(+)
  create mode 100644 readme.md
 $ git status

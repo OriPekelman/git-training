@@ -1,6 +1,6 @@
 $ git add LICENSE
 
 $ git commit -m Adding a license file
-[master 5ab2cae] Adding a license file
+[master cabdb6f] Adding a license file
  1 file changed, 8 insertions(+)
  create mode 100644 LICENSE

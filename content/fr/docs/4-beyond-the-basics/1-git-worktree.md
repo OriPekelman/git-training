@@ -465,7 +465,7 @@ réglé — la valeur de votre configuration globale. `git config --list --show-
 fichier l'a emporté :
 
 ```console
-file:/home/ori/.gitconfig	user.email=ori@pekelman.com
+file:/home/ori/.gitconfig	user.email=ori+git-training@pekelman.com
 file:/home/ori/code/shop/.git/worktrees/feature-x/config.worktree	user.email=agent-a@example.com
 ```
 

@@ -1,42 +1,42 @@
 $ git log
 commit faa7576ebbb4b31c24a08d7d32c15aad130ce771
-Author: Ori Pekelman <ori@pekelman.com>
+Author: Ori Pekelman <ori+git-training@pekelman.com>
 Date:   Mon Feb 2 06:31:09 2026 +0100
 
     Rename files to media
 
 commit 435106050d91338012bf3572847d9d647c9d1f1c
-Author: Ori Pekelman <ori@pekelman.com>
+Author: Ori Pekelman <ori+git-training@pekelman.com>
 Date:   Mon Feb 2 06:25:44 2026 +0100
 
     Remove license file
 
 commit c62f4a954135e7f58bbb13b2a1d2d929f7fbaf28
-Author: Ori Pekelman <ori@pekelman.com>
+Author: Ori Pekelman <ori+git-training@pekelman.com>
 Date:   Mon Feb 2 06:22:10 2026 +0100
 
     Add git log to the list of commands we learned today.
 
-commit f0bb8a21c920246672cf67119d2fc42ba8e5bb18
-Author: Ori Pekelman <ori@pekelman.com>
+commit 13688773276850af857c23ef9125d1f19a0f92f1
+Author: Ori Pekelman <ori+git-training@pekelman.com>
 Date:   Mon Feb 2 06:17:22 2026 +0100
 
     Add .gitkeep so files will be added to the repository
 
-commit 5ab2caec01348fa809286b406298889992680ed0
-Author: Ori Pekelman <ori@pekelman.com>
+commit cabdb6f9270182945008cee8acb9871dcf9fc03f
+Author: Ori Pekelman <ori+git-training@pekelman.com>
 Date:   Mon Feb 2 06:15:42 2026 +0100
 
     Adding a license file
 
-commit 46079d29e5c812f3141e2e5a2522c6a5871d2255
-Author: Ori Pekelman <ori@pekelman.com>
+commit 72c4234bd6c3c16c3b567b851e2c58cedbb019be
+Author: Ori Pekelman <ori+git-training@pekelman.com>
 Date:   Mon Feb 2 06:10:30 2026 +0100
 
     Add the list of commands we learned today.
 
-commit d2eafda3f0b5660fd33b0db429d2f5e447c4cd28
-Author: Ori Pekelman <ori@pekelman.com>
+commit 0ab682bba608f1b175dd716f8f62de4d462f604f
+Author: Ori Pekelman <ori+git-training@pekelman.com>
 Date:   Mon Feb 2 06:06:51 2026 +0100
 
     Added readme.md

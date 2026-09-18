@@ -26,7 +26,7 @@ Git n'aura besoin que d'un tout petit bout d'information pour nous aider à dém
 
 ```console
 git config --global user.name "Ori Pekelman"
-git config --global user.email "ori@pekelman.com"
+git config --global user.email "ori+git-training@pekelman.com"
 ```
 
 Mettez-y votre propre nom et votre propre adresse e-mail, bien sûr. Tout au long de ce cours, les sorties d'exemple afficheront les miennes, parce que c'est ce que ma machine imprime réellement.

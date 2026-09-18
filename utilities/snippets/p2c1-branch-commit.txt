@@ -10,6 +10,6 @@ nothing added to commit but untracked files present (use "git add" to track)
 $ git add lib
 
 $ git commit -m Initial shopping cart code
-[shopping_cart 57563d2] Initial shopping cart code
+[shopping_cart 41d6720] Initial shopping cart code
  1 file changed, 1 insertion(+)
  create mode 100644 lib/shopping_cart.js

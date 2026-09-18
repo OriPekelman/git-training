@@ -1,11 +1,11 @@
 $ git blame readme.md
-^d2eafda (Ori Pekelman 2026-02-02 06:06:51 +0100  1) # My first Git project
-46079d29 (Ori Pekelman 2026-02-02 06:10:30 +0100  2) 
-46079d29 (Ori Pekelman 2026-02-02 06:10:30 +0100  3) Today we learned the following Git commands:
-46079d29 (Ori Pekelman 2026-02-02 06:10:30 +0100  4) 
-46079d29 (Ori Pekelman 2026-02-02 06:10:30 +0100  5) 1. `git init` - initialize a new git repository
-46079d29 (Ori Pekelman 2026-02-02 06:10:30 +0100  6) 2. `git status` - find out the status of the working directory relative to the git repository
-46079d29 (Ori Pekelman 2026-02-02 06:10:30 +0100  7) 3. `git add` - add files to the git index to prepare for a commit
-46079d29 (Ori Pekelman 2026-02-02 06:10:30 +0100  8) 4. `git commit -m"{commit message}"` - save a milestone in the git repository
-230e18f7 (Ori Pekelman 2026-02-02 06:31:09 +0100  9) 
-230e18f7 (Ori Pekelman 2026-02-02 06:31:09 +0100 10) 5. `git log` view all revisions
+^0ab682b (Ori Pekelman 2026-02-02 06:06:51 +0100  1) # My first Git project
+72c4234b (Ori Pekelman 2026-02-02 06:10:30 +0100  2) 
+72c4234b (Ori Pekelman 2026-02-02 06:10:30 +0100  3) Today we learned the following Git commands:
+72c4234b (Ori Pekelman 2026-02-02 06:10:30 +0100  4) 
+72c4234b (Ori Pekelman 2026-02-02 06:10:30 +0100  5) 1. `git init` - initialize a new git repository
+72c4234b (Ori Pekelman 2026-02-02 06:10:30 +0100  6) 2. `git status` - find out the status of the working directory relative to the git repository
+72c4234b (Ori Pekelman 2026-02-02 06:10:30 +0100  7) 3. `git add` - add files to the git index to prepare for a commit
+72c4234b (Ori Pekelman 2026-02-02 06:10:30 +0100  8) 4. `git commit -m"{commit message}"` - save a milestone in the git repository
+4b8243a7 (Ori Pekelman 2026-02-02 06:31:09 +0100  9) 
+4b8243a7 (Ori Pekelman 2026-02-02 06:31:09 +0100 10) 5. `git log` view all revisions

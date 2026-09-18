@@ -1,8 +1,8 @@
 $ git log --graph --pretty=format:%h - (%ad) %s - %an%d --date=short
-* 230e18f - (2026-02-02) added git log command - Ori Pekelman (HEAD -> master)
-* 2937bcc - (2026-02-02) Rename files to media - Ori Pekelman
-* f2c06df - (2026-02-02) Remove license file - Ori Pekelman
-* f0bb8a2 - (2026-02-02) Add .gitkeep so files will be added to the repository - Ori Pekelman
-* 5ab2cae - (2026-02-02) Adding a license file - Ori Pekelman
-* 46079d2 - (2026-02-02) Add the list of commands we learned today. - Ori Pekelman
-* d2eafda - (2026-02-02) Added readme.md - Ori Pekelman
+* 4b8243a - (2026-02-02) added git log command - Ori Pekelman (HEAD -> master)
+* 49c6166 - (2026-02-02) Rename files to media - Ori Pekelman
+* 17baa68 - (2026-02-02) Remove license file - Ori Pekelman
+* 1368877 - (2026-02-02) Add .gitkeep so files will be added to the repository - Ori Pekelman
+* cabdb6f - (2026-02-02) Adding a license file - Ori Pekelman
+* 72c4234 - (2026-02-02) Add the list of commands we learned today. - Ori Pekelman
+* 0ab682b - (2026-02-02) Added readme.md - Ori Pekelman

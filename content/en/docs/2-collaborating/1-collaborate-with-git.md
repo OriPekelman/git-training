@@ -97,23 +97,23 @@ The **Reflog** is a mechanism to log when branch tips are updated. And the `refl
 In our case `git reflog` will give us the full history of everything we've done so far:
 
 ```console
-f8aeebe HEAD@{0}: commit: Add media directory with .gitkeep
-94e2c27 HEAD@{1}: commit: Add git log to the list of commands we learned
-46079d2 HEAD@{2}: reset: moving to 46079d29e5c812f3141e2e5a2522c6a5871d2255
-230e18f HEAD@{3}: checkout: moving from 2937bccec42553482636326d6d60c5dcd1fe938d to master
-2937bcc HEAD@{4}: checkout: moving from master to 2937bccec42553482636326d6d60c5dcd1fe938d
-230e18f HEAD@{5}: commit: added git log command
-2937bcc HEAD@{6}: commit: Rename files to media
-f2c06df HEAD@{7}: commit: Remove license file
-f0bb8a2 HEAD@{8}: commit: Add .gitkeep so files will be added to the repository
-5ab2cae HEAD@{9}: commit: Adding a license file
-46079d2 HEAD@{10}: commit: Add the list of commands we learned today.
-d2eafda HEAD@{11}: commit (initial): Added readme.md
+4d48f63 HEAD@{0}: commit: Add media directory with .gitkeep
+a07690f HEAD@{1}: commit: Add git log to the list of commands we learned
+72c4234 HEAD@{2}: reset: moving to 72c4234bd6c3c16c3b567b851e2c58cedbb019be
+4b8243a HEAD@{3}: checkout: moving from 49c6166b1deb64004016a2ffe1c1b75eeadc4a4c to master
+49c6166 HEAD@{4}: checkout: moving from master to 49c6166b1deb64004016a2ffe1c1b75eeadc4a4c
+4b8243a HEAD@{5}: commit: added git log command
+49c6166 HEAD@{6}: commit: Rename files to media
+17baa68 HEAD@{7}: commit: Remove license file
+1368877 HEAD@{8}: commit: Add .gitkeep so files will be added to the repository
+cabdb6f HEAD@{9}: commit: Adding a license file
+72c4234 HEAD@{10}: commit: Add the list of commands we learned today.
+0ab682b HEAD@{11}: commit (initial): Added readme.md
 ```
 
 Read it from the bottom up and you have an honest diary of the whole previous chapter, including the parts we tidied away: the seven commits, the excursion into a **detached head** at `HEAD@{4}` and the way back at `HEAD@{3}`, the `reset` at `HEAD@{2}` that threw five of those commits off the branch, and the two replacement commits we made afterwards.
 
-Look carefully at `HEAD@{5}`: `230e18f`, "added git log command". That commit is not on any branch any more — we reset past it. It is not in `git log`. And it is still right there, named, one command away. **Nothing we did was silently lost.**
+Look carefully at `HEAD@{5}`: `4b8243a`, "added git log command". That commit is not on any branch any more — we reset past it. It is not in `git log`. And it is still right there, named, one command away. **Nothing we did was silently lost.**
 
 > :information_source:
 > Every ref has its own reflog, not just **HEAD**. `git reflog show master` tells you the history of where the `master` branch pointer has been. The files are plain text under `.git/logs/` — go and `cat .git/logs/HEAD` if you don't believe us.
@@ -129,8 +129,8 @@ git branch -vv
 ```
 
 ```console
-  master        f8aeebe Add media directory with .gitkeep
-* shopping_cart f8aeebe Add media directory with .gitkeep
+  master        4d48f63 Add media directory with .gitkeep
+* shopping_cart 4d48f63 Add media directory with .gitkeep
 ```
 
 The `*` marks the branch we are on. `-vv` also shows the last commit of each branch and, once we have a remote, which remote branch it is tracking.
@@ -194,10 +194,10 @@ git branch -vv
 ```
 
 ```console
-* homepage               f8aeebe Add media directory with .gitkeep
-  master                 f8aeebe Add media directory with .gitkeep
-  shopping_cart          57563d2 Initial shopping cart code
-  shopping_cart_template 10913e8 Implement shopping cart template
+* homepage               4d48f63 Add media directory with .gitkeep
+  master                 4d48f63 Add media directory with .gitkeep
+  shopping_cart          41d6720 Initial shopping cart code
+  shopping_cart_template 5c37832 Implement shopping cart template
 ```
 
 Notice that `homepage` and `master` point at the *same* commit. We created the branch and have not committed to it yet, so there is genuinely nothing to distinguish them. A branch costs Git 41 bytes and no thought whatsoever.
@@ -226,14 +226,14 @@ nothing to commit, working tree clean
 Now let's verify what this branch is pointing at. We have already seen the `git log` command; `git log -1` shows only the most recent **commit** of the current branch.
 
 ```console
-commit 57563d230b3b552922e00c626159272cca683837
-Author: Ori Pekelman <ori@pekelman.com>
+commit 41d6720b05bbb8c051b35a75b164957b38753ab8
+Author: Ori Pekelman <ori+git-training@pekelman.com>
 Date:   Mon Feb 2 06:46:00 2026 +0100
 
     Initial shopping cart code
 ```
 
-It is telling us our **HEAD** is pointing, as expected, at the reference of the `shopping_cart` branch, which currently sits at commit `57563d2`.
+It is telling us our **HEAD** is pointing, as expected, at the reference of the `shopping_cart` branch, which currently sits at commit `41d6720`.
 
 So, we are on the `shopping_cart` branch. If we issue the command `git merge shopping_cart_template`, Git will do some very intelligent things and apply all the changes we made in that second branch to this one.
 
@@ -244,14 +244,14 @@ git merge shopping_cart_template
 ```
 
 ```console
-Updating 57563d2..10913e8
+Updating 41d6720..5c37832
 Fast-forward
  views/shopping_cart.html | 8 ++++++++
  1 file changed, 8 insertions(+)
  create mode 100644 views/shopping_cart.html
 ```
 
-Some very interesting things just happened. Let's figure them out. As we learned, **commit**s have parents and **branch**es are references to **commit**s. Git says it updated `57563d2` to `10913e8`. It also says it **Fast-forward**ed, which we will come back to in a second. And then it tells us what actually changed: it created `views/shopping_cart.html`, as expected. Our working area now has it (with `tree -C`):
+Some very interesting things just happened. Let's figure them out. As we learned, **commit**s have parents and **branch**es are references to **commit**s. Git says it updated `41d6720` to `5c37832`. It also says it **Fast-forward**ed, which we will come back to in a second. And then it tells us what actually changed: it created `views/shopping_cart.html`, as expected. Our working area now has it (with `tree -C`):
 
 ```console
 .
@@ -270,12 +270,12 @@ git log --oneline --graph --decorate --all
 ```
 
 ```console
-* 10913e8 (HEAD -> shopping_cart, shopping_cart_template) Implement shopping cart template
-* 57563d2 Initial shopping cart code
-* f8aeebe (master, homepage) Add media directory with .gitkeep
-* 94e2c27 Add git log to the list of commands we learned
-* 46079d2 Add the list of commands we learned today.
-* d2eafda Added readme.md
+* 5c37832 (HEAD -> shopping_cart, shopping_cart_template) Implement shopping cart template
+* 41d6720 Initial shopping cart code
+* 4d48f63 (master, homepage) Add media directory with .gitkeep
+* a07690f Add git log to the list of commands we learned
+* 72c4234 Add the list of commands we learned today.
+* 0ab682b Added readme.md
 ```
 
 Look carefully at three things. `shopping_cart` and `shopping_cart_template` now point at the *same* commit. **HEAD** points at `shopping_cart`. And the history is a single straight line — there is not a fork anywhere in that picture, because Git did not create one.

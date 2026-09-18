@@ -1,16 +1,16 @@
 # the tree of the third commit
-$ git show 5ab2caec01348fa809286b406298889992680ed0^{tree}
-tree 5ab2caec01348fa809286b406298889992680ed0^{tree}
+$ git show cabdb6f9270182945008cee8acb9871dcf9fc03f^{tree}
+tree cabdb6f9270182945008cee8acb9871dcf9fc03f^{tree}
 
 LICENSE
 readme.md
-$ git ls-tree 5ab2caec01348fa809286b406298889992680ed0^{tree}
+$ git ls-tree cabdb6f9270182945008cee8acb9871dcf9fc03f^{tree}
 100644 blob 0ba5adce31cb9cf9951fed3075d7571a9db5bc32	LICENSE
 100644 blob 0c7e1663dd99931898dfa9e25dfd2aba94dbe9ad	readme.md
 # the two versions of readme.md, and LICENSE, as blobs
-$ git rev-parse d2eafda3f0b5660fd33b0db429d2f5e447c4cd28:readme.md
+$ git rev-parse 0ab682bba608f1b175dd716f8f62de4d462f604f:readme.md
 3836229b5ce7fd362c59974d286de92bf5191784
-$ git rev-parse 46079d29e5c812f3141e2e5a2522c6a5871d2255:readme.md
+$ git rev-parse 72c4234bd6c3c16c3b567b851e2c58cedbb019be:readme.md
 0c7e1663dd99931898dfa9e25dfd2aba94dbe9ad
-$ git rev-parse 5ab2caec01348fa809286b406298889992680ed0:LICENSE
+$ git rev-parse cabdb6f9270182945008cee8acb9871dcf9fc03f:LICENSE
 0ba5adce31cb9cf9951fed3075d7571a9db5bc32

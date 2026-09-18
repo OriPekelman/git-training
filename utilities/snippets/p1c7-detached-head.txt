@@ -1,5 +1,5 @@
-$ git checkout 2937bccec42553482636326d6d60c5dcd1fe938d
-Note: switching to '2937bccec42553482636326d6d60c5dcd1fe938d'.
+$ git checkout 49c6166b1deb64004016a2ffe1c1b75eeadc4a4c
+Note: switching to '49c6166b1deb64004016a2ffe1c1b75eeadc4a4c'.
 
 You are in 'detached HEAD' state. You can look around, make experimental
 changes and commit them, and you can discard any commits you make in this
@@ -16,7 +16,7 @@ Or undo this operation with:
 
 Turn off this advice by setting config variable advice.detachedHead to false
 
-HEAD is now at 2937bcc Rename files to media
+HEAD is now at 49c6166 Rename files to media
 $ cat readme.md
 # My first Git project
 
@@ -27,24 +27,24 @@ Today we learned the following Git commands:
 3. `git add` - add files to the git index to prepare for a commit
 4. `git commit -m"{commit message}"` - save a milestone in the git repository
 $ git log --oneline
-2937bcc Rename files to media
-f2c06df Remove license file
-f0bb8a2 Add .gitkeep so files will be added to the repository
-5ab2cae Adding a license file
-46079d2 Add the list of commands we learned today.
-d2eafda Added readme.md
+49c6166 Rename files to media
+17baa68 Remove license file
+1368877 Add .gitkeep so files will be added to the repository
+cabdb6f Adding a license file
+72c4234 Add the list of commands we learned today.
+0ab682b Added readme.md
 # git log shows only the past of where we are; --branches shows the rest
 $ git log --oneline --branches
-230e18f added git log command
-2937bcc Rename files to media
-f2c06df Remove license file
-f0bb8a2 Add .gitkeep so files will be added to the repository
-5ab2cae Adding a license file
-46079d2 Add the list of commands we learned today.
-d2eafda Added readme.md
+4b8243a added git log command
+49c6166 Rename files to media
+17baa68 Remove license file
+1368877 Add .gitkeep so files will be added to the repository
+cabdb6f Adding a license file
+72c4234 Add the list of commands we learned today.
+0ab682b Added readme.md
 $ git status
-HEAD detached at 2937bcc
+HEAD detached at 49c6166
 nothing to commit, working tree clean
 $ git checkout master
-Previous HEAD position was 2937bcc Rename files to media
+Previous HEAD position was 49c6166 Rename files to media
 Switched to branch 'master'

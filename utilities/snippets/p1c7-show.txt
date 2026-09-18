@@ -1,6 +1,6 @@
-$ git show 230e18f7b7070cd33c94e7a2a8aaa532473007af
-commit 230e18f7b7070cd33c94e7a2a8aaa532473007af
-Author: Ori Pekelman <ori@pekelman.com>
+$ git show 4b8243a7e2f6defd29aa50fb48c741040971aaad
+commit 4b8243a7e2f6defd29aa50fb48c741040971aaad
+Author: Ori Pekelman <ori+git-training@pekelman.com>
 Date:   Mon Feb 2 06:31:09 2026 +0100
 
     added git log command

@@ -1,9 +1,9 @@
 $ git worktree add ../hotfix -b hotfix/urgent
 Preparing worktree (new branch 'hotfix/urgent')
-HEAD is now at a0faa94 Add a title file, the other way
+HEAD is now at f72aa51 Add a title file, the other way
 $ git worktree list
-~/projects/my_first_git_project a0faa94 [master]
-~/projects/hotfix               a0faa94 [hotfix/urgent]
+~/projects/my_first_git_project f72aa51 [master]
+~/projects/hotfix               f72aa51 [hotfix/urgent]
 # in a linked worktree, .git is a file, not a directory
 $ cat ../hotfix/.git
 gitdir: ~/projects/my_first_git_project/.git/worktrees/hotfix
@@ -26,4 +26,4 @@ fatal: 'master' is already used by worktree at '~/projects/my_first_git_project'
 $ git worktree remove ../hotfix
 
 $ git branch -D hotfix/urgent
-Deleted branch hotfix/urgent (was a0faa94).
+Deleted branch hotfix/urgent (was f72aa51).

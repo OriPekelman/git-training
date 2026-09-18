@@ -23,22 +23,22 @@ Ce qui nous donne :
 
 ```console
 .git/objects
+├── 0a
+│   └── b682bba608f1b175dd716f8f62de4d462f604f
 ├── 0b
 │   └── a5adce31cb9cf9951fed3075d7571a9db5bc32
 ├── 0c
 │   └── 7e1663dd99931898dfa9e25dfd2aba94dbe9ad
 ├── 38
 │   └── 36229b5ce7fd362c59974d286de92bf5191784
-├── 46
-│   └── 079d29e5c812f3141e2e5a2522c6a5871d2255
-├── 5a
-│   └── b2caec01348fa809286b406298889992680ed0
+├── 72
+│   └── c4234bd6c3c16c3b567b851e2c58cedbb019be
 ├── 83
 │   └── 2e299281e32ed167f389f4b34501ec48b302c0
 ├── 89
 │   └── 69130a4c5a09759ca1f60b161a8805edf26042
-├── d2
-│   └── eafda3f0b5660fd33b0db429d2f5e447c4cd28
+├── ca
+│   └── bdb6f9270182945008cee8acb9871dcf9fc03f
 ├── f1
 │   └── 2dd321865c1b55cd32d413e8ef51b6c4ee7741
 ├── info
@@ -158,7 +158,7 @@ git commit -m'Add .gitkeep so files will be added to the repository'
 ```
 
 ```console
-[master f0bb8a2] Add .gitkeep so files will be added to the repository
+[master 1368877] Add .gitkeep so files will be added to the repository
  1 file changed, 0 insertions(+), 0 deletions(-)
  create mode 100644 files/.gitkeep
 ```
@@ -216,24 +216,24 @@ Le commit nous permet de construire les relations entre les **tree**s, d'enregis
 
 Pour rappel, dans cette leçon nous avons déjà utilisé la commande `git commit` quatre fois :
 
-1. Quand nous avons ajouté `readme.md` (__commit d2eafda__)
-2. Quand nous avons modifié `readme.md` pour ajouter la liste des commandes que nous avons apprises (__commit 46079d2__)
-3. Quand nous avons ajouté `LICENSE` (__commit 5ab2cae__)
-4. Puis quand nous avons ajouté `files/.gitkeep` (__commit f0bb8a2__)
+1. Quand nous avons ajouté `readme.md` (__commit 0ab682b__)
+2. Quand nous avons modifié `readme.md` pour ajouter la liste des commandes que nous avons apprises (__commit 72c4234__)
+3. Quand nous avons ajouté `LICENSE` (__commit cabdb6f__)
+4. Puis quand nous avons ajouté `files/.gitkeep` (__commit 1368877__)
 
-Nous allons étudier le deuxième, **46079d2**. Pour voir l'objet brut, exactement tel que Git le stocke, il y a une commande de plomberie :
+Nous allons étudier le deuxième, **72c4234**. Pour voir l'objet brut, exactement tel que Git le stocke, il y a une commande de plomberie :
 
 ```console
-git cat-file -p 46079d2
+git cat-file -p 72c4234
 ```
 
 Et son contenu ressemble à ceci :
 
 ```console
 tree 832e299281e32ed167f389f4b34501ec48b302c0
-parent d2eafda3f0b5660fd33b0db429d2f5e447c4cd28
-author Ori Pekelman <ori@pekelman.com> 1770009030 +0100
-committer Ori Pekelman <ori@pekelman.com> 1770009030 +0100
+parent 0ab682bba608f1b175dd716f8f62de4d462f604f
+author Ori Pekelman <ori+git-training@pekelman.com> 1770009030 +0100
+committer Ori Pekelman <ori+git-training@pekelman.com> 1770009030 +0100
 
 Add the list of commands we learned today.
 ```
@@ -253,12 +253,12 @@ Donc on a bien compris : le commit, c'est une référence vers un **tree-id** (e
 Mais d'habitude, nous n'allons jamais regarder les structures internes de Git : nous utiliserons des commandes qui, en plus, nous donnent davantage d'informations. Regardons donc le deuxième **commit** avec la commande `git show` :
 
 ```console
-git show 46079d2
+git show 72c4234
 ```
 
 ```console
-commit 46079d29e5c812f3141e2e5a2522c6a5871d2255
-Author: Ori Pekelman <ori@pekelman.com>
+commit 72c4234bd6c3c16c3b567b851e2c58cedbb019be
+Author: Ori Pekelman <ori+git-training@pekelman.com>
 Date:   Mon Feb 2 06:10:30 2026 +0100
 
     Add the list of commands we learned today.
@@ -306,8 +306,8 @@ Voici le tout, dessiné avec les objets du dépôt que vous venez de construire 
 
 {{< mermaid >}}
 graph TD
-  C["commit f0bb8a2<br/>qui, quand, pourquoi"]
-  P["commit 5ab2cae<br/>le parent"]
+  C["commit 1368877<br/>qui, quand, pourquoi"]
+  P["commit cabdb6f<br/>le parent"]
   T["tree 3216264"]
   F["tree d564d0b"]
   L["blob 0ba5adc"]

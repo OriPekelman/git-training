@@ -1,6 +1,6 @@
 $ git show HEAD~2
-commit 46079d29e5c812f3141e2e5a2522c6a5871d2255
-Author: Ori Pekelman <ori@pekelman.com>
+commit 72c4234bd6c3c16c3b567b851e2c58cedbb019be
+Author: Ori Pekelman <ori+git-training@pekelman.com>
 Date:   Mon Feb 2 06:10:30 2026 +0100
 
     Add the list of commands we learned today.

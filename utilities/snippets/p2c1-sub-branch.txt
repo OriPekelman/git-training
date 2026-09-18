@@ -3,6 +3,6 @@ Switched to a new branch 'shopping_cart_template'
 $ git add views
 
 $ git commit -m Implement shopping cart template
-[shopping_cart_template 10913e8] Implement shopping cart template
+[shopping_cart_template 5c37832] Implement shopping cart template
  1 file changed, 8 insertions(+)
  create mode 100644 views/shopping_cart.html

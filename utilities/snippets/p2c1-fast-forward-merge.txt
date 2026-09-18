@@ -4,13 +4,13 @@ $ git status
 On branch shopping_cart
 nothing to commit, working tree clean
 $ git log -1
-commit 57563d230b3b552922e00c626159272cca683837
-Author: Ori Pekelman <ori@pekelman.com>
+commit 41d6720b05bbb8c051b35a75b164957b38753ab8
+Author: Ori Pekelman <ori+git-training@pekelman.com>
 Date:   Mon Feb 2 06:46:00 2026 +0100
 
     Initial shopping cart code
 $ git merge shopping_cart_template
-Updating 57563d2..10913e8
+Updating 41d6720..5c37832
 Fast-forward
  views/shopping_cart.html | 8 ++++++++
  1 file changed, 8 insertions(+)
@@ -24,11 +24,11 @@ $ tree --charset=UTF-8 --noreport .
 └── views
     └── shopping_cart.html
 $ git log --oneline --graph --decorate --all
-* 10913e8 (HEAD -> shopping_cart, shopping_cart_template) Implement shopping cart template
-* 57563d2 Initial shopping cart code
-* f8aeebe (master, homepage) Add media directory with .gitkeep
-* 94e2c27 Add git log to the list of commands we learned
-* 46079d2 Add the list of commands we learned today.
-* d2eafda Added readme.md
+* 5c37832 (HEAD -> shopping_cart, shopping_cart_template) Implement shopping cart template
+* 41d6720 Initial shopping cart code
+* 4d48f63 (master, homepage) Add media directory with .gitkeep
+* a07690f Add git log to the list of commands we learned
+* 72c4234 Add the list of commands we learned today.
+* 0ab682b Added readme.md
 $ git checkout master
 Switched to branch 'master'

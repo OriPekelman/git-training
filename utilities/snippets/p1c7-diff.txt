@@ -9,7 +9,7 @@ index 0c7e166..8457b88 100644
  4. `git commit -m"{commit message}"` - save a milestone in the git repository
 +
 +5. `git log` view all revisions
-$ git diff f2c06df5e0a310f2f4689f9d0dc3edfddf237d4c 230e18f7b7070cd33c94e7a2a8aaa532473007af
+$ git diff 17baa688a633434ea561c8e4ada42d1f9db6c058 4b8243a7e2f6defd29aa50fb48c741040971aaad
 diff --git a/files/.gitkeep b/media/.gitkeep
 similarity index 100%
 rename from files/.gitkeep

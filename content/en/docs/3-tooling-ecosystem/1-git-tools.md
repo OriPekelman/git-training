@@ -24,7 +24,7 @@ git config --list --show-origin --show-scope
 ```console
 system	file:/etc/gitconfig	core.autocrlf=input
 global	file:/home/you/.gitconfig	user.name=Ori Pekelman
-global	file:/home/you/.gitconfig	user.email=ori@pekelman.com
+global	file:/home/you/.gitconfig	user.email=ori+git-training@pekelman.com
 global	file:/home/you/.gitconfig	init.defaultbranch=main
 global	file:/home/you/.gitconfig	pull.ff=only
 local	file:.git/config	user.email=ori@work.example.com
@@ -39,7 +39,7 @@ git config --show-origin --show-scope --get-all user.email
 ```
 
 ```console
-global	file:/home/you/.gitconfig	ori@pekelman.com
+global	file:/home/you/.gitconfig	ori+git-training@pekelman.com
 local	file:.git/config	ori@work.example.com
 ```
 
@@ -477,7 +477,7 @@ git range-diff main feature feature-v2
 1:  8cbd8b2 = 1:  8cbd8b2 Feature: first step
 2:  655127f ! 2:  70ef0e7 Feature: second step
     @@ Metadata
-     Author: Ori Pekelman <ori@pekelman.com>
+     Author: Ori Pekelman <ori+git-training@pekelman.com>
 
       ## Commit message ##
      -    Feature: second step
@@ -514,7 +514,7 @@ Bisecting: 0 revisions left to test after this (roughly 0 steps)
 running './test.sh'
 5d20f59bd6ea1ff63b19d75a9cef312b00e9ab21 is the first bad commit
 commit 5d20f59bd6ea1ff63b19d75a9cef312b00e9ab21
-Author: Ori Pekelman <ori@pekelman.com>
+Author: Ori Pekelman <ori+git-training@pekelman.com>
 Date:   Thu Jul 30 00:03:37 2026 +0200
 
     Commit 7: an innocent refactor

@@ -221,7 +221,7 @@ git range-diff main..try-a main..try-c
 1:  afa5504 = 1:  e757365 Format prices with integer arithmetic
 2:  f4be4ee ! 2:  21945c0 Add a test for format_price
     @@ Metadata
-     Author: Ori Pekelman <ori@pekelman.com>
+     Author: Ori Pekelman <ori+git-training@pekelman.com>
 
       ## Commit message ##
     -    Add a test for format_price
@@ -578,7 +578,7 @@ Et le message s'explique de lui-même, ce qui est toute la demande :
 git log -1 bug/rounding
 
 commit 95e2fdc531dab793a8f03a715f54c169031bd580
-Author: Ori Pekelman <ori@pekelman.com>
+Author: Ori Pekelman <ori+git-training@pekelman.com>
 Date:   Wed Jul 29 07:20:00 2026 +0200
 
     Round prices with integer arithmetic

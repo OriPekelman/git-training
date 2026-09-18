@@ -582,7 +582,7 @@ One file per commit, and the file is a real email:
 
 ```console
 From 908187bd9d032029abff70dff03f5382f2d57253 Mon Sep 17 00:00:00 2001
-From: Ori Pekelman <ori@pekelman.com>
+From: Ori Pekelman <ori+git-training@pekelman.com>
 Date: Sat, 7 Feb 2026 14:00:00 +0100
 Subject: [PATCH] Fix a typo in the readme
 

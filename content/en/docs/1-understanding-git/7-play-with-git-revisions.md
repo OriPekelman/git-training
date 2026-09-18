@@ -12,38 +12,38 @@ Now we have learned how to create versions of our code. Did you change a file? W
 We can now type `git log`; this very useful command lists all the changes in order, the most recent first.
 
 ```console
-commit 2937bccec42553482636326d6d60c5dcd1fe938d (HEAD -> master)
-Author: Ori Pekelman <ori@pekelman.com>
+commit 49c6166b1deb64004016a2ffe1c1b75eeadc4a4c (HEAD -> master)
+Author: Ori Pekelman <ori+git-training@pekelman.com>
 Date:   Mon Feb 2 06:25:44 2026 +0100
 
     Rename files to media
 
-commit f2c06df5e0a310f2f4689f9d0dc3edfddf237d4c
-Author: Ori Pekelman <ori@pekelman.com>
+commit 17baa688a633434ea561c8e4ada42d1f9db6c058
+Author: Ori Pekelman <ori+git-training@pekelman.com>
 Date:   Mon Feb 2 06:22:10 2026 +0100
 
     Remove license file
 
-commit f0bb8a21c920246672cf67119d2fc42ba8e5bb18
-Author: Ori Pekelman <ori@pekelman.com>
+commit 13688773276850af857c23ef9125d1f19a0f92f1
+Author: Ori Pekelman <ori+git-training@pekelman.com>
 Date:   Mon Feb 2 06:17:22 2026 +0100
 
     Add .gitkeep so files will be added to the repository
 
-commit 5ab2caec01348fa809286b406298889992680ed0
-Author: Ori Pekelman <ori@pekelman.com>
+commit cabdb6f9270182945008cee8acb9871dcf9fc03f
+Author: Ori Pekelman <ori+git-training@pekelman.com>
 Date:   Mon Feb 2 06:15:42 2026 +0100
 
     Adding a license file
 
-commit 46079d29e5c812f3141e2e5a2522c6a5871d2255
-Author: Ori Pekelman <ori@pekelman.com>
+commit 72c4234bd6c3c16c3b567b851e2c58cedbb019be
+Author: Ori Pekelman <ori+git-training@pekelman.com>
 Date:   Mon Feb 2 06:10:30 2026 +0100
 
     Add the list of commands we learned today.
 
-commit d2eafda3f0b5660fd33b0db429d2f5e447c4cd28
-Author: Ori Pekelman <ori@pekelman.com>
+commit 0ab682bba608f1b175dd716f8f62de4d462f604f
+Author: Ori Pekelman <ori+git-training@pekelman.com>
 Date:   Mon Feb 2 06:06:51 2026 +0100
 
     Added readme.md
@@ -71,8 +71,8 @@ git commit -am'added git log command'
 Cool. It will continue to work. Now if I type `git log` again I will see at the top of the list my new commit:
 
 ```console
-commit 230e18f7b7070cd33c94e7a2a8aaa532473007af (HEAD -> master)
-Author: Ori Pekelman <ori@pekelman.com>
+commit 4b8243a7e2f6defd29aa50fb48c741040971aaad (HEAD -> master)
+Author: Ori Pekelman <ori+git-training@pekelman.com>
 Date:   Mon Feb 2 06:31:09 2026 +0100
 
     added git log command
@@ -87,13 +87,13 @@ you have just made:
 graph TD
   H["HEAD"] --> M
   M["master"] --> C7
-  C7["230e18f<br/>added git log command"] --> C6
-  C6["2937bcc<br/>Rename files to media"] --> C5
-  C5["f2c06df<br/>Remove license file"] --> C4
-  C4["f0bb8a2<br/>Add .gitkeep…"] --> C3
-  C3["5ab2cae<br/>Adding a license file"] --> C2
-  C2["46079d2<br/>Add the list of commands…"] --> C1
-  C1["d2eafda<br/>Added readme.md"]
+  C7["4b8243a<br/>added git log command"] --> C6
+  C6["49c6166<br/>Rename files to media"] --> C5
+  C5["17baa68<br/>Remove license file"] --> C4
+  C4["1368877<br/>Add .gitkeep…"] --> C3
+  C3["cabdb6f<br/>Adding a license file"] --> C2
+  C2["72c4234<br/>Add the list of commands…"] --> C1
+  C1["0ab682b<br/>Added readme.md"]
 {{< /mermaid >}}
 
 Every arrow points *backwards*, from a commit to its parent. That is the only
@@ -117,12 +117,12 @@ But how do you see what has changed?
 
 ## `git diff` to see what changed
 
-So back to our repository: remember our last change was to add a line to `readme.md`. The `git log` command gives us the list of changes, doesn't it? The penultimate commit is **2937bcc** and we can now see what has changed since then.
+So back to our repository: remember our last change was to add a line to `readme.md`. The `git log` command gives us the list of changes, doesn't it? The penultimate commit is **49c6166** and we can now see what has changed since then.
 
 The command:
 
 ```console
-git diff 2937bcc
+git diff 49c6166
 ```
 Will tell us something like:
 ```console
@@ -165,16 +165,16 @@ git blame readme.md
 ```
 
 ```console
-^d2eafda (Ori Pekelman 2026-02-02 06:06:51 +0100  1) # My first Git project
-46079d29 (Ori Pekelman 2026-02-02 06:10:30 +0100  2) 
-46079d29 (Ori Pekelman 2026-02-02 06:10:30 +0100  3) Today we learned the following Git commands:
-46079d29 (Ori Pekelman 2026-02-02 06:10:30 +0100  4) 
-46079d29 (Ori Pekelman 2026-02-02 06:10:30 +0100  5) 1. `git init` - initialize a new git repository
-46079d29 (Ori Pekelman 2026-02-02 06:10:30 +0100  6) 2. `git status` - find out the status of the working directory relative to the git repository
-46079d29 (Ori Pekelman 2026-02-02 06:10:30 +0100  7) 3. `git add` - add files to the git index to prepare for a commit
-46079d29 (Ori Pekelman 2026-02-02 06:10:30 +0100  8) 4. `git commit -m"{commit message}"` - save a milestone in the git repository
-230e18f7 (Ori Pekelman 2026-02-02 06:31:09 +0100  9) 
-230e18f7 (Ori Pekelman 2026-02-02 06:31:09 +0100 10) 5. `git log` view all revisions
+^0ab682b (Ori Pekelman 2026-02-02 06:06:51 +0100  1) # My first Git project
+72c4234b (Ori Pekelman 2026-02-02 06:10:30 +0100  2) 
+72c4234b (Ori Pekelman 2026-02-02 06:10:30 +0100  3) Today we learned the following Git commands:
+72c4234b (Ori Pekelman 2026-02-02 06:10:30 +0100  4) 
+72c4234b (Ori Pekelman 2026-02-02 06:10:30 +0100  5) 1. `git init` - initialize a new git repository
+72c4234b (Ori Pekelman 2026-02-02 06:10:30 +0100  6) 2. `git status` - find out the status of the working directory relative to the git repository
+72c4234b (Ori Pekelman 2026-02-02 06:10:30 +0100  7) 3. `git add` - add files to the git index to prepare for a commit
+72c4234b (Ori Pekelman 2026-02-02 06:10:30 +0100  8) 4. `git commit -m"{commit message}"` - save a milestone in the git repository
+4b8243a7 (Ori Pekelman 2026-02-02 06:31:09 +0100  9) 
+4b8243a7 (Ori Pekelman 2026-02-02 06:31:09 +0100 10) 5. `git log` view all revisions
 ```
 
 Here we can see that the very first line was added in the initial commit (that is what the `^` marks: the line has been there since the beginning of history). Then we have two more commits. We can thus go back in time... and understand precisely the why and the how.
@@ -187,12 +187,12 @@ Here we can see that the very first line was added in the initial commit (that i
 We can now watch a particular commit with the `git show` command and see when the change was introduced.
 
 ```console
-git show 230e18f
+git show 4b8243a
 ```
 
 ```console
-commit 230e18f7b7070cd33c94e7a2a8aaa532473007af
-Author: Ori Pekelman <ori@pekelman.com>
+commit 4b8243a7e2f6defd29aa50fb48c741040971aaad
+Author: Ori Pekelman <ori+git-training@pekelman.com>
 Date:   Mon Feb 2 06:31:09 2026 +0100
 
     added git log command
@@ -226,15 +226,15 @@ Now imagine that we want to go back in time before we made this change.
 Nothing could be simpler: in the log I will look at the **SHA**, the hash of the previous commit, and I can now type:
 
 ```console
-git checkout 2937bcc
+git checkout 49c6166
 ```
 
 Its response is going to be a bit wordy, so let's ignore the middle for now and just look at the first and last line:
 
 ```console
-Note: switching to '2937bcc'.
+Note: switching to '49c6166'.
     # [blah blah blah blah Git tries to be super helpful]
-HEAD is now at 2937bcc Rename files to media
+HEAD is now at 49c6166 Rename files to media
 ```
 
 We have returned to the past. If we type `cat readme.md` we will see our file as it was before we added point 5.
@@ -244,7 +244,7 @@ We have returned to the past. If we type `cat readme.md` we will see our file as
 > Since Git 2.23 the two jobs have their own commands. That is the whole reason for the split: `checkout` had accumulated two unrelated behaviours under one name, one of them harmless and one of them irreversible, and nothing in the command line told you which one you had asked for. Here they are separated:
 > * `git switch master` — go to a branch.
 > * `git switch -c new-feature` — create a branch and go to it (`-c` for *create*, where `checkout` used `-b`).
-> * `git switch --detach 2937bcc` — go to a specific commit, deliberately detaching (see below).
+> * `git switch --detach 49c6166` — go to a specific commit, deliberately detaching (see below).
 > * `git restore readme.md` — discard uncommitted changes to a file.
 > * `git restore --staged readme.md` — unstage a file, keeping the changes.
 >
@@ -266,52 +266,52 @@ git log --branches
 So `git log --branches` will show us that we haven't lost anything. And in addition we will see some additional interesting information.
 
 ```console
-commit 230e18f7b7070cd33c94e7a2a8aaa532473007af (master)
-Author: Ori Pekelman <ori@pekelman.com>
+commit 4b8243a7e2f6defd29aa50fb48c741040971aaad (master)
+Author: Ori Pekelman <ori+git-training@pekelman.com>
 Date:   Mon Feb 2 06:31:09 2026 +0100
 
     added git log command
 
-commit 2937bccec42553482636326d6d60c5dcd1fe938d (HEAD)
-Author: Ori Pekelman <ori@pekelman.com>
+commit 49c6166b1deb64004016a2ffe1c1b75eeadc4a4c (HEAD)
+Author: Ori Pekelman <ori+git-training@pekelman.com>
 Date:   Mon Feb 2 06:25:44 2026 +0100
 
     Rename files to media
 
-commit f2c06df5e0a310f2f4689f9d0dc3edfddf237d4c
-Author: Ori Pekelman <ori@pekelman.com>
+commit 17baa688a633434ea561c8e4ada42d1f9db6c058
+Author: Ori Pekelman <ori+git-training@pekelman.com>
 Date:   Mon Feb 2 06:22:10 2026 +0100
 
     Remove license file
 
-commit f0bb8a21c920246672cf67119d2fc42ba8e5bb18
-Author: Ori Pekelman <ori@pekelman.com>
+commit 13688773276850af857c23ef9125d1f19a0f92f1
+Author: Ori Pekelman <ori+git-training@pekelman.com>
 Date:   Mon Feb 2 06:17:22 2026 +0100
 
     Add .gitkeep so files will be added to the repository
 
-commit 5ab2caec01348fa809286b406298889992680ed0
-Author: Ori Pekelman <ori@pekelman.com>
+commit cabdb6f9270182945008cee8acb9871dcf9fc03f
+Author: Ori Pekelman <ori+git-training@pekelman.com>
 Date:   Mon Feb 2 06:15:42 2026 +0100
 
     Adding a license file
 
-commit 46079d29e5c812f3141e2e5a2522c6a5871d2255
-Author: Ori Pekelman <ori@pekelman.com>
+commit 72c4234bd6c3c16c3b567b851e2c58cedbb019be
+Author: Ori Pekelman <ori+git-training@pekelman.com>
 Date:   Mon Feb 2 06:10:30 2026 +0100
 
     Add the list of commands we learned today.
 
-commit d2eafda3f0b5660fd33b0db429d2f5e447c4cd28
-Author: Ori Pekelman <ori@pekelman.com>
+commit 0ab682bba608f1b175dd716f8f62de4d462f604f
+Author: Ori Pekelman <ori+git-training@pekelman.com>
 Date:   Mon Feb 2 06:06:51 2026 +0100
 
     Added readme.md
 ```
 
-Indeed `git log` by default shows us the past of the point at which we are. Nothing has been lost. Here is the **log** which is the same thing.. except for one small detail: where at the top we had **(HEAD -> master)**, now **230e18f** is marked as **master** and **2937bcc** as **HEAD**. What is that about?
+Indeed `git log` by default shows us the past of the point at which we are. Nothing has been lost. Here is the **log** which is the same thing.. except for one small detail: where at the top we had **(HEAD -> master)**, now **4b8243a** is marked as **master** and **49c6166** as **HEAD**. What is that about?
 
-**HEAD** is a pointer to where we are now. We were on commit **230e18f** and now our work area is in the past, on **2937bcc**.
+**HEAD** is a pointer to where we are now. We were on commit **4b8243a** and now our work area is in the past, on **49c6166**.
 
 If we now do `git checkout master` the **HEAD** pointer will once again position itself on our very last commit, the one with the message "added git log command". We can check it with `git log` or `git log --branches` (which there, therefore, will do precisely the same thing).
 
@@ -374,7 +374,7 @@ cat .git/refs/heads/master
 And it will respond to us with the **SHA**, the **commit-id** of our very last commit:
 
 ```console
-230e18f7b7070cd33c94e7a2a8aaa532473007af
+4b8243a7e2f6defd29aa50fb48c741040971aaad
 ```
 
 Forty-one bytes in a plain text file. That is all a branch is.
@@ -382,10 +382,10 @@ Forty-one bytes in a plain text file. That is all a branch is.
 > :information_source:
 > On a repository with a lot of branches and tags, you may find `.git/refs/heads` almost empty and a file called `.git/packed-refs` instead. Git periodically packs its references into that single file to avoid keeping thousands of tiny ones. Same information, denser storage. The command `git rev-parse master` gives you the answer either way, and is what you should use in a script.
 
-Earlier when we did `git checkout 2937bcc`, Git gave a big message that we chose to ignore. Let's read it now:
+Earlier when we did `git checkout 49c6166`, Git gave a big message that we chose to ignore. Let's read it now:
 
 ```console
-Note: switching to '2937bcc'.
+Note: switching to '49c6166'.
 
 You are in 'detached HEAD' state. You can look around, make experimental
 changes and commit them, and you can discard any commits you make in this
@@ -402,7 +402,7 @@ Or undo this operation with:
 
 Turn off this advice by setting config variable advice.detachedHead to false
 
-HEAD is now at 2937bcc Rename files to media
+HEAD is now at 49c6166 Rename files to media
 ```
 
 That's what it's telling us: hey, you've chosen to do a `checkout` not on the top of a branch, but on a specific **commit**. **HEAD**, the head, the pointer of the current state, is now "detached" from its branch — the famous **detached head**.
@@ -425,19 +425,19 @@ git log --graph --pretty=format:'%h - (%ad) %s - %an%d' --date=short
 ```
 
 ```console
-* 230e18f - (2026-02-02) added git log command - Ori Pekelman (HEAD -> master)
-* 2937bcc - (2026-02-02) Rename files to media - Ori Pekelman
-* f2c06df - (2026-02-02) Remove license file - Ori Pekelman
-* f0bb8a2 - (2026-02-02) Add .gitkeep so files will be added to the repository - Ori Pekelman
-* 5ab2cae - (2026-02-02) Adding a license file - Ori Pekelman
-* 46079d2 - (2026-02-02) Add the list of commands we learned today. - Ori Pekelman
-* d2eafda - (2026-02-02) Added readme.md - Ori Pekelman
+* 4b8243a - (2026-02-02) added git log command - Ori Pekelman (HEAD -> master)
+* 49c6166 - (2026-02-02) Rename files to media - Ori Pekelman
+* 17baa68 - (2026-02-02) Remove license file - Ori Pekelman
+* 1368877 - (2026-02-02) Add .gitkeep so files will be added to the repository - Ori Pekelman
+* cabdb6f - (2026-02-02) Adding a license file - Ori Pekelman
+* 72c4234 - (2026-02-02) Add the list of commands we learned today. - Ori Pekelman
+* 0ab682b - (2026-02-02) Added readme.md - Ori Pekelman
 ```
 
 Make sure you are back on the branch (`git checkout master`) before what follows. Then:
 
 ```console
-git reset 46079d2
+git reset 72c4234
 ```
 
 This resets **HEAD** to that commit, and — unlike `git checkout` — it drags the branch **master** back with it. But our work area is left exactly as it is. Git tells us as much:
@@ -475,17 +475,17 @@ git commit -m'Add media directory with .gitkeep'
 Now our history is much cleaner:
 
 ```console
-* f8aeebe - (2026-02-02) Add media directory with .gitkeep - Ori Pekelman (HEAD -> master)
-* 94e2c27 - (2026-02-02) Add git log to the list of commands we learned - Ori Pekelman
-* 46079d2 - (2026-02-02) Add the list of commands we learned today. - Ori Pekelman
-* d2eafda - (2026-02-02) Added readme.md - Ori Pekelman
+* 4d48f63 - (2026-02-02) Add media directory with .gitkeep - Ori Pekelman (HEAD -> master)
+* a07690f - (2026-02-02) Add git log to the list of commands we learned - Ori Pekelman
+* 72c4234 - (2026-02-02) Add the list of commands we learned today. - Ori Pekelman
+* 0ab682b - (2026-02-02) Added readme.md - Ori Pekelman
 ```
 
-Notice that the two oldest commits kept their hashes — `d2eafda` and `46079d2` are untouched, we never rewrote them — while everything after the reset point is brand new. A commit-id depends on its parent, so rewriting history necessarily gives every descendant a new identity. Remember that; it is the whole reason the warning below matters.
+Notice that the two oldest commits kept their hashes — `0ab682b` and `72c4234` are untouched, we never rewrote them — while everything after the reset point is brand new. A commit-id depends on its parent, so rewriting history necessarily gives every descendant a new identity. Remember that; it is the whole reason the warning below matters.
 
 In this case we wanted to roll back to a previous state while keeping the changes we made. But what if we really want to get rid of our last few commits? We can do a hard reset with `git reset --hard`.
 
-Thus `git reset --hard d2eafda` will bring us back to our initial state, with a single `readme.md` file which will have a single line of content. Sometimes it's nice to get rid of the weight of the past.
+Thus `git reset --hard 0ab682b` will bring us back to our initial state, with a single `readme.md` file which will have a single line of content. Sometimes it's nice to get rid of the weight of the past.
 
 > :warning:
 > `git reset --hard` is one of the very few Git commands that genuinely destroys work: any change in your working directory that you had not committed is gone, with no `git` command that will bring it back. Committed work is recoverable for a while — `git reflog` remembers where **HEAD** has been, so `git reset --hard` to a commit-id you find there undoes the damage — but uncommitted work is not in Git at all, and so Git cannot help you. Commit before you experiment.

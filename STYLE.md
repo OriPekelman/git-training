@@ -35,7 +35,7 @@ intelligent adults who deserve the real explanation.
 ## Hard rules
 
 1. **Never mention Platform.sh.** The author no longer works there. No `platform` CLI, no
-   `ori@platform.sh` email, no platform.sh examples. Use `ori@pekelman.com` for the author
+   `ori@platform.sh` email, no platform.sh examples. Use `ori+git-training@pekelman.com` for the author
    identity in example output, or a neutral `you@example.com` in instructions.
 2. **Every command must be real and correct.** If you write output, it must be what the
    command actually prints with a recent Git (2.40+). When in doubt, run it. There is a

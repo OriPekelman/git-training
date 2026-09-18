@@ -1,5 +1,5 @@
 $ git add readme.md
 
 $ git commit -m Add the list of commands we learned today.
-[master 46079d2] Add the list of commands we learned today.
+[master 72c4234] Add the list of commands we learned today.
  1 file changed, 7 insertions(+)

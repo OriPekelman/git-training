@@ -39,4 +39,4 @@ $ cat title.md
 $ git merge --abort
 
 $ git branch -D conflicting
-Deleted branch conflicting (was e227b20).
+Deleted branch conflicting (was 19024b5).

@@ -826,7 +826,7 @@ Bisecting: 0 revisions left to test after this (roughly 0 steps)
 running './check.sh'
 4c5fe6a24048ed630e626aa791e899a5bba7fc08 is the first bad commit
 commit 4c5fe6a24048ed630e626aa791e899a5bba7fc08
-Author: Ori Pekelman <ori@pekelman.com>
+Author: Ori Pekelman <ori+git-training@pekelman.com>
 Date:   Tue Feb 17 14:00:00 2026 +0100
 
     Introduce the configurable tax rate
@@ -970,8 +970,8 @@ tree 31ee6cd9e70d9b4dc8cd2d087b525135c863c155
 parent 51de6d1143332b4224d19af5d4fdce11f1b2878e
 parent 615417a415e96155d1eb0025278b16786a9970ff
 parent f8c0a1974c63e9d2d1a9f687c3dbe92f131dd14d
-author Ori Pekelman <ori@pekelman.com> 1772532000 +0100
-committer Ori Pekelman <ori@pekelman.com> 1772532000 +0100
+author Ori Pekelman <ori+git-training@pekelman.com> 1772532000 +0100
+committer Ori Pekelman <ori+git-training@pekelman.com> 1772532000 +0100
 
 On master: wip: VAT on the cart total
 ```

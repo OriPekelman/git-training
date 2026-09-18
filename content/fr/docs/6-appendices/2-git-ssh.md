@@ -545,7 +545,7 @@ git config --global tag.gpgsign true
 Pour *vérifier* des signatures, Git a besoin de savoir à quelles clés faire confiance. C'est un fichier qui associe des identités à des clés publiques, dans le même format que le fichier `allowed_signers` de SSH :
 
 ```
-ori@pekelman.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKHRDpUquRUZV8YB+JS7Smjvv2ewxGIkeoyu8eIpWUq5
+ori+git-training@pekelman.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKHRDpUquRUZV8YB+JS7Smjvv2ewxGIkeoyu8eIpWUq5
 ```
 
 ```console
@@ -561,8 +561,8 @@ git log --show-signature -1
 
 ```console
 commit d5416dd130411ebcff88f0c3ce79f8882f3b89b3
-Good "git" signature for ori@pekelman.com with ED25519 key SHA256:F7Ft0eRDNNJ+e31qdZ/jGjNXp9x4L9rrhVgU5l3Bi3E
-Author: Ori Pekelman <ori@pekelman.com>
+Good "git" signature for ori+git-training@pekelman.com with ED25519 key SHA256:F7Ft0eRDNNJ+e31qdZ/jGjNXp9x4L9rrhVgU5l3Bi3E
+Author: Ori Pekelman <ori+git-training@pekelman.com>
 Date:   Wed Jul 29 23:32:12 2026 +0200
 
     Un commit signé
@@ -575,7 +575,7 @@ git verify-commit HEAD
 ```
 
 ```console
-Good "git" signature for ori@pekelman.com with ED25519 key SHA256:F7Ft0eRDNNJ+e31qdZ/jGjNXp9x4L9rrhVgU5l3Bi3E
+Good "git" signature for ori+git-training@pekelman.com with ED25519 key SHA256:F7Ft0eRDNNJ+e31qdZ/jGjNXp9x4L9rrhVgU5l3Bi3E
 ```
 
 Et pour voir l'état de toute une plage d'un coup d'œil, `%G?` dans un format d'affichage écrit une lettre par commit :
@@ -601,11 +601,11 @@ git tag -v v1.0
 ```
 
 ```console
-Good "git" signature for ori@pekelman.com with ED25519 key SHA256:F7Ft0eRDNNJ+e31qdZ/jGjNXp9x4L9rrhVgU5l3Bi3E
+Good "git" signature for ori+git-training@pekelman.com with ED25519 key SHA256:F7Ft0eRDNNJ+e31qdZ/jGjNXp9x4L9rrhVgU5l3Bi3E
 object d5416dd130411ebcff88f0c3ce79f8882f3b89b3
 type commit
 tag v1.0
-tagger Ori Pekelman <ori@pekelman.com> 1785360732 +0200
+tagger Ori Pekelman <ori+git-training@pekelman.com> 1785360732 +0200
 
 Version 1.0
 ```

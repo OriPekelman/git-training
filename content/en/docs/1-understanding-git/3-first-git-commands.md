@@ -26,7 +26,7 @@ At the command line:
 
 ```console
 git config --global user.name "Ori Pekelman"
-git config --global user.email "ori@pekelman.com"
+git config --global user.email "ori+git-training@pekelman.com"
 ```
 
 Put your own name and your own email address there, of course. Throughout this course the example output will show mine, because that is what my machine actually prints.

@@ -216,7 +216,7 @@ git commit -m"Added readme.md"
 Normalement Git nous répondra avec :
 
 ```console
-[master (root-commit) d2eafda] Added readme.md
+[master (root-commit) 0ab682b] Added readme.md
  1 file changed, 1 insertion(+)
  create mode 100644 readme.md
 ```
@@ -284,7 +284,7 @@ git commit -m"Add the list of commands we learned today."
 Qui nous répond par :
 
 ```console
-[master 46079d2] Add the list of commands we learned today.
+[master 72c4234] Add the list of commands we learned today.
  1 file changed, 7 insertions(+)
 ```
 
@@ -313,7 +313,7 @@ git commit -m"Adding a license file"
 Ce qui nous donne :
 
 ```console
-[master 5ab2cae] Adding a license file
+[master cabdb6f] Adding a license file
  1 file changed, 8 insertions(+)
  create mode 100644 LICENSE
 ```

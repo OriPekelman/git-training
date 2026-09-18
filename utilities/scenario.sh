@@ -51,7 +51,7 @@ done
 # names, their emails AND the timestamps. Pin all of them and the SHAs quoted
 # in the course are reproducible on any machine running the same Git version.
 export GIT_AUTHOR_NAME="Ori Pekelman"
-export GIT_AUTHOR_EMAIL="ori@pekelman.com"
+export GIT_AUTHOR_EMAIL="ori+git-training@pekelman.com"
 export GIT_COMMITTER_NAME="$GIT_AUTHOR_NAME"
 export GIT_COMMITTER_EMAIL="$GIT_AUTHOR_EMAIL"
 

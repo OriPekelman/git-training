@@ -6,6 +6,6 @@ Changes to be committed:
   (use "git restore --staged <file>..." to unstage)
 	renamed:    files/.gitkeep -> media/.gitkeep
 $ git commit -m Rename files to media
-[master 2937bcc] Rename files to media
+[master 49c6166] Rename files to media
  1 file changed, 0 insertions(+), 0 deletions(-)
  rename {files => media}/.gitkeep (100%)

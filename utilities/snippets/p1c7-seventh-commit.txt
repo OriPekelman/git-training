@@ -1,20 +1,20 @@
 $ git commit -am added git log command
-[master 230e18f] added git log command
+[master 4b8243a] added git log command
  1 file changed, 2 insertions(+)
 $ git log -1
-commit 230e18f7b7070cd33c94e7a2a8aaa532473007af
-Author: Ori Pekelman <ori@pekelman.com>
+commit 4b8243a7e2f6defd29aa50fb48c741040971aaad
+Author: Ori Pekelman <ori+git-training@pekelman.com>
 Date:   Mon Feb 2 06:31:09 2026 +0100
 
     added git log command
 $ git log --oneline
-230e18f added git log command
-2937bcc Rename files to media
-f2c06df Remove license file
-f0bb8a2 Add .gitkeep so files will be added to the repository
-5ab2cae Adding a license file
-46079d2 Add the list of commands we learned today.
-d2eafda Added readme.md
+4b8243a added git log command
+49c6166 Rename files to media
+17baa68 Remove license file
+1368877 Add .gitkeep so files will be added to the repository
+cabdb6f Adding a license file
+72c4234 Add the list of commands we learned today.
+0ab682b Added readme.md
 $ cat readme.md
 # My first Git project
 

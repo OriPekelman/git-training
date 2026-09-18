@@ -1,16 +1,16 @@
-$ git cat-file -t 46079d29e5c812f3141e2e5a2522c6a5871d2255
+$ git cat-file -t 72c4234bd6c3c16c3b567b851e2c58cedbb019be
 commit
 # the raw commit object: tree, parent, author, committer, message
-$ git cat-file -p 46079d29e5c812f3141e2e5a2522c6a5871d2255
+$ git cat-file -p 72c4234bd6c3c16c3b567b851e2c58cedbb019be
 tree 832e299281e32ed167f389f4b34501ec48b302c0
-parent d2eafda3f0b5660fd33b0db429d2f5e447c4cd28
-author Ori Pekelman <ori@pekelman.com> 1770009030 +0100
-committer Ori Pekelman <ori@pekelman.com> 1770009030 +0100
+parent 0ab682bba608f1b175dd716f8f62de4d462f604f
+author Ori Pekelman <ori+git-training@pekelman.com> 1770009030 +0100
+committer Ori Pekelman <ori+git-training@pekelman.com> 1770009030 +0100
 
 Add the list of commands we learned today.
-$ git show 46079d29e5c812f3141e2e5a2522c6a5871d2255
-commit 46079d29e5c812f3141e2e5a2522c6a5871d2255
-Author: Ori Pekelman <ori@pekelman.com>
+$ git show 72c4234bd6c3c16c3b567b851e2c58cedbb019be
+commit 72c4234bd6c3c16c3b567b851e2c58cedbb019be
+Author: Ori Pekelman <ori+git-training@pekelman.com>
 Date:   Mon Feb 2 06:10:30 2026 +0100
 
     Add the list of commands we learned today.
@@ -28,9 +28,9 @@ index 3836229..0c7e166 100644
 +2. `git status` - find out the status of the working directory relative to the git repository
 +3. `git add` - add files to the git index to prepare for a commit
 +4. `git commit -m"{commit message}"` - save a milestone in the git repository
-$ git show --stat 46079d29e5c812f3141e2e5a2522c6a5871d2255
-commit 46079d29e5c812f3141e2e5a2522c6a5871d2255
-Author: Ori Pekelman <ori@pekelman.com>
+$ git show --stat 72c4234bd6c3c16c3b567b851e2c58cedbb019be
+commit 72c4234bd6c3c16c3b567b851e2c58cedbb019be
+Author: Ori Pekelman <ori+git-training@pekelman.com>
 Date:   Mon Feb 2 06:10:30 2026 +0100
 
     Add the list of commands we learned today.

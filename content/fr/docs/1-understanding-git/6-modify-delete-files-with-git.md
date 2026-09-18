@@ -29,7 +29,7 @@ no changes added to commit (use "git add" and/or "git commit -a")
 Cela veut dire que le fichier LICENSE existe dans l'**index** mais n'existe pas dans la zone de travail. Pour le supprimer, on va devoir ajouter la suppression à l'index. Donc `git add LICENSE`. Puis nous allons appliquer ce changement avec un `git commit -m"Remove license file"`.
 
 ```console
-[master f2c06df] Remove license file
+[master 17baa68] Remove license file
  1 file changed, 8 deletions(-)
  delete mode 100644 LICENSE
 ```
@@ -95,7 +95,7 @@ git commit -m'Rename files to media'
 
 Qui nous dira :
 ```console
-[master 2937bcc] Rename files to media
+[master 49c6166] Rename files to media
  1 file changed, 0 insertions(+), 0 deletions(-)
  rename {files => media}/.gitkeep (100%)
 ```

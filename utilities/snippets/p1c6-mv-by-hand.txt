@@ -1,6 +1,6 @@
 # renaming with the shell instead, which Git cannot recognise as a rename
 $ git reset --hard
-HEAD is now at f0bb8a2 Add .gitkeep so files will be added to the repository
+HEAD is now at 1368877 Add .gitkeep so files will be added to the repository
 $ mv files media
 
 $ git status

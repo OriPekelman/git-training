@@ -400,7 +400,7 @@ git config --worktree user.email bot@example.com
 Now each worktree can override. Set `agent-a@example.com` in `feature-x` and you get three different answers to `git config --get user.email`: `agent-a@example.com` there, `bot@example.com` in the main worktree, and — from `hotfix`, which set nothing — the value from your global config. `git config --list --show-origin` tells you which file won:
 
 ```console
-file:/home/ori/.gitconfig	user.email=ori@pekelman.com
+file:/home/ori/.gitconfig	user.email=ori+git-training@pekelman.com
 file:/home/ori/code/shop/.git/worktrees/feature-x/config.worktree	user.email=agent-a@example.com
 ```
 

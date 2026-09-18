@@ -184,8 +184,8 @@ git cat-file -p HEAD
 
 tree 90e3af950a6f74e6246508c7d231744e530be0e0
 parent eca5ea6741808f64f3ed42d45d3a8f7c12028574
-author Ori Pekelman <ori@pekelman.com> 1770108000 +0100
-committer Ori Pekelman <ori@pekelman.com> 1770108000 +0100
+author Ori Pekelman <ori+git-training@pekelman.com> 1770108000 +0100
+committer Ori Pekelman <ori+git-training@pekelman.com> 1770108000 +0100
 
 Style the top banner
 ```
@@ -242,8 +242,8 @@ git cat-file -p HEAD
 tree 90e3af950a6f74e6246508c7d231744e530be0e0
 parent 62fe1853d2a7aec2d7975bae70fa6dcd6711c33b
 parent 36e6c8f267b889a0ee9dba55e15eb61276f69721
-author Ori Pekelman <ori@pekelman.com> 1770109200 +0100
-committer Ori Pekelman <ori@pekelman.com> 1770109200 +0100
+author Ori Pekelman <ori+git-training@pekelman.com> 1770109200 +0100
+committer Ori Pekelman <ori+git-training@pekelman.com> 1770109200 +0100
 
 Merge branch 'banner'
 ```
@@ -259,7 +259,7 @@ git show --stat HEAD
 
 commit e10823db3ff81d11ec97e2dc8c49d53c2a4a8869
 Merge: 62fe185 36e6c8f
-Author: Ori Pekelman <ori@pekelman.com>
+Author: Ori Pekelman <ori+git-training@pekelman.com>
 Date:   Tue Feb 3 10:00:00 2026 +0100
 
     Merge branch 'banner'
@@ -435,8 +435,8 @@ tree 251bc909bb984807aa5fec53c3590582becb611c
 parent 3cedfbc7eedef1ba231b245d9dd2defce24dc594
 parent 03b4871a9c2f26fd0a81952e82688382e9e72153
 parent 549222d148e85976eb2cb69a4f0e8256a3b7d87c
-author Ori Pekelman <ori@pekelman.com> 1770800400 +0100
-committer Ori Pekelman <ori@pekelman.com> 1770800400 +0100
+author Ori Pekelman <ori+git-training@pekelman.com> 1770800400 +0100
+committer Ori Pekelman <ori+git-training@pekelman.com> 1770800400 +0100
 
 Merge three features at once
 ```
@@ -507,8 +507,8 @@ git cat-file -p HEAD
 
 tree abda1ee73e79458a3d911e1970203b504b741880
 parent 931150fa7798c7d9dd60177ec3d17de04e9978b2
-author Ori Pekelman <ori@pekelman.com> 1770282000 +0100
-committer Ori Pekelman <ori@pekelman.com> 1770282000 +0100
+author Ori Pekelman <ori+git-training@pekelman.com> 1770282000 +0100
+committer Ori Pekelman <ori+git-training@pekelman.com> 1770282000 +0100
 
 Add the price filter
 ```
@@ -1324,7 +1324,7 @@ quantity input. The cart cannot change between renders, so caching it in the
 session is safe.
 
 Refs: #431
-Signed-off-by: Ori Pekelman <ori@pekelman.com>
+Signed-off-by: Ori Pekelman <ori+git-training@pekelman.com>
 Co-authored-by: Lea Prettier <lea@example.com>
 ```
 
@@ -1344,15 +1344,15 @@ git commit -s --trailer "Co-authored-by: Lea Prettier <lea@example.com>" \
 git cat-file -p HEAD
 
 tree ab69b4abf3bb84d4e268bd42d84e4a9a5e242bd3
-author Ori Pekelman <ori@pekelman.com> 1771833600 +0100
-committer Ori Pekelman <ori@pekelman.com> 1771833600 +0100
+author Ori Pekelman <ori+git-training@pekelman.com> 1771833600 +0100
+committer Ori Pekelman <ori+git-training@pekelman.com> 1771833600 +0100
 
 Cache the cart total for the session
 
 Recomputing the total on every render was costing us 40ms per keystroke on the quantity input. The cart cannot change between renders, so caching it in the session is safe.
 
 Refs: #431
-Signed-off-by: Ori Pekelman <ori@pekelman.com>
+Signed-off-by: Ori Pekelman <ori+git-training@pekelman.com>
 Co-authored-by: Lea Prettier <lea@example.com>
 ```
 

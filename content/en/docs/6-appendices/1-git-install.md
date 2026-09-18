@@ -310,7 +310,7 @@ git config list --show-origin
 
 ```console
 file:/Users/oripekelman/.gitconfig	user.name=Ori Pekelman
-file:/Users/oripekelman/.gitconfig	user.email=ori@pekelman.com
+file:/Users/oripekelman/.gitconfig	user.email=ori+git-training@pekelman.com
 file:/Users/oripekelman/.gitconfig	init.defaultbranch=main
 ```
 
@@ -328,7 +328,7 @@ Git can include another config file *conditionally*, based on where the reposito
 ```
 [user]
 	name = Ori Pekelman
-	email = ori@pekelman.com
+	email = ori+git-training@pekelman.com
 [init]
 	defaultBranch = main
 [includeIf "gitdir:~/work/"]
@@ -361,7 +361,7 @@ git config get user.email
 ```
 
 ```console
-ori@pekelman.com
+ori+git-training@pekelman.com
 ```
 
 The `includeIf` mechanism arrived in Git 2.13 with `gitdir:`; 2.23 added `onbranch:` (apply this config while on a branch matching a pattern) and 2.36 added `hasconfig:remote.*.url:` (apply it in any repository whose remote is *that* server), which is even better suited to the work/personal split — it follows the code rather than the directory.
@@ -402,9 +402,9 @@ git log --pretty=fuller
 
 ```console
 commit 71e50b1af89627c5065c45979d42a9c252a4c1e6
-Author:     Ori Pekelman <ori@pekelman.com>
+Author:     Ori Pekelman <ori+git-training@pekelman.com>
 AuthorDate: Wed Jul 29 23:36:13 2026 +0200
-Commit:     Ori Pekelman <ori@pekelman.com>
+Commit:     Ori Pekelman <ori+git-training@pekelman.com>
 CommitDate: Wed Jul 29 23:36:13 2026 +0200
 
     My first commit

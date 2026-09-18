@@ -308,7 +308,7 @@ bad — and halves the range again, until:
 running './test.sh'
 8228d7412652f77476b8c08ea3a3833035955d86 is the first bad commit
 commit 8228d7412652f77476b8c08ea3a3833035955d86
-Author: Ori Pekelman <ori@pekelman.com>
+Author: Ori Pekelman <ori+git-training@pekelman.com>
 
     commit 4
 

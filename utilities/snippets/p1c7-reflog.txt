@@ -1,13 +1,13 @@
 $ git reflog
-f8aeebe HEAD@{0}: commit: Add media directory with .gitkeep
-94e2c27 HEAD@{1}: commit: Add git log to the list of commands we learned
-46079d2 HEAD@{2}: reset: moving to 46079d29e5c812f3141e2e5a2522c6a5871d2255
-230e18f HEAD@{3}: checkout: moving from 2937bccec42553482636326d6d60c5dcd1fe938d to master
-2937bcc HEAD@{4}: checkout: moving from master to 2937bccec42553482636326d6d60c5dcd1fe938d
-230e18f HEAD@{5}: commit: added git log command
-2937bcc HEAD@{6}: commit: Rename files to media
-f2c06df HEAD@{7}: commit: Remove license file
-f0bb8a2 HEAD@{8}: commit: Add .gitkeep so files will be added to the repository
-5ab2cae HEAD@{9}: commit: Adding a license file
-46079d2 HEAD@{10}: commit: Add the list of commands we learned today.
-d2eafda HEAD@{11}: commit (initial): Added readme.md
+4d48f63 HEAD@{0}: commit: Add media directory with .gitkeep
+a07690f HEAD@{1}: commit: Add git log to the list of commands we learned
+72c4234 HEAD@{2}: reset: moving to 72c4234bd6c3c16c3b567b851e2c58cedbb019be
+4b8243a HEAD@{3}: checkout: moving from 49c6166b1deb64004016a2ffe1c1b75eeadc4a4c to master
+49c6166 HEAD@{4}: checkout: moving from master to 49c6166b1deb64004016a2ffe1c1b75eeadc4a4c
+4b8243a HEAD@{5}: commit: added git log command
+49c6166 HEAD@{6}: commit: Rename files to media
+17baa68 HEAD@{7}: commit: Remove license file
+1368877 HEAD@{8}: commit: Add .gitkeep so files will be added to the repository
+cabdb6f HEAD@{9}: commit: Adding a license file
+72c4234 HEAD@{10}: commit: Add the list of commands we learned today.
+0ab682b HEAD@{11}: commit (initial): Added readme.md

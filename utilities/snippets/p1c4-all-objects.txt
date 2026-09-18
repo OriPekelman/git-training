@@ -1,32 +1,32 @@
 $ tree --charset=UTF-8 --noreport .git/objects
 .git/objects
+├── 0a
+│   └── b682bba608f1b175dd716f8f62de4d462f604f
 ├── 0b
 │   └── a5adce31cb9cf9951fed3075d7571a9db5bc32
 ├── 0c
 │   └── 7e1663dd99931898dfa9e25dfd2aba94dbe9ad
 ├── 38
 │   └── 36229b5ce7fd362c59974d286de92bf5191784
-├── 46
-│   └── 079d29e5c812f3141e2e5a2522c6a5871d2255
-├── 5a
-│   └── b2caec01348fa809286b406298889992680ed0
+├── 72
+│   └── c4234bd6c3c16c3b567b851e2c58cedbb019be
 ├── 83
 │   └── 2e299281e32ed167f389f4b34501ec48b302c0
 ├── 89
 │   └── 69130a4c5a09759ca1f60b161a8805edf26042
-├── d2
-│   └── eafda3f0b5660fd33b0db429d2f5e447c4cd28
+├── ca
+│   └── bdb6f9270182945008cee8acb9871dcf9fc03f
 ├── f1
 │   └── 2dd321865c1b55cd32d413e8ef51b6c4ee7741
 ├── info
 └── pack
 $ git cat-file --batch-check --batch-all-objects
+0ab682bba608f1b175dd716f8f62de4d462f604f commit 204
 0ba5adce31cb9cf9951fed3075d7571a9db5bc32 blob 326
 0c7e1663dd99931898dfa9e25dfd2aba94dbe9ad blob 356
 3836229b5ce7fd362c59974d286de92bf5191784 blob 23
-46079d29e5c812f3141e2e5a2522c6a5871d2255 commit 253
-5ab2caec01348fa809286b406298889992680ed0 commit 232
+72c4234bd6c3c16c3b567b851e2c58cedbb019be commit 279
 832e299281e32ed167f389f4b34501ec48b302c0 tree 37
 8969130a4c5a09759ca1f60b161a8805edf26042 tree 72
-d2eafda3f0b5660fd33b0db429d2f5e447c4cd28 commit 178
+cabdb6f9270182945008cee8acb9871dcf9fc03f commit 258
 f12dd321865c1b55cd32d413e8ef51b6c4ee7741 tree 37

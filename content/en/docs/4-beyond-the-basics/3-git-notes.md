@@ -29,7 +29,7 @@ Now `git log`:
 git log -1
 
 commit d68868997648ff6e3e6ae505743b668f7a6d5763
-Author: Ori Pekelman <ori@pekelman.com>
+Author: Ori Pekelman <ori+git-training@pekelman.com>
 Date:   Mon Mar 2 09:31:00 2026 +0100
 
     Add pretty red button to shopping cart
@@ -82,8 +82,8 @@ git cat-file -p refs/notes/commits
 
 tree 9593c7973ed478fc32d0b5bd16ac511ee1d27104
 parent 22475090ba59acd210c74bb247c49c31ac5e4495
-author Ori Pekelman <ori@pekelman.com> 1772445600 +0100
-committer Ori Pekelman <ori@pekelman.com> 1772445600 +0100
+author Ori Pekelman <ori+git-training@pekelman.com> 1772445600 +0100
+committer Ori Pekelman <ori+git-training@pekelman.com> 1772445600 +0100
 
 Notes added by 'git notes append'
 ```

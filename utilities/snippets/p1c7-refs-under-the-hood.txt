@@ -1,8 +1,8 @@
 $ cat .git/HEAD
 ref: refs/heads/master
 $ cat .git/refs/heads/master
-230e18f7b7070cd33c94e7a2a8aaa532473007af
+4b8243a7e2f6defd29aa50fb48c741040971aaad
 $ git rev-parse HEAD
-230e18f7b7070cd33c94e7a2a8aaa532473007af
+4b8243a7e2f6defd29aa50fb48c741040971aaad
 $ git for-each-ref
-230e18f7b7070cd33c94e7a2a8aaa532473007af commit	refs/heads/master
+4b8243a7e2f6defd29aa50fb48c741040971aaad commit	refs/heads/master
